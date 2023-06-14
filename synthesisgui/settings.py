@@ -34,9 +34,10 @@ INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
-    'django.contrib.sessions',
+    #'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'information',
 ]
 
 MIDDLEWARE = [
@@ -55,7 +56,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [],
-        'APP_DIRS': True,
+        'APP_DIRS': True, # Django looks for templates within app and templates folder
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
