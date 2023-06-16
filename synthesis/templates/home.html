@@ -1,0 +1,123 @@
+{% load static %}
+<!doctype html>
+<html lang="de">
+
+<head>
+    {% block title %}
+    <title>Speech synthesis</title>
+    {% endblock %}
+    <link rel="stylesheet" type="text/css" href="{% static 'base.css' %}">
+</head>
+
+<body>
+    <form action="/synthesize/" method="post">
+        {% block sidebar %}
+        <div id="header">
+            <div id="nav">
+                <ul>
+                    <li>Speech synthesis</li>
+                    <li><button type="button" id="info-button" class="nav-button" onclick="window.location.href='/synthesis/home';">[ home ]</button>
+                    </li>
+                    <li><button type="button" id="about-button" class="nav-button" onclick="window.location.href='/synthesis/about';">[ i ]</button>
+                    </li>
+                    <li><button type="button" id="help-button" class="nav-button" onclick="window.location.href='/synthesis/help';">[ ? ]</button>
+                </ul>
+            </div>
+        </div>
+        {% endblock %}
+
+        {% block content %}
+        <div id="content">
+            <ul>
+                <li>
+                    <h1>Example synthesis</h1>
+                    <button type="button" id="save-project-button" class="primary-button" onclick="myFunction()">Save project</button>
+                    <button type="button" id="load-project-button" class="primary-button" onclick="myFunction()">Load project</button>
+            </ul>
+
+            <div id="input">
+                <h2>Input</h2>
+                <div class="input-field">
+                    <label for="text-in-field">Text:</label><br>
+                    <textarea id="text-in-field" name="text-in-field"></textarea>
+                </div>
+                <div class="input-field">
+                    <label for="ipa-in-field">IPA:</label><br>
+                    <textarea id="ipa-in-field" name="ipa-in-field"></textarea>
+                </div>
+                <div class="input-field">
+                    <label for="ipa-chart">Insert symbol in cursor position:</label>
+                    <table id="ipa-chart" name="ipa-chart">
+                        <tbody>
+                            <!-- Rows -->
+                            <tr>
+                                <td><button type="button">ʃ</button></td>
+                                <td><button type="button">ɑ</button></td>
+                                <td><button type="button">ɛ</button></td>
+                                <td><button type="button">θ</button></td>
+                                <td><button type="button">ŋ</button></td>
+                                <td><button type="button">ʊ</button></td>
+                                <td><button type="button">ɔ</button></td>
+                                <td><button type="button">ə</button></td>
+                                <td><button type="button">ʒ</button></td>
+                                <td><button type="button">ɪ</button></td>
+                            </tr>
+                            <tr>
+                                <td><button type="button">ɡ</button></td>
+                                <td><button type="button">ɹ</button></td>
+                                <td><button type="button">æ</button></td>
+                                <td><button type="button">ʌ</button></td>
+                                <td><button type="button">ɛ̃</button></td>
+                                <td><button type="button">ʃ</button></td>
+                                <td><button type="button">ɪ</button></td>
+                                <td><button type="button">ɑ</button></td>
+                                <td><button type="button">ɔɪ</button></td>
+                                <td><button type="button">ʊ</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="settings">
+                <h2>Settings</h2>
+                <li>
+                    <label for="dropdown-model">Model:</label>
+                    <select id="dropdown-model" name="dropdown-model">
+                        <option value="ljspeech11">LJSpeech 1.1</option>
+                    </select>
+                </li>
+                <li>
+                    <label for="dropdown-voice">Voice:</label>
+                    <select id="dropdown-voice" name="dropdown-voice">
+                        <option value="lindajohnson">Linda Johnson</option>
+                    </select>
+                </li>
+            </div>
+
+            <div id="output">
+                <h2>Output</h2>
+                <ul>
+                    <li>
+                        <label for="dropdown-sentence">Sentence:</label>
+                        <select id="dropdown-sentence" name="dropdown-sentence">
+                            <option value="sentence1">Sentence 1</option> <!-- Must be updated to the actual sentence -->
+                        </select>
+                    </li>
+
+                    <li>
+                        <input type="submit" id="button-synthesize" class="primary-button" value="Synthesize">
+                    </li>
+                    <li>Audio [playback, volume, download button]</li>
+                </ul>
+            </div>
+        </div>
+        {% endblock %}
+    </form>
+
+    <div id="footer">
+        <p>&copy; Copyright 2023, <a href="https://stefantaubert.com/">Stefan Taubert</a></p>
+    </div>
+</body>
+
+</html>
