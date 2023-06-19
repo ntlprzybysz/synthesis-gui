@@ -7,31 +7,30 @@ If you're intrested in contributing to the project, want to cite it or find out 
 # Viewing and running the project locally
 Please take into account that this section is a rough sketch.
 
-## Create a local copy of the repository on your machine
-Open Terminal and move to a directory where you want to create the copy.
-Then, type in your Terminal window:
-`git clone https://github.com/ntlprzybysz/synthesis-gui.git`
+```# 1. Create a local copy of the repository on your machine
+# Open Terminal and move to a directory where you want to create the copy. Then, type in your Terminal window:
+git clone https://github.com/ntlprzybysz/synthesis-gui.git
 
-## Move to the directory of the repository
-`cd synthesis-gui`
+# 2. Move to the directory of the repository
+cd synthesis-gui
 
-## Create a virtual environment
-`pipenv shell --python 3.11`
+# 3. Create a virtual environment
+pipenv shell --python 3.11
 
-## If there's no `(synthesis-gui)` in front of your username in Terminal, activate the virtual environment
+# 3a. If there's no `(synthesis-gui)` in front of your username in Terminal, activate the virtual environment
 `pipenv shell`
 
-## Install dependencies of the project in your virtual environment
-`pip3 install -r requirements.txt`
+# 4. Install dependencies of the project in your virtual environment
+pip3 install -r requirements.txt
 
-## Run a local server to see the website
-`python manage.py runserver`
+# 5. Run a local server to see the website
+python manage.py runserver
 
-## Open the website in your browser
-Visit http://localhost:8000/synthesis/
+# 6. Open the website in your browser
+# Visit http://localhost:8000/synthesis/
 
-## If you're done, close the server
-Press CTRL + C
+# 7. If you're done, close the server
+# Press CTRL + C
 
-## Deactivate the virtual environment
-`deactivate`
+# 8. Deactivate the virtual environment
+deactivate´´´
