@@ -7,7 +7,8 @@ If you're intrested in contributing to the project, want to cite it or find out 
 # Viewing and Running Project Locally
 Please take into account that this section is a rough sketch.
 
-```# 1. Create a local copy of the repository on your machine
+```
+# 1. Create a local copy of the repository on your machine
 # Open Terminal and move to a directory where you want to create the copy. 
 # Then, type in your Terminal window:
 git clone https://github.com/ntlprzybysz/synthesis-gui.git
@@ -34,4 +35,5 @@ python manage.py runserver
 # Press CTRL + C
 
 # 8. Deactivate the virtual environment
-deactivate ```
+deactivate
+```
