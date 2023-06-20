@@ -1,9 +1,18 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+#from django.http import HttpResponse
+
+from .forms import InputForm
 
 
 def show_home(request):
-    return render(request, "home.html")
+    if request.method == "POST":
+        form = InputForm(request.POST)
+        if form.is_valid():
+            pass
+    else:
+        form = InputForm()
+
+    return render(request, "home.html", {"form": form})
 
 
 def show_about(request):
@@ -37,6 +46,21 @@ class Project:
         self.settings: "Settings" = Settings()
 
 
+def get_project_data(request) -> "Project":
+    """
+    Creates a Project object from the data sent via the form.
+    """
+    project = Project()
+    project.name = request.POST["project-name-field"]
+    project.text_input = request.POST["text-in-field"]
+    project.ipa_input = request.POST["ipa-in-field"]
+    project.settings.model = request.POST["dropdown-model"]
+    project.settings.voice = request.POST["dropdown-voice"]
+    project.settings.sentence = int(request.POST["dropdown-sentence"])
+
+    return project
+
+
 def insert_character_to_ipa_field(button_value):
     """
     Inserts a character selected from the chart into the IPA text field on the cursor position.
@@ -51,7 +75,7 @@ def synthesise(ipa_input: str, settings: "Settings"):  # -> audio_file:
     pass
 
 
-def save_text(self, text_input: str):  # -> project_file:
+def save_text(text_input: str):  # -> project_file:
     """
     Saves user's text input to a project file.
     """
@@ -61,7 +85,7 @@ def save_text(self, text_input: str):  # -> project_file:
     # save to file, output file
 
 
-def save_ipa(self, ipa_input: str):  # -> project_file:
+def save_ipa(ipa_input: str):  # -> project_file:
     """
     Saves user's IPA input to a project file.
     """
@@ -71,7 +95,9 @@ def save_ipa(self, ipa_input: str):  # -> project_file:
     # save to file, output file
 
 
-def save_project(self, text_input: str, ipa_input: str, settings: 'Settings'):  # -> project_file:
+def save_project(
+    text_input: str, ipa_input: str, settings: "Settings"
+):  # -> project_file:
     """
     Saves user's information about their project to a project file.
     """
@@ -82,7 +108,7 @@ def save_project(self, text_input: str, ipa_input: str, settings: 'Settings'):  
     project.settings = settings
 
 
-def load_project(self, project_file) -> 'Project':
+def load_project(project_file): # -> "Project":
     """
     Loads user's previously saved information about their project from a project file.
     """
