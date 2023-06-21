@@ -7,6 +7,7 @@
     <title>Speech synthesis</title>
     {% endblock %}
     <link rel="stylesheet" type="text/css" href="{% static 'base.css' %}">
+    <script src="{% static 'main.js' %}"></script>
 </head>
 
 <body>
@@ -43,10 +44,10 @@
                     {{ form.project_name }}
                 </li>
                 <li>
-                    <button type="button" id="save-project-button" class="primary-button" onclick="save_project()">Save project</button>
+                    <button type="button" id="save-project-button" class="primary-button" onclick="saveProject()">Save project</button>
                 </li>
                 <li>
-                    <button type="button" id="load-project-button" class="primary-button" onclick="load_project()">Load project</button>
+                    <button type="button" id="load-project-button" class="primary-button" onclick="loadProject()">Load project</button>
                 </li>
             </ul>
 
@@ -57,12 +58,14 @@
                     {{ form.text_input.errors }}
                     {{ form.text_input_name.label_tag }}
                     {{ form.text_input }}
+                    <button type="button" id="save-text-input-button" class="primary-button" onclick="saveTextInput()">Save</button>
                 </div>
 
                 <div class="input-field">
                     {{ form.ipa_input.errors }}
                     {{ form.ipa_input_name.label_tag }}
                     {{ form.ipa_input }}
+                    <button type="button" id="save-ipa-input-button" class="primary-button" onclick="saveIpaInput()">Save</button>
                 </div>
 
                 <div class="input-field">                    
@@ -227,21 +230,6 @@
                             </tr>                            
                         </tbody>
                     </table>
-
-                    <script>
-                        function insertSymbol(symbol) {
-                            var textField = document.getElementById("{{ form.ipa_input.id_for_label }}");
-                            var cursorPosition = textField.selectionStart;
-                            
-                            var currentValue = textField.value;
-                            var updatedValue = currentValue.substring(0, cursorPosition) + symbol + currentValue.substring(cursorPosition);
-                            textField.value = updatedValue;
-                            
-                            textField.selectionStart = cursorPosition + symbol.length;
-                            textField.selectionEnd = cursorPosition + symbol.length;
-                            textField.focus();
-                        }
-                    </script>
                 </div>
             </div>
 
