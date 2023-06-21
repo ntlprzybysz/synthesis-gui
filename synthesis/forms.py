@@ -10,7 +10,7 @@ class InputForm(forms.Form):
         ("LINDAJOHNSON", "Linda Johnson"),
     ]
     SENTENCE_OPTIONS = [
-        ("SENTENCE1", "Sentence 1"),
+        (1, "Sentence 1"),
     ]
 
     project_name = forms.CharField(
@@ -30,7 +30,7 @@ class InputForm(forms.Form):
     ipa_input = forms.CharField(
         max_length=500,
         min_length=1,
-        widget=forms.Textarea(),
+        widget=forms.Textarea(attrs={'id': 'ipa-input-field'}),
         help_text="Provide IPA input for synthesis (min. 1 character)."
     )
     model = forms.ChoiceField(
@@ -48,10 +48,3 @@ class InputForm(forms.Form):
         initial=SENTENCE_OPTIONS[0],
         label="Sentence:"
     )
-
-    def clean(self):
-        cleaned_data = super(InputForm, self).clean()
-        text_input = cleaned_data.get("text_input")
-        ipa_input = cleaned_data.get("ipa_input")
-        if not ipa_input:
-            raise forms.ValidationError("The IPA input field cannot be submitted empty.")

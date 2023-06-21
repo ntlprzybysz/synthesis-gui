@@ -7,8 +7,8 @@ from .forms import InputForm
 def show_home(request):
     if request.method == "POST":
         form = InputForm(request.POST)
-        if form.is_valid():
-            pass
+        if form.is_valid(): # required fields filled in properly
+            project = start_project(form.cleaned_data)
     else:
         form = InputForm()
 
@@ -38,7 +38,6 @@ class Project:
     """
     Saves all data user provided about the poject.
     """
-
     def __init__(self):
         self.name = "Example project"
         self.text_input: str = ""
@@ -46,17 +45,17 @@ class Project:
         self.settings: "Settings" = Settings()
 
 
-def get_project_data(request) -> "Project":
+def start_project(cleaned_form_input: dict) -> "Project":
     """
     Creates a Project object from the data sent via the form.
     """
     project = Project()
-    project.name = request.POST["project-name-field"]
-    project.text_input = request.POST["text-in-field"]
-    project.ipa_input = request.POST["ipa-in-field"]
-    project.settings.model = request.POST["dropdown-model"]
-    project.settings.voice = request.POST["dropdown-voice"]
-    project.settings.sentence = int(request.POST["dropdown-sentence"])
+    project.name = cleaned_form_input["project_name"]
+    project.text_input = cleaned_form_input["text_input"]
+    project.ipa_input = cleaned_form_input["ipa_input"]
+    project.settings.model = cleaned_form_input["model"]
+    project.settings.voice = cleaned_form_input["voice"]
+    project.settings.sentence = int(cleaned_form_input["sentence"])
 
     return project
 
