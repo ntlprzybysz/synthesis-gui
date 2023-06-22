@@ -11,15 +11,6 @@ function insertSymbol(symbol) {
     textFieldValue.focus();
 }
 
-/*
-function sanitizeInput(projectInformation) {
-    for (var key in projectInformation) {
-        if (key == "") {
-            projectInformation[key];
-        }
-    };
-}
-*/
 
 function saveFile(projectInformation) {
     var fileName = "synthesis_" + projectInformation["projectName"];
@@ -45,8 +36,6 @@ function saveTextInput() {
     var projectNameFieldValue = document.getElementById("project-name-field").value;
     var textFieldValue = document.getElementById("text-input-field").value;
 
-    // TODO test input
-
     var projectInformation = {
         "projectName": projectNameFieldValue,
         "textInput": textFieldValue,
@@ -59,8 +48,6 @@ function saveTextInput() {
 function saveIpaInput() {
     var projectNameFieldValue = document.getElementById("project-name-field").value;
     var ipaFieldValue = document.getElementById("ipa-input-field").value;
-
-    // TODO test input
 
     var projectInformation = {
         "projectName": projectNameFieldValue,
@@ -79,8 +66,6 @@ function saveProject() {
     var voiceFieldValue = document.getElementById("voice-select-field").value;
     var sentenceFieldValue = document.getElementById("sentence-select-field").value;
 
-    // TODO test input
-
     var projectInformation = {
         "projectName": projectNameFieldValue,
         "textInput": textFieldValue,
@@ -94,23 +79,49 @@ function saveProject() {
 }
 
 
-/* 
-function loadProject() {
-    var projectInformation = {
-        "projectName" : projectNameFieldValue,
-        "textInput" : textFieldValue,
-        "ipaInput" : ipaFieldValue,
-        "modelInput" : modelFieldValue,
-        "voiceInput" : voiceFieldValue,
-        "sentenceInput" : sentenceFieldValue,
+function loadInput(file) {
+    const reader = new FileReader();
+
+    reader.onload = function (event) {
+        const fileContent = event.target.result;
+        const lines = fileContent.split("\n");
+
+        const projectInformation = {};
+        lines.forEach(function (line) {
+            const [key, value] = line.split(": ");
+            projectInformation[key] = value;
+        });
+
+        const fieldMapping = {
+            projectName: "project-name-field",
+            textInput: "text-input-field",
+            ipaInput: "ipa-input-field",
+            modelInput: "model-select-field",
+            voiceInput: "voice-select-field",
+            sentenceInput: "sentence-select-field"
+        };
+
+        for (var key in projectInformation) {
+            const fieldId = fieldMapping[key];
+            if (fieldId) {
+                document.getElementById(fieldId).value = projectInformation[key];
+            };
+        };
     };
 
-    var projectNameFieldValue = document.getElementById("project-name-field").value;
-    var textFieldValue = document.getElementById("text-input-field").value;
-    var ipaFieldValue = document.getElementById("ipa-input-field").value;
-    var modelFieldValue = document.getElementById("model-select-field").value;
-    var voiceFieldValue = document.getElementById("voice-select-field").value;
-    var sentenceFieldValue = document.getElementById("sentence-select-field").value;
-
+    reader.readAsText(file);
 }
- */
+
+
+function loadProject() {
+    const input = document.createElement("input");
+    input.type = "file";
+    input.accept = ".txt";
+
+    input.onchange = function (event) {
+        const file = event.target.files[0];
+        loadInput(file);
+    };
+
+    input.click();
+}
