@@ -6,49 +6,43 @@ This project focuses on developing a graphical interface in Django for tools for
 If you're intrested in contributing to the project, want to cite it or find out more about it, please contact its owner, [@stefantaubert](https://github.com/stefantaubert).
 
 # Viewing and Running Project Locally
-1. Create a local copy of the repository on your machine
-Open Terminal and move to a directory where you want to create the copy. Then, type in your Terminal window:
-a. with HTTPS:
-```
-git clone https://github.com/ntlprzybysz/synthesis-gui.git
-```
-b. with SSH:
+1. Create a local copy of the repository on your machine. 
+
+Move to the directory where you want to hold the project. Then, to create a local copy of the repository, type in your Terminal window:
 ```
 git clone git@github.com:ntlprzybysz/synthesis-gui.git
 ```
 
-2. Move to the directory of the repository
+2. Move to the directory of the project:
 ```
 cd synthesis-gui
 ```
 
-3. Create a virtual environment
+3. Create a virtual environment within the directory:
 ```
-pipenv shell --python 3.11
+pipenv --python 3.10
 ```
 
-a. If there's no `(synthesis-gui)` in front of your username in Terminal, activate the virtual environment
+If there's no `(synthesis-gui)` in front of your username in Terminal, the virtual environment you just created isn't active. Activate it:
 ```
 pipenv shell
 ```
 
-4. Install dependencies of the project in your virtual environment
+4. Install dependencies of the project within your virtual environment:
 ```
 pip3 install -r requirements.txt
 ```
 
-5. Run a local server to see the website
+5. Run a local server to see the website:
 ```
 python manage.py runserver
 ```
 
-6. Open the website in your browser
-Visit http://localhost:8000/synthesis/
+6. Open the website in your browser by visiting http://localhost:8000/synthesis/.
 
-7. If you're done, close the server
-Press CTRL + C
+7. If you're done, close the server by pressing `CTRL` + `C`.
 
-8. Deactivate the virtual environment
+8. Deactivate the virtual environment:
 ```
 deactivate
 ```
