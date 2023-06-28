@@ -6,6 +6,16 @@ This project focuses on developing a graphical interface in Django for tools for
 If you're intrested in contributing to the project, want to cite it or find out more about it, please contact its owner, [@stefantaubert](https://github.com/stefantaubert).
 
 # Viewing and Running Project Locally
+
+## Prerequisites
+
+Please make sure that you have installed globally:
+- Python 3.10 for working with Python scripts,
+- pip for installing packages,
+- pyenv for creating a virtual environment.
+
+## Installation
+
 1. Create a local copy of the repository on your machine. 
 
 Move to the directory where you want to hold the project. Then, to create a local copy of the repository, type in your Terminal window:
@@ -20,10 +30,24 @@ cd synthesis-gui
 
 3. Create a virtual environment within the directory:
 ```
-pipenv --python 3.10
+pipenv --python3.10
+```
+If pipenv installs the virtual environment with a Python version different than the specified version 3.10, please go to step 3a. Otherwise, please go to step 3b.
+
+3a. If pipenv installs the virtual environment with a Python version different than the specified version 3.10, please remove the newly created environment:
+```
+pipenv --rm
+```
+Close the terminal window, open a new terminal window and navigate back to the project directory with `cd synthesis-gui`. Then, find your path to python3.10:
+```
+which python3.10
+```
+Install the virtual environment with the given path:
+```
+pipenv shell --python /your/path/python3.10
 ```
 
-If there's no `(synthesis-gui)` in front of your username in Terminal, the virtual environment you just created isn't active. Activate it:
+3b. If there's no `(synthesis-gui)` in front of your username in your terminal window, the virtual environment you just created isn't active. Please activate it:
 ```
 pipenv shell
 ```
