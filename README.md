@@ -57,16 +57,24 @@ pipenv shell
 pip3 install -r requirements.txt
 ```
 
-5. Run a local server to see the website:
+5. Download models for synthesis:
+```
+REPOSITORY_DIR="/your/path/to/synthesis-gui"
+TOOLS_DIR="$REPOSITORY_DIR/synthesis/static/tools"
+wget "https://tuc.cloud/index.php/s/LH4Zzn7fPMb2w6s/download/101000.pt" -O "$TOOLS_DIR/tacotron.pt"
+wget "https://tuc.cloud/index.php/s/yBRaWz5oHrFwigf/download/LJS-v3-580000.pt" -O "$TOOLS_DIR/waveglow.pt"
+```
+
+6. Run a local server for the website:
 ```
 python manage.py runserver
 ```
 
-6. Open the website in your browser by visiting http://localhost:8000/synthesis/.
+7. Open the website in your browser by visiting http://localhost:8000/synthesis/.
 
-7. If you're done, close the server by pressing `CTRL` + `C`.
+8. If you're done, close the server by pressing `CTRL` + `C`.
 
-8. Deactivate the virtual environment:
+9. Deactivate the virtual environment:
 ```
 deactivate
 ```
