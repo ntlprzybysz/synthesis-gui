@@ -58,11 +58,56 @@ pip3 install -r requirements.txt
 ```
 
 5. Download models for synthesis:
+
+Set project variables by adjusting the path to your repository accordingly:
 ```
 REPOSITORY_DIR="/your/path/to/synthesis-gui"
 TOOLS_DIR="$REPOSITORY_DIR/synthesis/static/tools"
+```
+Download the models:
+```
 wget "https://tuc.cloud/index.php/s/LH4Zzn7fPMb2w6s/download/101000.pt" -O "$TOOLS_DIR/tacotron.pt"
 wget "https://tuc.cloud/index.php/s/yBRaWz5oHrFwigf/download/LJS-v3-580000.pt" -O "$TOOLS_DIR/waveglow.pt"
+```
+Your project structure should like like this now (it's okay if "media" folder is missing. It will be created as soon as you synthesize):
+```
+synthesis-gui/
+├── synthesis/
+│   ├── media/
+│   │   └── ...
+│   ├── migrations/
+│   │   └── __init__.py
+|   ├── static/
+│   │   ├── tools/
+│   │   │   ├── tacotron.pt
+│   │   │   └── waveglow.pt
+│   │   ├── base.css
+│   │   └── main.js
+|   ├── templates/
+│   │   ├── about.html
+│   │   ├── help.html
+│   │   ├── home.html
+│   │   └── test.html
+|   ├── __init__.py
+|   ├── admin.py
+|   ├── forms.py
+|   ├── models.py
+|   ├── tests.py
+|   ├── urls.py
+|   └── views.py
+├── synthesis-gui/
+|   ├── __init__.py
+|   ├── asgi.py
+|   ├── settings.py
+|   ├── urls.py
+|   └── wsgi.py
+├── db.sqlite3
+├── manage.py
+├── Pipfile
+├── Pipfile.lock
+├── README.md
+├── requirements.txt
+└── Screenshot_date.png
 ```
 
 6. Run a local server for the website:

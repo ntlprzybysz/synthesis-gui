@@ -7,7 +7,6 @@ class Project:
     Saves all data user provided about the project and provide a method to synthesize it.
     """
     def __init__(self, cleaned_form_input: dict, session_key) -> None:
-    #def __init__(self, cleaned_form_input: dict) -> None:
         self.session_key = session_key
         self.name: str = cleaned_form_input["project_name"]
         self.text_input: str = cleaned_form_input["text_input"]
