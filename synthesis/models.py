@@ -6,9 +6,9 @@ class Project:
     """
     Saves all data user provided about the project and provide a method to synthesize it.
     """
-    # def __init__(self, cleaned_form_input: dict, session_key) -> None:
-    def __init__(self, cleaned_form_input: dict) -> None:
-        #self.session_key = session_key
+    def __init__(self, cleaned_form_input: dict, session_key) -> None:
+    #def __init__(self, cleaned_form_input: dict) -> None:
+        self.session_key = session_key
         self.name: str = cleaned_form_input["project_name"]
         self.text_input: str = cleaned_form_input["text_input"]
         self.ipa_input: str = cleaned_form_input["ipa_input"]
@@ -20,9 +20,8 @@ class Project:
         """
         Uses user's IPA input and settings to generate an audio file with synthesised sentence.
         """
-        session_key = "001"
         tools_dir = f"{settings.STATIC_ROOT}/tools"
-        project_dir = f"{settings.MEDIA_ROOT}/{session_key}"
+        project_dir = f"{settings.MEDIA_ROOT}/{self.session_key}"
 
         cmd_clear_project_dir = f"rm -rf {project_dir}"
         subprocess.run(cmd_clear_project_dir, shell=True, check=True)

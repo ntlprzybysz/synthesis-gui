@@ -124,3 +124,6 @@ MEDIA_ROOT = BASE_DIR / 'synthesis/media'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Sessions
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'

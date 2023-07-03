@@ -9,8 +9,9 @@ def show_home(request):
     if request.method == "POST":
         form = InputForm(request.POST)
         if form.is_valid(): # required fields filled in properly
-            #project = Project(form.cleaned_data, request.session.session_key)
-            project = Project(form.cleaned_data)
+            request.session.save()  # force session key generation
+            session_key = request.session.session_key
+            project = Project(form.cleaned_data, session_key)
             project.synthesize()
             return render(request, "test.html")
     else:
