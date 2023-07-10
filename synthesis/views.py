@@ -1,9 +1,8 @@
+from django.conf import settings
 from django.shortcuts import render
-from django.contrib.sessions.backends.db import SessionStore
 
 from .forms import InputForm
 from .models import Project
-
 
 def show_home(request):
     if request.method == "POST":
@@ -12,8 +11,10 @@ def show_home(request):
             request.session.save()  # force session key generation
             session_key = request.session.session_key
             project = Project(form.cleaned_data, session_key)
-            project.synthesize()
-            return render(request, "test.html")
+            if project.synthesize():
+                audio_url = settings.MEDIA_URL + session_key + "/1-1.npy.wav"
+                return render(request, "synthesized.html", {"form": form, "audio_url": audio_url})
+            return render(request, "home.html", {"form": form})
     else:
         form = InputForm()
 

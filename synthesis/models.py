@@ -114,7 +114,7 @@ class Project:
         self.sentence: int = int(cleaned_form_input["sentence"])
 
 
-    def synthesize(self):  # -> audio_file:
+    def synthesize(self) -> bool:
         """
         Uses user's IPA input and settings to generate an audio file with synthesised sentence.
         """
@@ -133,7 +133,11 @@ class Project:
 
         # Tacotron with subprocess
         cmd_synthesize_tacotron = f"tacotron-cli synthesize '{tacotron_checkpoint_file_path}' '{input_file_path}' --custom-seed 1111 --sep '|' -out '{project_dir_path}'"
-        subprocess.run(cmd_synthesize_tacotron, shell=True, check=True)
+        try:
+            subprocess.run(cmd_synthesize_tacotron, shell=True, check=True)
+        except:
+            return False
+
 
         """
         # Tacotron without subprocess
@@ -144,7 +148,10 @@ class Project:
 
         # Waveglow with subprocess
         cmd_synthesize_waveglow = f"waveglow-cli synthesize '{waveglow_checkpoint_file_path}' '{project_dir_path}' -o --custom-seed 1111 --denoiser-strength 0.0005 --sigma 1.0"
-        subprocess.run(cmd_synthesize_waveglow, shell=True, check=True)
+        try:
+            subprocess.run(cmd_synthesize_waveglow, shell=True, check=True)
+        except:
+            return False
       
         """
         # Waveglow without subprocess
@@ -165,3 +172,5 @@ class Project:
         if subfolder_path.is_dir():
             shutil.rmtree(subfolder_path)
         """
+
+        return True
