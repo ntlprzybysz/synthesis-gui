@@ -71,43 +71,49 @@ wget "https://tuc.cloud/index.php/s/yBRaWz5oHrFwigf/download/LJS-v3-580000.pt" -
 ```
 Your project structure should like like this now (it's okay if "media" folder is missing. It will be created as soon as you synthesize):
 ```
-synthesis-gui/
-├── synthesis/
-│   ├── media/
-│   │   └── ...
-│   ├── migrations/
-│   │   └── __init__.py
-|   ├── static/
-│   │   ├── tools/
-│   │   │   ├── tacotron.pt
-│   │   │   └── waveglow.pt
-│   │   ├── base.css
-│   │   └── main.js
-|   ├── templates/
-│   │   ├── about.html
-│   │   ├── help.html
-│   │   ├── home.html
-│   │   └── test.html
-|   ├── __init__.py
-|   ├── admin.py
-|   ├── forms.py
-|   ├── models.py
-|   ├── tests.py
-|   ├── urls.py
-|   └── views.py
-├── synthesis-gui/
-|   ├── __init__.py
-|   ├── asgi.py
-|   ├── settings.py
-|   ├── urls.py
-|   └── wsgi.py
+synthesis-gui
 ├── db.sqlite3
 ├── manage.py
+├── media
 ├── Pipfile
 ├── Pipfile.lock
 ├── README.md
 ├── requirements.txt
-└── Screenshot_date.png
+├── Screenshot_2023-06-21.png
+├── synthesis
+│   ├── admin.py
+│   ├── apps.py
+│   ├── forms.py
+│   ├── __init__.py
+│   ├── migrations
+│   │   ├── __init__.py
+│   │   └── __pycache__
+│   │       └── ...
+│   ├── models.py
+│   ├── __pycache__
+│   │   └── ...
+│   ├── static
+│   │   ├── base.css
+│   │   ├── main.js
+│   │   └── tools
+│   │       ├── tacotron.pt
+│   │       └── waveglow.pt
+│   ├── templates
+│   │   ├── about.html
+│   │   ├── help.html
+│   │   ├── home.html
+│   │   └── synthesized.html
+│   ├── tests.py
+│   ├── urls.py
+│   └── views.py
+└── synthesisgui
+    ├── asgi.py
+    ├── __init__.py
+    ├── __pycache__
+    │   └── ...
+    ├── settings.py
+    ├── urls.py
+    └── wsgi.py
 ```
 
 6. Run a local server for the website:
