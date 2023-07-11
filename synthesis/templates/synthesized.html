@@ -254,20 +254,27 @@
                         {{ form.sentence.errors }}
                         {{ form.sentence.label_tag }}
                         {{ form.sentence }}
+                    </form>
                     </li>
-
-                    <li>
+                    
+                    <li>                       
                         <script>
-                            document.addEventListener('DOMContentLoaded', function() {
-                              var synthesizeBtn = document.getElementById('synthesize-button');
-                              synthesizeBtn.addEventListener('click', function() {
-                                synthesizeBtn.innerText = 'Synthesizing...';
-                              });
+                            document.addEventListener('DOMContentLoaded', function () {
+                                var synthesizeBtn = document.getElementById('synthesize-button');
+                                synthesizeBtn.addEventListener('click', function () {
+                                    synthesizeBtn.innerText = 'Synthesizing...';
+                                });
+
+                                var downloadBtn = document.getElementById('download-button');
+                                downloadBtn.addEventListener('click', function () {
+                                    event.preventDefault();
+                                    window.open('{{ audio_url }}', '_blank');
+                                });
                             });
                         </script>
-                          
                         <button id="synthesize-button" type="submit">Synthesize</button>
                     </li>
+                    
                     <li>
                         <audio controls>
                             <source src="{{ audio_url }}" type="audio/wav">
@@ -275,11 +282,10 @@
                         </audio>
                     </li>
                     <li>
-                        <button onclick="window.location.href='{{ audio_url }}'" download>Download</button>
+                        <button id="download-button" download>Download</button>
                     </li>
                 </ul>
             </div>
-        </form>
     </div>
     {% endblock %}
 
