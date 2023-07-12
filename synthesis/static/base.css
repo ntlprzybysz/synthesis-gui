@@ -1,29 +1,13 @@
 body {
-    width: 90%;
-    margin: 0 auto;
+    font: Arial, Helvetica, sans-serif;
+    font-size: 15px;
 }
 
-#content {
-    overflow: auto;
-}
-
-#input, #settings, #output {
-    border: 1px solid #665544;
-    margin-top: 1%;
-    margin-bottom: 1%;
-    padding: 1%;
-}
-
-#input {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 1%;
-    padding: 1%;
-}
-
-.input-text, .input-ipa, .input-symbols {
-    display: flex;
-    flex-direction: column;
+ul, li {
+    list-style-type: none;
+    display: inline;
+    padding: 0;
+    margin: 0;
 }
 
 textarea {
@@ -33,13 +17,83 @@ textarea {
     flex-grow: 1;
 }
 
-li {
-    display: inline;
-    padding: 0.5em;
+.content {
+    width: 90%;
+    margin: 0 auto;
 }
 
-#nav {
+#header {
+    overflow: hidden;
+    width: 100%;
+}
+
+.nav-button {
+    background-color: #efefef;
+    border: none;
+    color: black;
+    padding: 15px 32px;
+    font-size: 16px;
+    float: right;
+    text-align: center;
+    transition-duration: 0.4s;
+}
+
+.nav-button:hover {
+    background-color: white;
+    color: black;
+}
+
+.primary-button, #synthesize-button {
+    padding: 15px 32px;
+    font-size: 16px;
+    text-align: center;
+}
+
+#save-text-input-button, #save-ipa-input-button {
+    width: min-content;
+}
+
+.ipa-symbol-button {
+    background-color: white;
+    border: none;
+    font-size: 25px;
+    text-align: center;
+}
+
+.ipa-symbol-button:hover {
+    background-color: #efefef;
+    color: black;
+}
+
+.header {
     display: block;
     background-color: #efefef;
-    text-align: center;
+    margin: 0;
+    padding: 14px 16px;
+}
+
+.content {
+    overflow: auto;
+    margin-top: 50px;
+}
+
+.input, .output-settings, .output {
+    border: 1px solid #665544;
+    margin-top: 1%;
+    margin-bottom: 1%;
+    padding: 1%;
+}
+
+.input {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1%;
+    padding: 1%;
+}
+
+#text-input,
+#ipa-input,
+#ipa-input-chart{
+    display: flex;
+    flex-direction: column;
 }
