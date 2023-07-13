@@ -1,13 +1,43 @@
 body {
-    font: Arial, Helvetica, sans-serif;
-    font-size: 15px;
+    font: Deja Vu Serif, sans-serif;
+    font-size: medium;
+    margin: 0;
+    padding: 0;
+}
+
+input, label, p, textarea {
+    font-family: Deja Vu Serif, sans-serif;
+    font-size: large;
+  }
+
+a {
+    color: black;
+}
+
+h1 {
+    font-family: Deja Vu Serif, sans-serif;
+    font-size: x-large;
+    font-weight: normal;
+    margin-left: 20px;
+}
+
+h2 {
+    font-family: Deja Vu Serif, sans-serif;
+    font-size: x-large;
+    font-weight: normal;
+}
+
+select, select option {
+    font-family: Deja Vu Serif, sans-serif;
+    font-size: medium;
 }
 
 ul, li {
     list-style-type: none;
-    display: inline;
+    display: inline-block;
     padding: 0;
     margin: 0;
+    margin-right: 15px;
 }
 
 textarea {
@@ -20,11 +50,27 @@ textarea {
 .content {
     width: 90%;
     margin: 0 auto;
+    overflow: auto;
+    margin-top: 5%;
 }
 
-#header {
-    overflow: hidden;
+.header {
+    display: block;
+    background-color: #efefef;
+    margin: 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
     width: 100%;
+}
+
+#navigation {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
 }
 
 .nav-button {
@@ -32,8 +78,8 @@ textarea {
     border: none;
     color: black;
     padding: 15px 32px;
-    font-size: 16px;
-    float: right;
+    font-size: large;
+    font-family: Deja Vu Serif, sans-serif;
     text-align: center;
     transition-duration: 0.4s;
 }
@@ -44,8 +90,8 @@ textarea {
 }
 
 .primary-button, #synthesize-button {
-    padding: 15px 32px;
-    font-size: 16px;
+    font-size: medium;
+    font-family: Deja Vu Serif, sans-serif;
     text-align: center;
 }
 
@@ -55,26 +101,25 @@ textarea {
 
 .ipa-symbol-button {
     background-color: white;
-    border: none;
-    font-size: 25px;
+    border: 1px;
+    font-size: large;
+    font-family: Deja Vu Serif, sans-serif;
     text-align: center;
+    padding: 10px 5px;
 }
 
-.ipa-symbol-button:hover {
+.ipa-small-symbol-button {
+    background-color: white;
+    border: 1px;
+    font-size: large;
+    font-family: Deja Vu Serif, sans-serif;
+    text-align: center;
+    padding: 5px 15px;
+}
+
+.ipa-small-symbol-button:hover, .ipa-symbol-button:hover {
     background-color: #efefef;
     color: black;
-}
-
-.header {
-    display: block;
-    background-color: #efefef;
-    margin: 0;
-    padding: 14px 16px;
-}
-
-.content {
-    overflow: auto;
-    margin-top: 50px;
 }
 
 .input, .output-settings, .output {
@@ -84,11 +129,23 @@ textarea {
     padding: 1%;
 }
 
-.input {
+.input-fields {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 1%;
-    padding: 1%;
+    padding-left: 20%;
+}
+
+.input:first-child 
+{
+    margin-top: 0;
+}
+
+.input:last-child,
+.output-settings:last-child,
+.output:last-child 
+{
+    margin-bottom: 0;
 }
 
 #text-input,

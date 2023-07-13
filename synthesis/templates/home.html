@@ -3,408 +3,652 @@
 <html lang="eng">
 
 <head>
-    {% block title %}
-    <title>Speech synthesis</title>
-    {% endblock %}
-    <link rel="stylesheet" type="text/css" href="{% static 'base.css' %}">
-    <script src="{% static 'main.js' %}"></script>
+        {% block title %}
+        <title>Speech synthesis</title>
+        {% endblock %}
+        <link rel="stylesheet" type="text/css" href="{% static 'base.css' %}">
+        <script src="{% static 'main.js' %}"></script>
 </head>
 
 <body>
-    {% block sidebar %}
-    <div class="header">
-        <ul>
-            <li>
-                <h1>Speech synthesis</h1>
-            </li>
-            <li>
-                <button type="button" id="help-button" class="nav-button"
-                    onclick="window.location.href='/synthesis/help';">?</button>
-            </li>
-            <li>
-                <button type="button" id="about-button" class="nav-button"
-                    onclick="window.location.href='/synthesis/about';">i</button>
-            </li>
-            <li>
-                <button type="button" id="info-button" class="nav-button"
-                    onclick="window.location.href='/synthesis/home';">home</button>
-            </li>
-        </ul>
-    </div>
-    {% endblock %}
-
-    {% block content %}
-    <div class="content">
-        <form method="post" novalidate>
-            {% csrf_token %}
-            {{ form.non_field_errors }}
-
-            <div id="project-settings">
+        {% block sidebar %}
+        <div class="header">
                 <ul>
-                    <li>
-                        {{ form.project_name.errors }}
-                        {{ form.project_name.label_tag }}
-                        {{ form.project_name }}
-                    </li>
-                    <li>
-                        <button type="button" id="save-project-button" class="primary-button"
-                            onclick="saveProject()">Save project</button>
-                    </li>
-                    <li>
-                        <button type="button" id="load-project-button" class="primary-button"
-                            onclick="loadProject()">Load project</button>
-                    </li>
+                        <li>
+                                <h1>Speech synthesis</h1>
+                        </li>
+                        <div id="navigation">
+                                <li>
+                                        <button type="button" id="home-button" class="nav-button"
+                                                onclick="window.location.href='/synthesis/home';">home</button>
+                                </li>
+                                <li>
+                                        <button type="button" id="about-button" class="nav-button"
+                                                onclick="window.location.href='/synthesis/about';">i</button>
+                                </li>
+                                <li>
+                                        <button type="button" id="help-button" class="nav-button"
+                                                onclick="window.location.href='/synthesis/help';">?</button>
+                                </li>
+                        </div>
                 </ul>
-            </div>
+        </div>
+        {% endblock %}
 
-            <div class="input">
-                <h2>Input</h2>
+        {% block content %}
+        <div class="content">
+                <form method="post" novalidate>
+                        {% csrf_token %}
+                        {{ form.non_field_errors }}
 
-                <div id="text-input">
-                    {{ form.text_input.errors }}
-                    {{ form.text_input.label_tag }}
-                    {{ form.text_input }}
-                    <button type="button" id="save-text-input-button" class="primary-button"
-                        onclick="saveTextInput()">Save</button>
-                </div>
+                        <div id="project-settings">
+                                <ul>
+                                        <li>
+                                                {{ form.project_name.errors }}
+                                                {{ form.project_name.label_tag }}
+                                                {{ form.project_name }}
+                                        </li>
+                                        <li>
+                                                <button type="button" id="save-project-button" class="primary-button"
+                                                        onclick="saveProject()">Save project</button>
+                                        </li>
+                                        <li>
+                                                <button type="button" id="load-project-button" class="primary-button"
+                                                        onclick="loadProject()">Load project</button>
+                                        </li>
+                                </ul>
+                        </div>
 
-                <div id="ipa-input">
-                    {{ form.ipa_input.errors }}
-                    {{ form.ipa_input.label_tag }}
-                    {{ form.ipa_input }}
-                    <button type="button" id="save-ipa-input-button" class="primary-button"
-                        onclick="saveIpaInput()">Save</button>
-                </div>
+                        <div class="input">
+                                <h2>Input</h2>
 
-                <div id="input-ipa-chart">
-                    <label for="ipa-chart">Insert symbol at cursor position:</label>
-                    <table id="ipa-chart" name="ipa-chart">
-                        <tbody>
-                            <tr>
-                                <!-- ɑɐɒæʙɓβçɕð -->
-                                <td><button type="button" class="ipa-symbol-button"
-                                        onclick="insertSymbol('ɑ')">ɑ</button></td>
-                                <td><button type="button" class="ipa-symbol-button"
-                                        onclick="insertSymbol('ɐ')">ɐ</button></td>
-                                <td><button type="button" class="ipa-symbol-button"
-                                        onclick="insertSymbol('ɒ')">ɒ</button></td>
-                                <td><button type="button" class="ipa-symbol-button"
-                                        onclick="insertSymbol('æ')">æ</button></td>
-                                <td><button type="button" class="ipa-symbol-button"
-                                        onclick="insertSymbol('ʙ')">ʙ</button></td>
-                                <td><button type="button" class="ipa-symbol-button"
-                                        onclick="insertSymbol('ɓ')">ɓ</button></td>
-                                <td><button type="button" class="ipa-symbol-button"
-                                        onclick="insertSymbol('β')">β</button></td>
-                                <td><button type="button" class="ipa-symbol-button"
-                                        onclick="insertSymbol('ç')">ç</button></td>
-                                <td><button type="button" class="ipa-symbol-button"
-                                        onclick="insertSymbol('ɕ')">ɕ</button></td>
-                                <td><button type="button" class="ipa-symbol-button"
-                                        onclick="insertSymbol('ð')">ð</button></td>
-                            </tr>
-                            <tr>
-                                <!-- ɗɖɛɜəɢɠʛɣɤ -->
-                                <td><button type="button" class="ipa-symbol-button"
-                                        onclick="insertSymbol('ɗ')">ɗ</button></td>
-                                <td><button type="button" class="ipa-symbol-button"
-                                        onclick="insertSymbol('ɖ')">ɖ</button></td>
-                                <td><button type="button" class="ipa-symbol-button"
-                                        onclick="insertSymbol('ɛ')">ɛ</button></td>
-                                <td><button type="button" class="ipa-symbol-button"
-                                        onclick="insertSymbol('ɜ')">ɜ</button></td>
-                                <td><button type="button" class="ipa-symbol-button"
-                                        onclick="insertSymbol('ə')">ə</button></td>
-                                <td><button type="button" class="ipa-symbol-button"
-                                        onclick="insertSymbol('ɢ')">ɢ</button></td>
-                                <td><button type="button" class="ipa-symbol-button"
-                                        onclick="insertSymbol('ɠ')">ɠ</button></td>
-                                <td><button type="button" class="ipa-symbol-button"
-                                        onclick="insertSymbol('ʛ')">ʛ</button></td>
-                                <td><button type="button" class="ipa-symbol-button"
-                                        onclick="insertSymbol('ɣ')">ɣ</button></td>
-                                <td><button type="button" class="ipa-symbol-button"
-                                        onclick="insertSymbol('ɤ')">ɤ</button></td>
-                            </tr>
-                            <tr>
-                                <!-- ˠʜɦħʰɧɪɨıɟ -->
-                                <td><button type="button" class="ipa-symbol-button"
-                                        onclick="insertSymbol('ˠ')">ˠ</button></td>
-                                <td><button type="button" class="ipa-symbol-button"
-                                        onclick="insertSymbol('ʜ')">ʜ</button></td>
-                                <td><button type="button" class="ipa-symbol-button"
-                                        onclick="insertSymbol('ɦ')">ɦ</button></td>
-                                <td><button type="button" class="ipa-symbol-button"
-                                        onclick="insertSymbol('ħ')">ħ</button></td>
-                                <td><button type="button" class="ipa-symbol-button"
-                                        onclick="insertSymbol('ʰ')">ʰ</button></td>
-                                <td><button type="button" class="ipa-symbol-button"
-                                        onclick="insertSymbol('ɧ')">ɧ</button></td>
-                                <td><button type="button" class="ipa-symbol-button"
-                                        onclick="insertSymbol('ɪ')">ɪ</button></td>
-                                <td><button type="button" class="ipa-symbol-button"
-                                        onclick="insertSymbol('ɨ')">ɨ</button></td>
-                                <td><button type="button" class="ipa-symbol-button"
-                                        onclick="insertSymbol('ı')">ı</button></td>
-                                <td><button type="button" class="ipa-symbol-button"
-                                        onclick="insertSymbol('ɟ')">ɟ</button></td>
-                            </tr>
-                            <tr>
-                                <!-- ʝʄᴊʲʟɬɭɮɫˡ -->
-                                <td><button type="button" class="ipa-symbol-button"
-                                        onclick="insertSymbol('ʝ')">ʝ</button></td>
-                                <td><button type="button" class="ipa-symbol-button"
-                                        onclick="insertSymbol('ʄ')">ʄ</button></td>
-                                <td><button type="button" class="ipa-symbol-button"
-                                        onclick="insertSymbol('ᴊ')">ᴊ</button></td>
-                                <td><button type="button" class="ipa-symbol-button"
-                                        onclick="insertSymbol('ʲ')">ʲ</button></td>
-                                <td><button type="button" class="ipa-symbol-button"
-                                        onclick="insertSymbol('ʟ')">ʟ</button></td>
-                                <td><button type="button" class="ipa-symbol-button"
-                                        onclick="insertSymbol('ɬ')">ɬ</button></td>
-                                <td><button type="button" class="ipa-symbol-button"
-                                        onclick="insertSymbol('ɭ')">ɭ</button></td>
-                                <td><button type="button" class="ipa-symbol-button"
-                                        onclick="insertSymbol('ɮ')">ɮ</button></td>
-                                <td><button type="button" class="ipa-symbol-button"
-                                        onclick="insertSymbol('ɫ')">ɫ</button></td>
-                                <td><button type="button" class="ipa-symbol-button"
-                                        onclick="insertSymbol('ˡ')">ˡ</button></td>
-                            </tr>
-                            <tr>
-                                <!-- ɰɯɱɴŋɲɳⁿɔɵ -->
-                                <td><button type="button" class="ipa-symbol-button"
-                                        onclick="insertSymbol('ɰ')">ɰ</button></td>
-                                <td><button type="button" class="ipa-symbol-button"
-                                        onclick="insertSymbol('ɯ')">ɯ</button></td>
-                                <td><button type="button" class="ipa-symbol-button"
-                                        onclick="insertSymbol('ɱ')">ɱ</button></td>
-                                <td><button type="button" class="ipa-symbol-button"
-                                        onclick="insertSymbol('ɴ')">ɴ</button></td>
-                                <td><button type="button" class="ipa-symbol-button"
-                                        onclick="insertSymbol('ŋ')">ŋ</button></td>
-                                <td><button type="button" class="ipa-symbol-button"
-                                        onclick="insertSymbol('ɲ')">ɲ</button></td>
-                                <td><button type="button" class="ipa-symbol-button"
-                                        onclick="insertSymbol('ɳ')">ɳ</button></td>
-                                <td><button type="button" class="ipa-symbol-button"
-                                        onclick="insertSymbol('ⁿ')">ⁿ</button></td>
-                                <td><button type="button" class="ipa-symbol-button"
-                                        onclick="insertSymbol('ɔ')">ɔ</button></td>
-                                <td><button type="button" class="ipa-symbol-button"
-                                        onclick="insertSymbol('ɵ')">ɵ</button></td>
-                            </tr>
-                            <tr>
-                                <!-- øœɶɸɹʀʁɾɽɺ -->
-                                <td><button type="button" class="ipa-symbol-button"
-                                        onclick="insertSymbol('ø')">ø</button></td>
-                                <td><button type="button" class="ipa-symbol-button"
-                                        onclick="insertSymbol('œ')">œ</button></td>
-                                <td><button type="button" class="ipa-symbol-button"
-                                        onclick="insertSymbol('ɶ')">ɶ</button></td>
-                                <td><button type="button" class="ipa-symbol-button"
-                                        onclick="insertSymbol('ɸ')">ɸ</button></td>
-                                <td><button type="button" class="ipa-symbol-button"
-                                        onclick="insertSymbol('ɹ')">ɹ</button></td>
-                                <td><button type="button" class="ipa-symbol-button"
-                                        onclick="insertSymbol('ʀ')">ʀ</button></td>
-                                <td><button type="button" class="ipa-symbol-button"
-                                        onclick="insertSymbol('ʁ')">ʁ</button></td>
-                                <td><button type="button" class="ipa-symbol-button"
-                                        onclick="insertSymbol('ɾ')">ɾ</button></td>
-                                <td><button type="button" class="ipa-symbol-button"
-                                        onclick="insertSymbol('ɽ')">ɽ</button></td>
-                                <td><button type="button" class="ipa-symbol-button"
-                                        onclick="insertSymbol('ɺ')">ɺ</button></td>
-                            </tr>
-                            <tr>
-                                <!-- ɻʃʂθʈʉʊʌʋʍ -->
-                                <td><button type="button" class="ipa-symbol-button"
-                                        onclick="insertSymbol('ɻ')">ɻ</button></td>
-                                <td><button type="button" class="ipa-symbol-button"
-                                        onclick="insertSymbol('ʃ')">ʃ</button></td>
-                                <td><button type="button" class="ipa-symbol-button"
-                                        onclick="insertSymbol('ʂ')">ʂ</button></td>
-                                <td><button type="button" class="ipa-symbol-button"
-                                        onclick="insertSymbol('θ')">θ</button></td>
-                                <td><button type="button" class="ipa-symbol-button"
-                                        onclick="insertSymbol('ʈ')">ʈ</button></td>
-                                <td><button type="button" class="ipa-symbol-button"
-                                        onclick="insertSymbol('ʉ')">ʉ</button></td>
-                                <td><button type="button" class="ipa-symbol-button"
-                                        onclick="insertSymbol('ʊ')">ʊ</button></td>
-                                <td><button type="button" class="ipa-symbol-button"
-                                        onclick="insertSymbol('ʌ')">ʌ</button></td>
-                                <td><button type="button" class="ipa-symbol-button"
-                                        onclick="insertSymbol('ʋ')">ʋ</button></td>
-                                <td><button type="button" class="ipa-symbol-button"
-                                        onclick="insertSymbol('ʍ')">ʍ</button></td>
-                            </tr>
-                            <tr>
-                                <!-- ʷχʎʏɥʒʐʑˑː -->
-                                <td><button type="button" class="ipa-symbol-button"
-                                        onclick="insertSymbol('ʷ')">ʷ</button></td>
-                                <td><button type="button" class="ipa-symbol-button"
-                                        onclick="insertSymbol('χ')">χ</button></td>
-                                <td><button type="button" class="ipa-symbol-button"
-                                        onclick="insertSymbol('ʎ')">ʎ</button></td>
-                                <td><button type="button" class="ipa-symbol-button"
-                                        onclick="insertSymbol('ʏ')">ʏ</button></td>
-                                <td><button type="button" class="ipa-symbol-button"
-                                        onclick="insertSymbol('ɥ')">ɥ</button></td>
-                                <td><button type="button" class="ipa-symbol-button"
-                                        onclick="insertSymbol('ʒ')">ʒ</button></td>
-                                <td><button type="button" class="ipa-symbol-button"
-                                        onclick="insertSymbol('ʐ')">ʐ</button></td>
-                                <td><button type="button" class="ipa-symbol-button"
-                                        onclick="insertSymbol('ʑ')">ʑ</button></td>
-                                <td><button type="button" class="ipa-symbol-button"
-                                        onclick="insertSymbol('ˑ')">ˑ</button></td>
-                                <td><button type="button" class="ipa-symbol-button"
-                                        onclick="insertSymbol('ː')">ː</button></td>
-                            </tr>
-                            <tr>
-                                <!-- ʔʡʕʢˤǃʘǀǁǂ -->
-                                <td><button type="button" class="ipa-symbol-button"
-                                        onclick="insertSymbol('ʔ')">ʔ</button></td>
-                                <td><button type="button" class="ipa-symbol-button"
-                                        onclick="insertSymbol('ʡ')">ʡ</button></td>
-                                <td><button type="button" class="ipa-symbol-button"
-                                        onclick="insertSymbol('ʕ')">ʕ</button></td>
-                                <td><button type="button" class="ipa-symbol-button"
-                                        onclick="insertSymbol('ʢ')">ʢ</button></td>
-                                <td><button type="button" class="ipa-symbol-button"
-                                        onclick="insertSymbol('ˤ')">ˤ</button></td>
-                                <td><button type="button" class="ipa-symbol-button"
-                                        onclick="insertSymbol('ǃ')">ǃ</button></td>
-                                <td><button type="button" class="ipa-symbol-button"
-                                        onclick="insertSymbol('ʘ')">ʘ</button></td>
-                                <td><button type="button" class="ipa-symbol-button"
-                                        onclick="insertSymbol('ǀ')">ǀ</button></td>
-                                <td><button type="button" class="ipa-symbol-button"
-                                        onclick="insertSymbol('ǁ')">ǁ</button></td>
-                                <td><button type="button" class="ipa-symbol-button"
-                                        onclick="insertSymbol('ǂ')">ǂ</button></td>
-                            </tr>
-                            <tr>
-                                <!-- ʤɘɚɝʱˢʧɞʦʣ -->
-                                <td><button type="button" class="ipa-symbol-button"
-                                        onclick="insertSymbol('ʤ')">ʤ</button></td>
-                                <td><button type="button" class="ipa-symbol-button"
-                                        onclick="insertSymbol('ɘ')">ɘ</button></td>
-                                <td><button type="button" class="ipa-symbol-button"
-                                        onclick="insertSymbol('ɚ')">ɚ</button></td>
-                                <td><button type="button" class="ipa-symbol-button"
-                                        onclick="insertSymbol('ɝ')">ɝ</button></td>
-                                <td><button type="button" class="ipa-symbol-button"
-                                        onclick="insertSymbol('ʱ')">ʱ</button></td>
-                                <td><button type="button" class="ipa-symbol-button"
-                                        onclick="insertSymbol('ˢ')">ˢ</button></td>
-                                <td><button type="button" class="ipa-symbol-button"
-                                        onclick="insertSymbol('ʧ')">ʧ</button></td>
-                                <td><button type="button" class="ipa-symbol-button"
-                                        onclick="insertSymbol('ɞ')">ɞ</button></td>
-                                <td><button type="button" class="ipa-symbol-button"
-                                        onclick="insertSymbol('ʦ')">ʦ</button></td>
-                                <td><button type="button" class="ipa-symbol-button"
-                                        onclick="insertSymbol('ʣ')">ʣ</button></td>
-                            </tr>
-                            <tr>
-                                <!--ʨʥ ̊ ̥  ̤  ̰  ̪  ̩  ̝  ̞  -->
-                                <td><button type="button" class="ipa-symbol-button"
-                                        onclick="insertSymbol('ʨ')">ʨ</button></td>
-                                <td><button type="button" class="ipa-symbol-button"
-                                        onclick="insertSymbol('ʥ')">ʥ</button></td>
-                                <td><button type="button" class="ipa-symbol-button"
-                                        onclick="insertSymbol('̊')">̊</button></td>
-                                <td><button type="button" class="ipa-symbol-button"
-                                        onclick="insertSymbol('̥')">̥</button></td>
-                                <td><button type="button" class="ipa-symbol-button"
-                                        onclick="insertSymbol('̤')">̤</button></td>
-                                <td><button type="button" class="ipa-symbol-button"
-                                        onclick="insertSymbol('̰')">̰</button></td>
-                                <td><button type="button" class="ipa-symbol-button"
-                                        onclick="insertSymbol('̪')">̪</button></td>
-                                <td><button type="button" class="ipa-symbol-button"
-                                        onclick="insertSymbol('̩')">̩</button></td>
-                                <td><button type="button" class="ipa-symbol-button"
-                                        onclick="insertSymbol('̝')">̝</button></td>
-                                <td><button type="button" class="ipa-symbol-button"
-                                        onclick="insertSymbol('̞')">̞</button></td>
-                            </tr>
-                            <tr>
-                                <!--  ́  ̄  ̀  ̈  ̃  ̟  ̱  ̹  ̜  ̚ -->
-                                <td><button type="button" class="ipa-symbol-button"
-                                        onclick="insertSymbol('́')">́</button></td>
-                                <td><button type="button" class="ipa-symbol-button"
-                                        onclick="insertSymbol('̄')">̄</button></td>
-                                <td><button type="button" class="ipa-symbol-button"
-                                        onclick="insertSymbol('̀')">̀</button></td>
-                                <td><button type="button" class="ipa-symbol-button"
-                                        onclick="insertSymbol('̈')">̈</button></td>
-                                <td><button type="button" class="ipa-symbol-button"
-                                        onclick="insertSymbol('̃')">̃</button></td>
-                                <td><button type="button" class="ipa-symbol-button"
-                                        onclick="insertSymbol('̟')">̟</button></td>
-                                <td><button type="button" class="ipa-symbol-button"
-                                        onclick="insertSymbol('̱')">̱</button></td>
-                                <td><button type="button" class="ipa-symbol-button"
-                                        onclick="insertSymbol('̹')">̹</button></td>
-                                <td><button type="button" class="ipa-symbol-button"
-                                        onclick="insertSymbol('̜')">̜</button></td>
-                                <td><button type="button" class="ipa-symbol-button"
-                                        onclick="insertSymbol('̚')">̚</button></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+                                <div class="input-fields">
+                                        <div id="text-input">
+                                                {{ form.text_input.errors }}
+                                                {{ form.text_input.label_tag }}
+                                                {{ form.text_input }}
+                                                <button type="button" id="save-text-input-button" class="primary-button"
+                                                        onclick="saveTextInput()">Save</button>
+                                        </div>
 
-            <div class="output-settings">
-                <h2>Settings</h2>
-                <li>
-                    {{ form.model.errors }}
-                    {{ form.model.label_tag }}
-                    {{ form.model }}
-                </li>
-                <li>
-                    {{ form.voice.errors }}
-                    {{ form.voice.label_tag }}
-                    {{ form.voice }}
-                </li>
-            </div>
+                                        <div id="ipa-input">
+                                                {{ form.ipa_input.errors }}
+                                                {{ form.ipa_input.label_tag }}
+                                                {{ form.ipa_input }}
+                                                <button type="button" id="save-ipa-input-button" class="primary-button"
+                                                        onclick="saveIpaInput()">Save</button>
+                                        </div>
 
-            <div class="output">
-                <h2>Output</h2>
-                <ul>
-                    <li>
-                        {{ form.sentence.errors }}
-                        {{ form.sentence.label_tag }}
-                        {{ form.sentence }}
-                    </li>
+                                        <div id="input-ipa-chart">
+                                                <label for="ipa-chart">Insert symbol at cursor position:</label>
+                                                <table id="ipa-chart" name="ipa-chart">
+                                                        <tbody>
+                                                                <tr>
+                                                                        <!-- ɑɐɒæʙɓβçɕð -->
+                                                                        <td><button type="button"
+                                                                                        class="ipa-symbol-button"
+                                                                                        onclick="insertSymbol('ɑ')">ɑ</button>
+                                                                        </td>
+                                                                        <td><button type="button"
+                                                                                        class="ipa-symbol-button"
+                                                                                        onclick="insertSymbol('ɐ')">ɐ</button>
+                                                                        </td>
+                                                                        <td><button type="button"
+                                                                                        class="ipa-symbol-button"
+                                                                                        onclick="insertSymbol('ɒ')">ɒ</button>
+                                                                        </td>
+                                                                        <td><button type="button"
+                                                                                        class="ipa-symbol-button"
+                                                                                        onclick="insertSymbol('æ')">æ</button>
+                                                                        </td>
+                                                                        <td><button type="button"
+                                                                                        class="ipa-symbol-button"
+                                                                                        onclick="insertSymbol('ʙ')">ʙ</button>
+                                                                        </td>
+                                                                        <td><button type="button"
+                                                                                        class="ipa-symbol-button"
+                                                                                        onclick="insertSymbol('ɓ')">ɓ</button>
+                                                                        </td>
+                                                                        <td><button type="button"
+                                                                                        class="ipa-symbol-button"
+                                                                                        onclick="insertSymbol('β')">β</button>
+                                                                        </td>
+                                                                        <td><button type="button"
+                                                                                        class="ipa-symbol-button"
+                                                                                        onclick="insertSymbol('ç')">ç</button>
+                                                                        </td>
+                                                                        <td><button type="button"
+                                                                                        class="ipa-symbol-button"
+                                                                                        onclick="insertSymbol('ɕ')">ɕ</button>
+                                                                        </td>
+                                                                        <td><button type="button"
+                                                                                        class="ipa-symbol-button"
+                                                                                        onclick="insertSymbol('ð')">ð</button>
+                                                                        </td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <!-- ɗɖɛɜəɢɠʛɣɤ -->
+                                                                        <td><button type="button"
+                                                                                        class="ipa-symbol-button"
+                                                                                        onclick="insertSymbol('ɗ')">ɗ</button>
+                                                                        </td>
+                                                                        <td><button type="button"
+                                                                                        class="ipa-symbol-button"
+                                                                                        onclick="insertSymbol('ɖ')">ɖ</button>
+                                                                        </td>
+                                                                        <td><button type="button"
+                                                                                        class="ipa-symbol-button"
+                                                                                        onclick="insertSymbol('ɛ')">ɛ</button>
+                                                                        </td>
+                                                                        <td><button type="button"
+                                                                                        class="ipa-symbol-button"
+                                                                                        onclick="insertSymbol('ɜ')">ɜ</button>
+                                                                        </td>
+                                                                        <td><button type="button"
+                                                                                        class="ipa-symbol-button"
+                                                                                        onclick="insertSymbol('ə')">ə</button>
+                                                                        </td>
+                                                                        <td><button type="button"
+                                                                                        class="ipa-symbol-button"
+                                                                                        onclick="insertSymbol('ɢ')">ɢ</button>
+                                                                        </td>
+                                                                        <td><button type="button"
+                                                                                        class="ipa-symbol-button"
+                                                                                        onclick="insertSymbol('ɠ')">ɠ</button>
+                                                                        </td>
+                                                                        <td><button type="button"
+                                                                                        class="ipa-symbol-button"
+                                                                                        onclick="insertSymbol('ʛ')">ʛ</button>
+                                                                        </td>
+                                                                        <td><button type="button"
+                                                                                        class="ipa-symbol-button"
+                                                                                        onclick="insertSymbol('ɣ')">ɣ</button>
+                                                                        </td>
+                                                                        <td><button type="button"
+                                                                                        class="ipa-symbol-button"
+                                                                                        onclick="insertSymbol('ɤ')">ɤ</button>
+                                                                        </td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <!-- ˠʜɦħʰɧɪɨıɟ -->
+                                                                        <td><button type="button"
+                                                                                        class="ipa-symbol-button"
+                                                                                        onclick="insertSymbol('ˠ')">ˠ</button>
+                                                                        </td>
+                                                                        <td><button type="button"
+                                                                                        class="ipa-symbol-button"
+                                                                                        onclick="insertSymbol('ʜ')">ʜ</button>
+                                                                        </td>
+                                                                        <td><button type="button"
+                                                                                        class="ipa-symbol-button"
+                                                                                        onclick="insertSymbol('ɦ')">ɦ</button>
+                                                                        </td>
+                                                                        <td><button type="button"
+                                                                                        class="ipa-symbol-button"
+                                                                                        onclick="insertSymbol('ħ')">ħ</button>
+                                                                        </td>
+                                                                        <td><button type="button"
+                                                                                        class="ipa-symbol-button"
+                                                                                        onclick="insertSymbol('ʰ')">ʰ</button>
+                                                                        </td>
+                                                                        <td><button type="button"
+                                                                                        class="ipa-symbol-button"
+                                                                                        onclick="insertSymbol('ɧ')">ɧ</button>
+                                                                        </td>
+                                                                        <td><button type="button"
+                                                                                        class="ipa-symbol-button"
+                                                                                        onclick="insertSymbol('ɪ')">ɪ</button>
+                                                                        </td>
+                                                                        <td><button type="button"
+                                                                                        class="ipa-symbol-button"
+                                                                                        onclick="insertSymbol('ɨ')">ɨ</button>
+                                                                        </td>
+                                                                        <td><button type="button"
+                                                                                        class="ipa-symbol-button"
+                                                                                        onclick="insertSymbol('ı')">ı</button>
+                                                                        </td>
+                                                                        <td><button type="button"
+                                                                                        class="ipa-symbol-button"
+                                                                                        onclick="insertSymbol('ɟ')">ɟ</button>
+                                                                        </td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <!-- ʝʄᴊʲʟɬɭɮɫˡ -->
+                                                                        <td><button type="button"
+                                                                                        class="ipa-symbol-button"
+                                                                                        onclick="insertSymbol('ʝ')">ʝ</button>
+                                                                        </td>
+                                                                        <td><button type="button"
+                                                                                        class="ipa-symbol-button"
+                                                                                        onclick="insertSymbol('ʄ')">ʄ</button>
+                                                                        </td>
+                                                                        <td><button type="button"
+                                                                                        class="ipa-symbol-button"
+                                                                                        onclick="insertSymbol('ᴊ')">ᴊ</button>
+                                                                        </td>
+                                                                        <td><button type="button"
+                                                                                        class="ipa-symbol-button"
+                                                                                        onclick="insertSymbol('ʲ')">ʲ</button>
+                                                                        </td>
+                                                                        <td><button type="button"
+                                                                                        class="ipa-symbol-button"
+                                                                                        onclick="insertSymbol('ʟ')">ʟ</button>
+                                                                        </td>
+                                                                        <td><button type="button"
+                                                                                        class="ipa-symbol-button"
+                                                                                        onclick="insertSymbol('ɬ')">ɬ</button>
+                                                                        </td>
+                                                                        <td><button type="button"
+                                                                                        class="ipa-symbol-button"
+                                                                                        onclick="insertSymbol('ɭ')">ɭ</button>
+                                                                        </td>
+                                                                        <td><button type="button"
+                                                                                        class="ipa-symbol-button"
+                                                                                        onclick="insertSymbol('ɮ')">ɮ</button>
+                                                                        </td>
+                                                                        <td><button type="button"
+                                                                                        class="ipa-symbol-button"
+                                                                                        onclick="insertSymbol('ɫ')">ɫ</button>
+                                                                        </td>
+                                                                        <td><button type="button"
+                                                                                        class="ipa-symbol-button"
+                                                                                        onclick="insertSymbol('ˡ')">ˡ</button>
+                                                                        </td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <!-- ɰɯɱɴŋɲɳⁿɔɵ -->
+                                                                        <td><button type="button"
+                                                                                        class="ipa-symbol-button"
+                                                                                        onclick="insertSymbol('ɰ')">ɰ</button>
+                                                                        </td>
+                                                                        <td><button type="button"
+                                                                                        class="ipa-symbol-button"
+                                                                                        onclick="insertSymbol('ɯ')">ɯ</button>
+                                                                        </td>
+                                                                        <td><button type="button"
+                                                                                        class="ipa-symbol-button"
+                                                                                        onclick="insertSymbol('ɱ')">ɱ</button>
+                                                                        </td>
+                                                                        <td><button type="button"
+                                                                                        class="ipa-symbol-button"
+                                                                                        onclick="insertSymbol('ɴ')">ɴ</button>
+                                                                        </td>
+                                                                        <td><button type="button"
+                                                                                        class="ipa-symbol-button"
+                                                                                        onclick="insertSymbol('ŋ')">ŋ</button>
+                                                                        </td>
+                                                                        <td><button type="button"
+                                                                                        class="ipa-symbol-button"
+                                                                                        onclick="insertSymbol('ɲ')">ɲ</button>
+                                                                        </td>
+                                                                        <td><button type="button"
+                                                                                        class="ipa-symbol-button"
+                                                                                        onclick="insertSymbol('ɳ')">ɳ</button>
+                                                                        </td>
+                                                                        <td><button type="button"
+                                                                                        class="ipa-symbol-button"
+                                                                                        onclick="insertSymbol('ⁿ')">ⁿ</button>
+                                                                        </td>
+                                                                        <td><button type="button"
+                                                                                        class="ipa-symbol-button"
+                                                                                        onclick="insertSymbol('ɔ')">ɔ</button>
+                                                                        </td>
+                                                                        <td><button type="button"
+                                                                                        class="ipa-symbol-button"
+                                                                                        onclick="insertSymbol('ɵ')">ɵ</button>
+                                                                        </td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <!-- øœɶɸɹʀʁɾɽɺ -->
+                                                                        <td><button type="button"
+                                                                                        class="ipa-symbol-button"
+                                                                                        onclick="insertSymbol('ø')">ø</button>
+                                                                        </td>
+                                                                        <td><button type="button"
+                                                                                        class="ipa-symbol-button"
+                                                                                        onclick="insertSymbol('œ')">œ</button>
+                                                                        </td>
+                                                                        <td><button type="button"
+                                                                                        class="ipa-symbol-button"
+                                                                                        onclick="insertSymbol('ɶ')">ɶ</button>
+                                                                        </td>
+                                                                        <td><button type="button"
+                                                                                        class="ipa-symbol-button"
+                                                                                        onclick="insertSymbol('ɸ')">ɸ</button>
+                                                                        </td>
+                                                                        <td><button type="button"
+                                                                                        class="ipa-symbol-button"
+                                                                                        onclick="insertSymbol('ɹ')">ɹ</button>
+                                                                        </td>
+                                                                        <td><button type="button"
+                                                                                        class="ipa-symbol-button"
+                                                                                        onclick="insertSymbol('ʀ')">ʀ</button>
+                                                                        </td>
+                                                                        <td><button type="button"
+                                                                                        class="ipa-symbol-button"
+                                                                                        onclick="insertSymbol('ʁ')">ʁ</button>
+                                                                        </td>
+                                                                        <td><button type="button"
+                                                                                        class="ipa-symbol-button"
+                                                                                        onclick="insertSymbol('ɾ')">ɾ</button>
+                                                                        </td>
+                                                                        <td><button type="button"
+                                                                                        class="ipa-symbol-button"
+                                                                                        onclick="insertSymbol('ɽ')">ɽ</button>
+                                                                        </td>
+                                                                        <td><button type="button"
+                                                                                        class="ipa-symbol-button"
+                                                                                        onclick="insertSymbol('ɺ')">ɺ</button>
+                                                                        </td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <!-- ɻʃʂθʈʉʊʌʋʍ -->
+                                                                        <td><button type="button"
+                                                                                        class="ipa-symbol-button"
+                                                                                        onclick="insertSymbol('ɻ')">ɻ</button>
+                                                                        </td>
+                                                                        <td><button type="button"
+                                                                                        class="ipa-symbol-button"
+                                                                                        onclick="insertSymbol('ʃ')">ʃ</button>
+                                                                        </td>
+                                                                        <td><button type="button"
+                                                                                        class="ipa-symbol-button"
+                                                                                        onclick="insertSymbol('ʂ')">ʂ</button>
+                                                                        </td>
+                                                                        <td><button type="button"
+                                                                                        class="ipa-symbol-button"
+                                                                                        onclick="insertSymbol('θ')">θ</button>
+                                                                        </td>
+                                                                        <td><button type="button"
+                                                                                        class="ipa-symbol-button"
+                                                                                        onclick="insertSymbol('ʈ')">ʈ</button>
+                                                                        </td>
+                                                                        <td><button type="button"
+                                                                                        class="ipa-symbol-button"
+                                                                                        onclick="insertSymbol('ʉ')">ʉ</button>
+                                                                        </td>
+                                                                        <td><button type="button"
+                                                                                        class="ipa-symbol-button"
+                                                                                        onclick="insertSymbol('ʊ')">ʊ</button>
+                                                                        </td>
+                                                                        <td><button type="button"
+                                                                                        class="ipa-symbol-button"
+                                                                                        onclick="insertSymbol('ʌ')">ʌ</button>
+                                                                        </td>
+                                                                        <td><button type="button"
+                                                                                        class="ipa-symbol-button"
+                                                                                        onclick="insertSymbol('ʋ')">ʋ</button>
+                                                                        </td>
+                                                                        <td><button type="button"
+                                                                                        class="ipa-symbol-button"
+                                                                                        onclick="insertSymbol('ʍ')">ʍ</button>
+                                                                        </td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <!-- ʷχʎʏɥʒʐʑˑː -->
+                                                                        <td><button type="button"
+                                                                                        class="ipa-symbol-button"
+                                                                                        onclick="insertSymbol('ʷ')">ʷ</button>
+                                                                        </td>
+                                                                        <td><button type="button"
+                                                                                        class="ipa-symbol-button"
+                                                                                        onclick="insertSymbol('χ')">χ</button>
+                                                                        </td>
+                                                                        <td><button type="button"
+                                                                                        class="ipa-symbol-button"
+                                                                                        onclick="insertSymbol('ʎ')">ʎ</button>
+                                                                        </td>
+                                                                        <td><button type="button"
+                                                                                        class="ipa-symbol-button"
+                                                                                        onclick="insertSymbol('ʏ')">ʏ</button>
+                                                                        </td>
+                                                                        <td><button type="button"
+                                                                                        class="ipa-symbol-button"
+                                                                                        onclick="insertSymbol('ɥ')">ɥ</button>
+                                                                        </td>
+                                                                        <td><button type="button"
+                                                                                        class="ipa-symbol-button"
+                                                                                        onclick="insertSymbol('ʒ')">ʒ</button>
+                                                                        </td>
+                                                                        <td><button type="button"
+                                                                                        class="ipa-symbol-button"
+                                                                                        onclick="insertSymbol('ʐ')">ʐ</button>
+                                                                        </td>
+                                                                        <td><button type="button"
+                                                                                        class="ipa-symbol-button"
+                                                                                        onclick="insertSymbol('ʑ')">ʑ</button>
+                                                                        </td>
+                                                                        <td><button type="button"
+                                                                                        class="ipa-symbol-button"
+                                                                                        onclick="insertSymbol('ˑ')">ˑ</button>
+                                                                        </td>
+                                                                        <td><button type="button"
+                                                                                        class="ipa-symbol-button"
+                                                                                        onclick="insertSymbol('ː')">ː</button>
+                                                                        </td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <!-- ʔʡʕʢˤǃʘǀǁǂ -->
+                                                                        <td><button type="button"
+                                                                                        class="ipa-symbol-button"
+                                                                                        onclick="insertSymbol('ʔ')">ʔ</button>
+                                                                        </td>
+                                                                        <td><button type="button"
+                                                                                        class="ipa-symbol-button"
+                                                                                        onclick="insertSymbol('ʡ')">ʡ</button>
+                                                                        </td>
+                                                                        <td><button type="button"
+                                                                                        class="ipa-symbol-button"
+                                                                                        onclick="insertSymbol('ʕ')">ʕ</button>
+                                                                        </td>
+                                                                        <td><button type="button"
+                                                                                        class="ipa-symbol-button"
+                                                                                        onclick="insertSymbol('ʢ')">ʢ</button>
+                                                                        </td>
+                                                                        <td><button type="button"
+                                                                                        class="ipa-symbol-button"
+                                                                                        onclick="insertSymbol('ˤ')">ˤ</button>
+                                                                        </td>
+                                                                        <td><button type="button"
+                                                                                        class="ipa-symbol-button"
+                                                                                        onclick="insertSymbol('ǃ')">ǃ</button>
+                                                                        </td>
+                                                                        <td><button type="button"
+                                                                                        class="ipa-symbol-button"
+                                                                                        onclick="insertSymbol('ʘ')">ʘ</button>
+                                                                        </td>
+                                                                        <td><button type="button"
+                                                                                        class="ipa-symbol-button"
+                                                                                        onclick="insertSymbol('ǀ')">ǀ</button>
+                                                                        </td>
+                                                                        <td><button type="button"
+                                                                                        class="ipa-symbol-button"
+                                                                                        onclick="insertSymbol('ǁ')">ǁ</button>
+                                                                        </td>
+                                                                        <td><button type="button"
+                                                                                        class="ipa-symbol-button"
+                                                                                        onclick="insertSymbol('ǂ')">ǂ</button>
+                                                                        </td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <!-- ʤɘɚɝʱˢʧɞʦʣ -->
+                                                                        <td><button type="button"
+                                                                                        class="ipa-symbol-button"
+                                                                                        onclick="insertSymbol('ʤ')">ʤ</button>
+                                                                        </td>
+                                                                        <td><button type="button"
+                                                                                        class="ipa-symbol-button"
+                                                                                        onclick="insertSymbol('ɘ')">ɘ</button>
+                                                                        </td>
+                                                                        <td><button type="button"
+                                                                                        class="ipa-symbol-button"
+                                                                                        onclick="insertSymbol('ɚ')">ɚ</button>
+                                                                        </td>
+                                                                        <td><button type="button"
+                                                                                        class="ipa-symbol-button"
+                                                                                        onclick="insertSymbol('ɝ')">ɝ</button>
+                                                                        </td>
+                                                                        <td><button type="button"
+                                                                                        class="ipa-symbol-button"
+                                                                                        onclick="insertSymbol('ʱ')">ʱ</button>
+                                                                        </td>
+                                                                        <td><button type="button"
+                                                                                        class="ipa-symbol-button"
+                                                                                        onclick="insertSymbol('ˢ')">ˢ</button>
+                                                                        </td>
+                                                                        <td><button type="button"
+                                                                                        class="ipa-symbol-button"
+                                                                                        onclick="insertSymbol('ʧ')">ʧ</button>
+                                                                        </td>
+                                                                        <td><button type="button"
+                                                                                        class="ipa-symbol-button"
+                                                                                        onclick="insertSymbol('ɞ')">ɞ</button>
+                                                                        </td>
+                                                                        <td><button type="button"
+                                                                                        class="ipa-symbol-button"
+                                                                                        onclick="insertSymbol('ʦ')">ʦ</button>
+                                                                        </td>
+                                                                        <td><button type="button"
+                                                                                        class="ipa-symbol-button"
+                                                                                        onclick="insertSymbol('ʣ')">ʣ</button>
+                                                                        </td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <!--ʨʥ ̊ ̥  ̤  ̰  ̪  ̩  ̝  ̞  -->
+                                                                        <td><button type="button"
+                                                                                        class="ipa-symbol-button"
+                                                                                        onclick="insertSymbol('ʨ')">ʨ</button>
+                                                                        </td>
+                                                                        <td><button type="button"
+                                                                                        class="ipa-symbol-button"
+                                                                                        onclick="insertSymbol('ʥ')">ʥ</button>
+                                                                        </td>
+                                                                        <td><button type="button"
+                                                                                        class="ipa-small-symbol-button"
+                                                                                        onclick="insertSymbol('̊')">̊</button>
+                                                                        </td>
+                                                                        <td><button type="button"
+                                                                                        class="ipa-small-symbol-button"
+                                                                                        onclick="insertSymbol('̥')">̥</button>
+                                                                        </td>
+                                                                        <td><button type="button"
+                                                                                        class="ipa-small-symbol-button"
+                                                                                        onclick="insertSymbol('̤')">̤</button>
+                                                                        </td>
+                                                                        <td><button type="button"
+                                                                                        class="ipa-small-symbol-button"
+                                                                                        onclick="insertSymbol('̰')">̰</button>
+                                                                        </td>
+                                                                        <td><button type="button"
+                                                                                        class="ipa-small-symbol-button"
+                                                                                        onclick="insertSymbol('̪')">̪</button>
+                                                                        </td>
+                                                                        <td><button type="button"
+                                                                                        class="ipa-small-symbol-button"
+                                                                                        onclick="insertSymbol('̩')">̩</button>
+                                                                        </td>
+                                                                        <td><button type="button"
+                                                                                        class="ipa-small-symbol-button"
+                                                                                        onclick="insertSymbol('̝')">̝</button>
+                                                                        </td>
+                                                                        <td><button type="button"
+                                                                                        class="ipa-small-symbol-button"
+                                                                                        onclick="insertSymbol('̞')">̞</button>
+                                                                        </td>
+                                                                </tr>
+                                                                <tr>
+                                                                        <!--  ́  ̄  ̀  ̈  ̃  ̟  ̱  ̹  ̜  ̚ -->
+                                                                        <td><button type="button"
+                                                                                        class="ipa-small-symbol-button"
+                                                                                        onclick="insertSymbol('́')">́</button>
+                                                                        </td>
+                                                                        <td><button type="button"
+                                                                                        class="ipa-small-symbol-button"
+                                                                                        onclick="insertSymbol('̄')">̄</button>
+                                                                        </td>
+                                                                        <td><button type="button"
+                                                                                        class="ipa-small-symbol-button"
+                                                                                        onclick="insertSymbol('̀')">̀</button>
+                                                                        </td>
+                                                                        <td><button type="button"
+                                                                                        class="ipa-small-symbol-button"
+                                                                                        onclick="insertSymbol('̈')">̈</button>
+                                                                        </td>
+                                                                        <td><button type="button"
+                                                                                        class="ipa-small-symbol-button"
+                                                                                        onclick="insertSymbol('̃')">̃</button>
+                                                                        </td>
+                                                                        <td><button type="button"
+                                                                                        class="ipa-small-symbol-button"
+                                                                                        onclick="insertSymbol('̟')">̟</button>
+                                                                        </td>
+                                                                        <td><button type="button"
+                                                                                        class="ipa-small-symbol-button"
+                                                                                        onclick="insertSymbol('̱')">̱</button>
+                                                                        </td>
+                                                                        <td><button type="button"
+                                                                                        class="ipa-small-symbol-button"
+                                                                                        onclick="insertSymbol('̹')">̹</button>
+                                                                        </td>
+                                                                        <td><button type="button"
+                                                                                        class="ipa-small-symbol-button"
+                                                                                        onclick="insertSymbol('̜')">̜</button>
+                                                                        </td>
+                                                                        <td><button type="button"
+                                                                                        class="ipa-small-symbol-button"
+                                                                                        onclick="insertSymbol('̚')">̚</button>
+                                                                        </td>
+                                                                </tr>
+                                                        </tbody>
+                                                </table>
+                                        </div>
+                                </div>
+                        </div>
 
-                    <li>
-                        <script>
-                            document.addEventListener('DOMContentLoaded', function () {
-                                var synthesizeBtn = document.getElementById('synthesize-button');
-                                synthesizeBtn.addEventListener('click', function () {
-                                    synthesizeBtn.innerText = 'Synthesizing...';
-                                });
-                            });
-                        </script>
+                        <div class="output-settings">
+                                <h2>Settings</h2>
+                                <li>
+                                        {{ form.model.errors }}
+                                        {{ form.model.label_tag }}
+                                        {{ form.model }}
+                                </li>
+                                <li>
+                                        {{ form.voice.errors }}
+                                        {{ form.voice.label_tag }}
+                                        {{ form.voice }}
+                                </li>
+                        </div>
 
-                        <button id="synthesize-button" type="submit">Synthesize</button>
-                    </li>
-                </ul>
-            </div>
-        </form>
-    </div>
-    {% endblock %}
+                        <div class="output">
+                                <h2>Output</h2>
+                                <ul>
+                                        <li>
+                                                {{ form.sentence.errors }}
+                                                {{ form.sentence.label_tag }}
+                                                {{ form.sentence }}
+                                        </li>
 
-    <div class="footer">
-        <p>&copy; Copyright 2023, <a href="https://stefantaubert.com/">Stefan Taubert</a></p>
-    </div>
+                                        <li>
+                                                <script>
+                                                        document.addEventListener('DOMContentLoaded', function () {
+                                                                var synthesizeBtn = document.getElementById('synthesize-button');
+                                                                synthesizeBtn.addEventListener('click', function () {
+                                                                        synthesizeBtn.innerText = 'Synthesizing...';
+                                                                });
+                                                        });
+                                                </script>
+
+                                                <button id="synthesize-button" type="submit">Synthesize</button>
+                                        </li>
+                                </ul>
+                        </div>
+                </form>
+        </div>
+        {% endblock %}
+
+        <div class="footer">
+                <p>&copy; Copyright 2023, <a href="https://stefantaubert.com/">Stefan Taubert</a></p>
+        </div>
 </body>
 
 </html>
