@@ -1,6 +1,6 @@
 # Project Description
 This project focuses on developing a graphical interface in Django for tools for synthesizing speech developed by [@stefantaubert](https://github.com/stefantaubert).
-![Screenshot of the interface from 21.06.2023](Screenshot_2023-06-21.png)
+![Screenshot of the interface from 15.07.2023](Screenshot_2023-07-15.png)
 
 # Contributions, Citations, License
 If you're intrested in contributing to the project, want to cite it or find out more about it, please contact its owner, [@stefantaubert](https://github.com/stefantaubert).

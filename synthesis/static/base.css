@@ -1,14 +1,17 @@
 body {
-    font: Deja Vu Serif, sans-serif;
+    font-family: Deja Vu Serif, sans-serif;
     font-size: medium;
     margin: 0;
     padding: 0;
 }
 
-input, label, p, textarea {
+input,
+label,
+p,
+textarea {
     font-family: Deja Vu Serif, sans-serif;
     font-size: large;
-  }
+}
 
 a {
     color: black;
@@ -16,7 +19,7 @@ a {
 
 h1 {
     font-family: Deja Vu Serif, sans-serif;
-    font-size: x-large;
+    font-size: xx-large;
     font-weight: normal;
     margin-left: 20px;
 }
@@ -27,12 +30,14 @@ h2 {
     font-weight: normal;
 }
 
-select, select option {
+select,
+select option {
     font-family: Deja Vu Serif, sans-serif;
     font-size: medium;
 }
 
-ul, li {
+ul,
+li {
     list-style-type: none;
     display: inline-block;
     padding: 0;
@@ -49,9 +54,9 @@ textarea {
 
 .content {
     width: 90%;
-    margin: 0 auto;
+    margin: 120px auto 0;
     overflow: auto;
-    margin-top: 5%;
+    padding-top: 20px;
 }
 
 .header {
@@ -77,10 +82,6 @@ textarea {
     background-color: #efefef;
     border: none;
     color: black;
-    padding: 15px 32px;
-    font-size: large;
-    font-family: Deja Vu Serif, sans-serif;
-    text-align: center;
     transition-duration: 0.4s;
 }
 
@@ -89,13 +90,15 @@ textarea {
     color: black;
 }
 
-.primary-button, #synthesize-button {
+.primary-button,
+#synthesize-button {
     font-size: medium;
     font-family: Deja Vu Serif, sans-serif;
     text-align: center;
 }
 
-#save-text-input-button, #save-ipa-input-button {
+#save-text-input-button,
+#save-ipa-input-button {
     width: min-content;
 }
 
@@ -117,12 +120,15 @@ textarea {
     padding: 5px 15px;
 }
 
-.ipa-small-symbol-button:hover, .ipa-symbol-button:hover {
+.ipa-small-symbol-button:hover,
+.ipa-symbol-button:hover {
     background-color: #efefef;
     color: black;
 }
 
-.input, .output-settings, .output {
+.input,
+.output-settings,
+.output {
     border: 1px solid #665544;
     margin-top: 1%;
     margin-bottom: 1%;
@@ -136,21 +142,19 @@ textarea {
     padding-left: 20%;
 }
 
-.input:first-child 
-{
+.input:first-child {
     margin-top: 0;
 }
 
 .input:last-child,
 .output-settings:last-child,
-.output:last-child 
-{
+.output:last-child {
     margin-bottom: 0;
 }
 
 #text-input,
 #ipa-input,
-#ipa-input-chart{
+#ipa-input-chart {
     display: flex;
     flex-direction: column;
 }
