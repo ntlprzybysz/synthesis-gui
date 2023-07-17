@@ -6,6 +6,7 @@
         {% block title %}
         <title>Speech synthesis</title>
         {% endblock %}
+        <link rel="icon" type="image/x-icon" href="{% static 'graphics/favicon.ico' %}">
         <link rel="stylesheet" type="text/css" href="{% static 'base.css' %}">
         <script src="{% static 'main.js' %}"></script>
 </head>
@@ -14,25 +15,31 @@
         {% block sidebar %}
         <div class="header">
                 <ul>
-                        <li>
+                        <li id="navigation-title">
+                                <a id="home-link" href="/synthesis/home">
+                                <img src="/static/graphics/logo_transparent_500x500.png" alt="The logo of the project, a simplified representaton of 
+                                a neural network with a sound wave in the centre." style="float:left; width: 75px; height: 75px; margin-right: 25px;">
                                 <h1>Speech synthesis</h1>
+                                </a>
                         </li>
                         <div id="navigation">
                                 <li>
-                                        <button type="button" id="home-button" class="nav-button"
-                                                onclick="window.location.href='/synthesis/home';"><img src="{% static 'graphics/home_btn_transparent.png' %}" style="width: 40%; height: auto;"></button>
-                                </li>
-                                <li>
                                         <button type="button" id="about-button" class="nav-button"
-                                                onclick="window.location.href='/synthesis/about';"><img src="{% static 'graphics/info_btn_transparent.png' %}" style="width: 40%; height: auto;"></button>
+                                                onclick="window.location.href='/synthesis/about';"><img
+                                                        src="{% static 'graphics/info_btn_transparent.png' %}"
+                                                        style="width: 40%; height: auto;"></button>
                                 </li>
                                 <li>
                                         <button type="button" id="help-button" class="nav-button"
-                                                onclick="window.location.href='/synthesis/help';"><img src="{% static 'graphics/help_btn_transparent.png' %}" style="width: 40%; height: auto;"></button>
+                                                onclick="window.location.href='/synthesis/help';"><img
+                                                        src="{% static 'graphics/help_btn_transparent.png' %}"
+                                                        style="width: 40%; height: auto;"></button>
                                 </li>
                                 <li>
                                         <button type="button" id="menu-button" class="nav-button"
-                                                onclick="window.location.href='/synthesis/home';"><img src="{% static 'graphics/menu_btn_transparent.png' %}" style="width: 40%; height: auto;"></button>
+                                                onclick="window.location.href='/synthesis/home';"><img
+                                                        src="{% static 'graphics/menu_btn_transparent.png' %}"
+                                                        style="width: 40%; height: auto;"></button>
                                 </li>
                         </div>
                 </ul>
