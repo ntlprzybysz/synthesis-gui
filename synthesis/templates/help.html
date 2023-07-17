@@ -6,8 +6,148 @@
 
 
 {% block content %}
-<div id="content">
-    <h1> Help</h1>
-    <p>Manual here.</p>
+<div class="content">
+    <h2>How to Use This Website?</h2>
+    <p>
+        This website offers a graphical interface for tools for synthesizing speech. In other words,
+        you can generate an audio file in which a computer-generated speaker says out loud
+        the text you specified in the International Phonetic Alphabet (IPA).
+    </p>
+    <p>
+        You can listen to an audio sample of a text: "The North Wind and the Sun were disputing which was 
+        the stronger, when a traveler came along wrapped in a warm cloak." 
+        <a href="https://tuc.cloud/index.php/s/gzaYDNKinHw6GCz">Click to listen here</a> (headphones recommended).
+    </p>
+    <br>
+
+    <h3>Project Name Field</h3>
+    <p>
+        At the top of the page, you can specify your own name for the project or leave it as default,
+        "Example synthesis". The default value is always saved, even if you leave the box empty.</p>
+        <label for="project-name">Project name:</label>
+        <input type="text" id="project-name" value="Example synthesis">
+    <br><br><br>
+
+    <h3>Save and Load Buttons</h3>
+    <p>
+        The buttons next to the title of the project, "Save project" and "Load project" allow you to
+        save the details of the project you have inputted so far (its title, the text, the IPA version
+        of the text and the settings for the synthesis) as a simple .txt file. After saving the file,
+        you can close the website, come back later and start where you left it by loading that file with "Load project".
+    </p>
+    <button type="button" id="save-project-button" class="primary-button">Save project</button>
+    <button type="button" id="load-project-button" class="primary-button">Load project</button>
+    <br><br><br>
+
+    <h3>Text Area Field</h3>
+    <p>
+        The text area is an optional field where you can write the text you want to synthesize in a regular
+        alphabet. This field is not necessary for the synthesis, it serves for a better orientation in the IPA text.
+    </p>
+    <p>
+        Drag the little triangle on the bottom right to risize to your liking. You can save its content along 
+        with the project name to a text file by clicking the button "Save" under it.
+    </p>
+    <label for="text-input">Text:</label>
+    <textarea id="text-input" style="width: 500px; height: 100px;">Printing, in the only sense with which we are at present concerned, differs from most if not from all the arts and crafts represented in the Exhibition in being comparatively modern.</textarea>
+    <button type="button" id="save-text-input-btn" class="primary-button">Save</button>
+    <br><br><br>
+
+    <h3>IPA Area Field</h3>
+    <p>
+        The IPA text area is a non-optional field where you write the text you want to synthesize in an IPA
+        alphabet. This field is necessary for the synthesis. 
+    </p>
+    <p>
+        Drag the little triangle on the bottom right to risize to your liking. You can save its content along 
+        with the project name to a text file by clicking the button "Save" under it.
+    </p>
+    <label for="ipa-input">IPA:</label>
+    <textarea id="ipa-input" style="width: 500px; height: 100px;">p˘|r˘|ˈɪː|n˘|t|ɪː|ŋː|,|SIL2|ɪː|n|SIL0|ð|əː|SIL1|ˈoʊ|n|l˘|i|SIL0|sː|ˈɛˑ|n|s|SIL0|w˘|ˈɪ˘|ðː|SIL0|w|ˈɪ|tʃ|SIL0|w|ˈi|SIL0|ˈɑ|r|SIL0|ˈæ|t|SIL0|p˘|r˘|ˈɛ|z|ə|n˘|t|SIL0|k˘|ə˘|n|s|ˈʌrː|n|dː|,|SIL3|d|ˈɪ|f|ərˑ|zː|SIL1|f˘|r˘|ˈʌ˘|mˑ|SIL0|m˘|ˈoʊˑ|s|t˘|SIL0|ˈɪ|f|SIL0|n|ˈɑ|t|SIL0|f˘|r˘|ˈʌ˘|m|SIL0|ˈɔ|lˑ|SIL0|ðˑ|əː|SIL0|ˈɑ|r|t|s˘|SIL0|ə|n|d|SIL0|k|r˘|ˈæ|f|t˘|s|SIL0|r|ˌɛ˘|p|r˘|ɪ˘|z|ˈɛ|n˘|t|ɪ|d|SIL0|ɪː|n|SIL0|ð˘|ə|SIL0|ˌɛˑ|k|s˘|ə|b|ˈɪˑ|ʃ|əˑ|nː|SIL2|ɪ|n|SIL0|b˘|ˈi˘|ɪː|ŋ˘|SIL0|k˘|ə˘|m|p|ˈɛr|ə|t|ɪ|v|l|i|SIL0|mˑ|ˈɑː|d|ər|nː|.|SIL2</textarea>
+    <button type="button" id="save-text-input-btn" class="primary-button">Save</button>
+    <br><br>
+    <p>
+        For the generation of the audio file to be successful, the IPA area field must follow a format
+        that the <a href="https://pypi.org/project/speech-dataset-parser/">speech-dataset-parser</a> can follow, 
+        that is: <br>
+        &diams; Each phoneme must be separated into a single interval, e.g., T|h|i|s| |i|s| |a| |t|e|x|t|.<br>
+        &diams; Place stress directly to the vowel of the syllable, e.g. b|ˈo|d|i instead of ˈb|o|d|i (body).<br>
+        &diams; Place tone directly to the vowel of the syllable, e.g. ʈʂʰ|w|a˥˩|n instead of ʈʂʰ|w|a|n˥˩ (串).
+        Tone-characters which are considered: ˥ ˦ ˧ ˨ ˩, e.g., ɑ˥˩.<br>
+        &diams; Duration-characters which are considered: ˘ ˑ ː, e.g., ʌː.<br>
+        &diams; Normalize the text, e.g., numbers should be written out.<br>
+        &diams; Substituted space by either SIL0, SIL1 or SIL2 depending on the duration of the pause.
+        Use SIL0 for no pause, use SIL1 for a short pause (for example after a comma 
+        ...|v|i|ˈɛ|n|ʌ|,|SIL1|ˈɔ|s|t|ɹ|i|ʌ|...), use SIL2 for a longer pause (for example after 
+        a sentence: ...|ˈɝ|θ|.|SIL2).<br>
+        &diams; Each line in the text file will be synthesized as a single file, therefore it is recommended to 
+        place each sentence onto a single line paragraphs can be separated by a blank line.<br>
+        &diams; Each symbol needs can be separated by an separator like |, e.g. s|ˌɪ|ɡ|ɝ|ˈɛ|t.
+        This is useful if the model contains phonemes/symbols that consist of multiple characters, e.g., ˈɛ.<br>
+    </p>
+    <p>
+        Example valid sentence: "As the overlying plate lifts up, it also forms mountain ranges." => ˈæ|z|SIL0|ð|ʌ|SIL0|ˌoʊ|v|ɝ|l|ˈaɪ|ɪ|ŋ|SIL0|p|l|ˈeɪ|t|SIL0|l|ˈɪ|f|t|s|SIL0|ˈʌ|p|,|SIL1|ɪ|t|SIL0|ˈɔ|l|s|oʊ|SIL0|f|ˈɔ|ɹ|m|z|SIL0|m|ˈaʊ|n|t|ʌ|n|SIL0|ɹ|ˈeɪ|n|d͡ʒ|ʌ|z|.|SIL2
+    </p>
+    <p>
+        Example invalid sentence: "Digestion is a vital process which involves the breakdown of food into smaller and smaller components, until they can be absorbed and assimilated into the body." => daɪˈʤɛsʧʌn ɪz ʌ ˈvaɪtʌl ˈpɹɑˌsɛs wɪʧ ɪnˈvɑlvz ðʌ ˈbɹeɪkˌdaʊn ʌv fud ˈɪntu ˈsmɔlɝ ænd ˈsmɔlɝ kʌmˈpoʊnʌnts, ʌnˈtɪl ðeɪ kæn bi ʌbˈzɔɹbd ænd ʌˈsɪmʌˌleɪtɪd ˈɪntu ðʌ ˈbɑdi.      
+    </p><br>
+
+    <h3>IPA Chart</h3>
+    <p>
+        The IPA chart next to the IPA area field can be used to input common IPA characters at the position 
+        of your coursor in the IPA area field. 
+    </p>
+    <label for="ipa-chart">Insert symbol at cursor position:</label>
+    <table id="ipa-chart" name="ipa-chart">
+            <tbody>
+                    <tr>
+                            <!-- ɑɐɒæʙɓβçɕð -->
+                            <td><button type="button"
+                                            class="ipa-symbol-button"
+                                            onclick="insertSymbol('ɑ')">ɑ</button>
+                            </td>
+                            <td><button type="button"
+                                            class="ipa-symbol-button"
+                                            onclick="insertSymbol('ɐ')">ɐ</button>
+                            </td>
+                            <td><button type="button"
+                                            class="ipa-symbol-button"
+                                            onclick="insertSymbol('ɒ')">ɒ</button>
+                            </td>
+                            <td><button type="button"
+                                            class="ipa-symbol-button"
+                                            onclick="insertSymbol('æ')">æ</button>
+                            </td>
+                            <td><button type="button"
+                                            class="ipa-symbol-button"
+                                            onclick="insertSymbol('ʙ')">ʙ</button>
+                            </td>
+                            <td><button type="button"
+                                            class="ipa-symbol-button"
+                                            onclick="insertSymbol('ɓ')">ɓ</button>
+                            </td>
+                            <td><button type="button"
+                                            class="ipa-symbol-button"
+                                            onclick="insertSymbol('β')">β</button>
+                            </td>
+                            <td><button type="button"
+                                            class="ipa-symbol-button"
+                                            onclick="insertSymbol('ç')">ç</button>
+                            </td>
+                            <td><button type="button"
+                                            class="ipa-symbol-button"
+                                            onclick="insertSymbol('ɕ')">ɕ</button>
+                            </td>
+                            <td><button type="button"
+                                            class="ipa-symbol-button"
+                                            onclick="insertSymbol('ð')">ð</button>
+                            </td>
+                    </tr>
+            </tbody>
+    </table>
+    <label for="ipa-input-field">IPA:</label><br>
+    <textarea id="ipa-input-field" style="width: 500px; height: 100px;"></textarea><br>
+    <button type="button" id="save-text-input-btn" class="primary-button">Save</button>
+    <br><br><br>
 </div>
 {% endblock %}
