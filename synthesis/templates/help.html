@@ -9,31 +9,32 @@
 <div class="content">
     <h2>How to Use This Website?</h2>
     <p>
-        This website offers a graphical interface for tools for synthesizing speech. In other words,
-        you can generate an audio file in which a computer-generated speaker says out loud
-        the text you specified in the International Phonetic Alphabet (IPA).
+        This website provides a user-friendly interface for speech synthesis tools. In simple terms, 
+        you can create an audio file where a computer-generated speaker articulates the text 
+        you specify using the International Phonetic Alphabet (IPA).
     </p>
     <p>
-        You can listen to an audio sample of a text: "The North Wind and the Sun were disputing which was 
+        You can listen to a sample audio of the following text: "The North Wind and the Sun were disputing which was 
         the stronger, when a traveler came along wrapped in a warm cloak." 
-        <a href="https://tuc.cloud/index.php/s/gzaYDNKinHw6GCz">Click to listen here</a> (headphones recommended).
+        <a href="https://tuc.cloud/index.php/s/gzaYDNKinHw6GCz">Click here to listen</a> (headphones recommended).
     </p>
     <br>
 
     <h3>Project Name Field</h3>
     <p>
-        At the top of the page, you can specify your own name for the project or leave it as default,
-        "Example synthesis". The default value is always saved, even if you leave the box empty.</p>
+        At the top of the page, you have the option to enter a custom name for your project or leave it as 
+        the default value, "Example synthesis." The default value is automatically saved, even if you 
+        leave the field blank.</p>
         <label for="project-name">Project name:</label>
         <input type="text" id="project-name" value="Example synthesis">
     <br><br><br>
 
     <h3>Save and Load Buttons</h3>
     <p>
-        The buttons next to the title of the project, "Save project" and "Load project" allow you to
-        save the details of the project you have inputted so far (its title, the text, the IPA version
-        of the text and the settings for the synthesis) as a simple .txt file. After saving the file,
-        you can close the website, come back later and start where you left it by loading that file with "Load project".
+        The buttons next to the project title, "Save project" and "Load project," allow you to save all 
+        the project details (i.e., title, text input, IPA input, settings) as a simple *.txt file. 
+        By saving the file, you can close the website, return later, and resume your work by loading 
+        the saved project file using the "Load project" button.
     </p>
     <button type="button" id="save-project-button" class="primary-button">Save project</button>
     <button type="button" id="load-project-button" class="primary-button">Load project</button>
@@ -41,61 +42,66 @@
 
     <h3>Text Area Field</h3>
     <p>
-        The text area is an optional field where you can write the text you want to synthesize in a regular
-        alphabet. This field is not necessary for the synthesis, it serves for a better orientation in the IPA text.
+        The text area is an optional field where you can enter the text you want to synthesize using regular 
+        alphabet characters. This field is not essential for the synthesis process and it is not processed
+        in any way but serves as a reference for the IPA text.
     </p>
     <p>
-        Drag the little triangle on the bottom right to risize to your liking. You can save its content along 
-        with the project name to a text file by clicking the button "Save" under it.
+        You can adjust the size of the text area by dragging the small triangle in the bottom right corner. 
+        To save the content of this field along with the project name, click the "Save" button located below it. 
+        The saved file can be loaded to continue your work when you revisit the website.
     </p>
     <label for="text-input">Text:</label>
-    <textarea id="text-input" style="width: 500px; height: 100px;">Printing, in the only sense with which we are at present concerned, differs from most if not from all the arts and crafts represented in the Exhibition in being comparatively modern.</textarea>
+    <textarea id="text-input" style="width: 800px; height: 100px;">Printing, in the only sense with which we are at present concerned, differs from most if not from all the arts and crafts represented in the Exhibition in being comparatively modern.</textarea>
     <button type="button" id="save-text-input-btn" class="primary-button">Save</button>
     <br><br><br>
 
     <h3>IPA Area Field</h3>
     <p>
-        The IPA text area is a non-optional field where you write the text you want to synthesize in an IPA
-        alphabet. This field is necessary for the synthesis. 
+        The IPA text area is a mandatory field where you should input the text you want to synthesize using IPA symbols. 
+        This field is essential for the synthesis process.
     </p>
     <p>
-        Drag the little triangle on the bottom right to risize to your liking. You can save its content along 
-        with the project name to a text file by clicking the button "Save" under it.
+        You can adjust the size of the text area by dragging the small triangle in the bottom right corner. 
+        To save the content of this field along with the project name, click the "Save" button located below it. 
+        The saved file can be loaded to continue your work when you revisit the website.
     </p>
     <label for="ipa-input">IPA:</label>
-    <textarea id="ipa-input" style="width: 500px; height: 100px;">p˘|r˘|ˈɪː|n˘|t|ɪː|ŋː|,|SIL2|ɪː|n|SIL0|ð|əː|SIL1|ˈoʊ|n|l˘|i|SIL0|sː|ˈɛˑ|n|s|SIL0|w˘|ˈɪ˘|ðː|SIL0|w|ˈɪ|tʃ|SIL0|w|ˈi|SIL0|ˈɑ|r|SIL0|ˈæ|t|SIL0|p˘|r˘|ˈɛ|z|ə|n˘|t|SIL0|k˘|ə˘|n|s|ˈʌrː|n|dː|,|SIL3|d|ˈɪ|f|ərˑ|zː|SIL1|f˘|r˘|ˈʌ˘|mˑ|SIL0|m˘|ˈoʊˑ|s|t˘|SIL0|ˈɪ|f|SIL0|n|ˈɑ|t|SIL0|f˘|r˘|ˈʌ˘|m|SIL0|ˈɔ|lˑ|SIL0|ðˑ|əː|SIL0|ˈɑ|r|t|s˘|SIL0|ə|n|d|SIL0|k|r˘|ˈæ|f|t˘|s|SIL0|r|ˌɛ˘|p|r˘|ɪ˘|z|ˈɛ|n˘|t|ɪ|d|SIL0|ɪː|n|SIL0|ð˘|ə|SIL0|ˌɛˑ|k|s˘|ə|b|ˈɪˑ|ʃ|əˑ|nː|SIL2|ɪ|n|SIL0|b˘|ˈi˘|ɪː|ŋ˘|SIL0|k˘|ə˘|m|p|ˈɛr|ə|t|ɪ|v|l|i|SIL0|mˑ|ˈɑː|d|ər|nː|.|SIL2</textarea>
+    <textarea id="ipa-input" style="width: 800px; height: 100px;">p˘|r˘|ˈɪː|n˘|t|ɪː|ŋː|,|SIL2|ɪː|n|SIL0|ð|əː|SIL1|ˈoʊ|n|l˘|i|SIL0|sː|ˈɛˑ|n|s|SIL0|w˘|ˈɪ˘|ðː|SIL0|w|ˈɪ|tʃ|SIL0|w|ˈi|SIL0|ˈɑ|r|SIL0|ˈæ|t|SIL0|p˘|r˘|ˈɛ|z|ə|n˘|t|SIL0|k˘|ə˘|n|s|ˈʌrː|n|dː|,|SIL3|d|ˈɪ|f|ərˑ|zː|SIL1|f˘|r˘|ˈʌ˘|mˑ|SIL0|m˘|ˈoʊˑ|s|t˘|SIL0|ˈɪ|f|SIL0|n|ˈɑ|t|SIL0|f˘|r˘|ˈʌ˘|m|SIL0|ˈɔ|lˑ|SIL0|ðˑ|əː|SIL0|ˈɑ|r|t|s˘|SIL0|ə|n|d|SIL0|k|r˘|ˈæ|f|t˘|s|SIL0|r|ˌɛ˘|p|r˘|ɪ˘|z|ˈɛ|n˘|t|ɪ|d|SIL0|ɪː|n|SIL0|ð˘|ə|SIL0|ˌɛˑ|k|s˘|ə|b|ˈɪˑ|ʃ|əˑ|nː|SIL2|ɪ|n|SIL0|b˘|ˈi˘|ɪː|ŋ˘|SIL0|k˘|ə˘|m|p|ˈɛr|ə|t|ɪ|v|l|i|SIL0|mˑ|ˈɑː|d|ər|nː|.|SIL2</textarea>
     <button type="button" id="save-text-input-btn" class="primary-button">Save</button>
     <br><br>
     <p>
-        For the generation of the audio file to be successful, the IPA area field must follow a format
-        that the <a href="https://pypi.org/project/speech-dataset-parser/">speech-dataset-parser</a> can follow, 
-        that is: <br>
+        To successfully generate the audio file, the IPA text area must follow a specific format that 
+        <a href="https://pypi.org/project/speech-dataset-parser/">the speech-dataset-parser</a> can interpret. 
+        Follow these guidelines:
         &diams; Each phoneme must be separated into a single interval, e.g., T|h|i|s| |i|s| |a| |t|e|x|t|.<br>
-        &diams; Place stress directly to the vowel of the syllable, e.g. b|ˈo|d|i instead of ˈb|o|d|i (body).<br>
-        &diams; Place tone directly to the vowel of the syllable, e.g. ʈʂʰ|w|a˥˩|n instead of ʈʂʰ|w|a|n˥˩ (串).
-        Tone-characters which are considered: ˥ ˦ ˧ ˨ ˩, e.g., ɑ˥˩.<br>
-        &diams; Duration-characters which are considered: ˘ ˑ ː, e.g., ʌː.<br>
-        &diams; Normalize the text, e.g., numbers should be written out.<br>
-        &diams; Substituted space by either SIL0, SIL1 or SIL2 depending on the duration of the pause.
-        Use SIL0 for no pause, use SIL1 for a short pause (for example after a comma 
-        ...|v|i|ˈɛ|n|ʌ|,|SIL1|ˈɔ|s|t|ɹ|i|ʌ|...), use SIL2 for a longer pause (for example after 
-        a sentence: ...|ˈɝ|θ|.|SIL2).<br>
-        &diams; Each line in the text file will be synthesized as a single file, therefore it is recommended to 
-        place each sentence onto a single line paragraphs can be separated by a blank line.<br>
-        &diams; Each symbol needs can be separated by an separator like |, e.g. s|ˌɪ|ɡ|ɝ|ˈɛ|t.
-        This is useful if the model contains phonemes/symbols that consist of multiple characters, e.g., ˈɛ.<br>
+        &diams; Stress marks should be placed directly on the vowel of the syllable, e.g., b|ˈo|d|i instead of ˈb|o|d|i (body).<br>
+        &diams; Tone marks should be placed directly on the vowel of the syllable, e.g., ʈʂʰ|w|a˥˩|n instead of ʈʂʰ|w|a|n˥˩ (串).
+        Use the following tone characters: ˥ ˦ ˧ ˨ ˩, e.g., ɑ˥˩.<br>
+        &diams; Use duration marks: ˘ ˑ ː, e.g., ʌː.<br>
+        &diams; Spell out numbers instead of using numerals.<br>
+        &diams; Use SIL0, SIL1, or SIL2 to represent spaces, depending on the duration of the pause. SIL0 indicates no pause, 
+        SIL1 indicates a short pause (e.g., after a comma ...|v|i|ˈɛ|n|ʌ|,|SIL1|ˈɔ|s|t|ɹ|i|ʌ|...), and SIL2 indicates 
+        a longer pause (e.g., after a sentence: ...|ˈɝ|θ|.|SIL2).<br>
+        &diams; Each line in the text file will be synthesized as a separate file, so it's recommended to place each sentence 
+        on a single line. You can separate paragraphs with a blank line.<br>
+        &diams; Separate each symbol using the separator "|", e.g., s|ˌɪ|ɡ|ɝ|ˈɛ|t. This is useful when the model contains 
+        phonemes/symbols that consist of multiple characters, e.g., ˈɛ.<br>
     </p>
     <p>
-        Example valid sentence: "As the overlying plate lifts up, it also forms mountain ranges." => ˈæ|z|SIL0|ð|ʌ|SIL0|ˌoʊ|v|ɝ|l|ˈaɪ|ɪ|ŋ|SIL0|p|l|ˈeɪ|t|SIL0|l|ˈɪ|f|t|s|SIL0|ˈʌ|p|,|SIL1|ɪ|t|SIL0|ˈɔ|l|s|oʊ|SIL0|f|ˈɔ|ɹ|m|z|SIL0|m|ˈaʊ|n|t|ʌ|n|SIL0|ɹ|ˈeɪ|n|d͡ʒ|ʌ|z|.|SIL2
+        Example of a valid sentence: "As the overlying plate lifts up, it also forms mountain ranges." => 
+        ˈæ|z|SIL0|ð|ʌ|SIL0|ˌoʊ|v|ɝ|l|ˈaɪ|ɪ|ŋ|SIL0|p|l|ˈeɪ|t|SIL0|l|ˈɪ|f|t|s|SIL0|ˈʌ|p|,|SIL1|ɪ|t|SIL0|ˈɔ|l|s|oʊ|SIL0|f|ˈɔ|ɹ|m|z|SIL0|m|ˈaʊ|n|t|ʌ|n|SIL0|ɹ|ˈeɪ|n|d͡ʒ|ʌ|z|.|SIL2
     </p>
     <p>
-        Example invalid sentence: "Digestion is a vital process which involves the breakdown of food into smaller and smaller components, until they can be absorbed and assimilated into the body." => daɪˈʤɛsʧʌn ɪz ʌ ˈvaɪtʌl ˈpɹɑˌsɛs wɪʧ ɪnˈvɑlvz ðʌ ˈbɹeɪkˌdaʊn ʌv fud ˈɪntu ˈsmɔlɝ ænd ˈsmɔlɝ kʌmˈpoʊnʌnts, ʌnˈtɪl ðeɪ kæn bi ʌbˈzɔɹbd ænd ʌˈsɪmʌˌleɪtɪd ˈɪntu ðʌ ˈbɑdi.      
+        Example of an invalid sentence: "Digestion is a vital process which involves the breakdown of 
+        food into smaller and smaller components, until they can be absorbed and assimilated into the body."
+        => daɪˈʤɛsʧʌn ɪz ʌ ˈvaɪtʌl ˈpɹɑˌsɛs wɪʧ ɪnˈvɑlvz ðʌ ˈbɹeɪkˌdaʊn ʌv fud ˈɪntu ˈsmɔlɝ ænd ˈsmɔlɝ kʌmˈpoʊnʌnts, ʌnˈtɪl ðeɪ kæn bi ʌbˈzɔɹbd ænd ʌˈsɪmʌˌleɪtɪd ˈɪntu ðʌ ˈbɑdi.      
     </p><br>
 
     <h3>IPA Chart</h3>
     <p>
-        The IPA chart next to the IPA area field can be used to input common IPA characters at the position 
-        of your coursor in the IPA area field. 
+        Next to the IPA text area, you will find an IPA chart that can be used to input common IPA characters 
+        at the cursor's position in the IPA area field. 
     </p>
     <label for="ipa-chart">Insert symbol at cursor position:</label>
     <table id="ipa-chart" name="ipa-chart">
@@ -146,8 +152,60 @@
             </tbody>
     </table>
     <label for="ipa-input-field">IPA:</label><br>
-    <textarea id="ipa-input-field" style="width: 500px; height: 100px;"></textarea><br>
+    <textarea id="ipa-input-field" style="width: 800px; height: 100px;"></textarea><br>
     <button type="button" id="save-text-input-btn" class="primary-button">Save</button>
+    <br><br><br>
+
+    <h3>Settings</h3>
+    <p>
+        The input processing occurs in two stages: synthesizing the text into a mel-spectrogram 
+        and converting it into audio files. Each stage requires a specific model, which has a name, 
+        symbol range, supported speakers, languages, and accents. This section allows you to select 
+        the desired model variant. If you're unsure which options are suitable, we recommend 
+        sticking to the default values for now.
+    </p>
+    <label for="model">Model:</label>
+    <select name="model" id="model">
+        <option value="ljspeech">LJSpeech 1.1</option>
+    </select>
+    <label for="voice">Voice:</label>
+    <select name="voice" id="voice">
+        <option value="lindajohnson">Linda Johnson</option>
+    </select>
+    <br><br><br>
+
+    <h3>Output</h3>
+    <p>
+        Each sentence in the text file will be synthesized separately. In the input, each line is considered 
+        a sentence, and sentences should be separated by a blank line. You can use the dropdown menu 
+        to select the specific sentence you want to synthesize.
+    </p>
+    <label for="sentence">Sentence:</label>
+    <select name="sentence" id="sentence">
+        <option value="sentence">Sentence 1</option>
+    </select>
+    <p>
+        Once your IPA input is ready for synthesis, click the "Synthesize" button. This will initiate the processing.
+    </p>
+    <button type="button" id="synthesize" class="primary-button">Synthesize</button>
+    <p>
+        While the input is being processed, the button will display "Synthesizing...". This may take a few minutes.
+    </p>
+    <button type="button" id="synthesizing" class="primary-button">Synthesizing...</button>  
+    <p>
+        Once the audio is ready, you'll have options to play it back and download it.
+    </p>
+    <audio controls>
+            <source src="" type="audio/wav">
+            Your browser does not support the audio tag.
+    </audio>
+    <button id="download-button" style="font-size: medium; font-family: Deja Vu Serif, sans-serif; text-align: center; width: min-content;">Download</button>
+    <br><br><br>
+    <h3>Further questions, problems, feedback</h3>
+    <p>
+        If you have any additional questions, encounter issues while using this website, 
+        or would like to provide feedback, please reach out <a href="https://stefantaubert.com/">the project owner</a>.
+    </p>
     <br><br><br>
 </div>
 {% endblock %}

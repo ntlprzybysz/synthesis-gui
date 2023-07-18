@@ -118,7 +118,8 @@ textarea {
 }
 
 #save-text-input-button,
-#save-ipa-input-button {
+#save-ipa-input-button,
+#download-button {
     width: min-content;
 }
 
