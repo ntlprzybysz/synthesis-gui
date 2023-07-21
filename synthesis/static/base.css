@@ -1,5 +1,5 @@
 body {
-    font-family: Deja Vu Serif, sans-serif;
+    font-family: Noto Sans, sans-serif;
     font-size: medium;
     margin: 0;
     padding: 0;
@@ -7,9 +7,14 @@ body {
 
 input,
 label,
-p,
-textarea {
-    font-family: Deja Vu Serif, sans-serif;
+p {
+    font-family: Noto Sans, sans-serif;
+    font-size: large;
+}
+
+textarea, 
+.code {
+    font-family: Andale Mono, monospace;
     font-size: large;
 }
 
@@ -27,7 +32,7 @@ a:hover {
 }
 
 h1 {
-    font-family: Deja Vu Serif, sans-serif;
+    font-family: Noto Sans, sans-serif;
     font-size: xx-large;
     font-weight: normal;
     margin-left: 20px;
@@ -37,7 +42,7 @@ h1 {
 
 h2, 
 h3 {
-    font-family: Deja Vu Serif, sans-serif;
+    font-family: Noto Sans, sans-serif;
     font-size: x-large;
     font-weight: normal;
     text-decoration: none;
@@ -45,7 +50,7 @@ h3 {
 
 select,
 select option {
-    font-family: Deja Vu Serif, sans-serif;
+    font-family: Noto Sans, sans-serif;
     font-size: medium;
 }
 
@@ -113,7 +118,7 @@ textarea {
 .primary-button,
 #synthesize-button {
     font-size: medium;
-    font-family: Deja Vu Serif, sans-serif;
+    font-family: Noto Sans, sans-serif;
     text-align: center;
 }
 
@@ -127,7 +132,7 @@ textarea {
     background-color: white;
     border: 1px;
     font-size: large;
-    font-family: Deja Vu Serif, sans-serif;
+    font-family: Noto Sans, sans-serif;
     text-align: center;
     padding: 10px 5px;
 }
@@ -136,7 +141,7 @@ textarea {
     background-color: white;
     border: 1px;
     font-size: large;
-    font-family: Deja Vu Serif, sans-serif;
+    font-family: Noto Sans, sans-serif;
     text-align: center;
     padding: 5px 15px;
 }

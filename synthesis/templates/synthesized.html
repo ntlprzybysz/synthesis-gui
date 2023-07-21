@@ -25,19 +25,19 @@
                                 <li>
                                         <button type="button" id="about-button" class="nav-button"
                                                 onclick="window.location.href='/synthesis/about';"><img
-                                                        src="{% static 'graphics/info_btn_transparent.png' %}"
+                                                        src="{% static 'graphics/info_btn.png' %}"
                                                         style="width: 40%; height: auto;"></button>
                                 </li>
                                 <li>
                                         <button type="button" id="help-button" class="nav-button"
                                                 onclick="window.location.href='/synthesis/help';"><img
-                                                        src="{% static 'graphics/help_btn_transparent.png' %}"
+                                                        src="{% static 'graphics/help_btn.png' %}"
                                                         style="width: 40%; height: auto;"></button>
                                 </li>
                                 <li>
                                         <button type="button" id="menu-button" class="nav-button"
                                                 onclick="window.location.href='/synthesis/home';"><img
-                                                        src="{% static 'graphics/menu_btn_transparent.png' %}"
+                                                        src="{% static 'graphics/menu_btn.png' %}"
                                                         style="width: 40%; height: auto;"></button>
                                 </li>
                         </div>
@@ -59,10 +59,12 @@
                                         </li>
                                         <li>
                                                 <button type="button" id="save-project-button" class="primary-button"
+                                                        style="position: absolute; right: 14em; transform: translateY(-50%);"
                                                         onclick="saveProject()">Save project</button>
                                         </li>
                                         <li>
                                                 <button type="button" id="load-project-button" class="primary-button"
+                                                        style="position: absolute; right: 6em; transform: translateY(-50%);"
                                                         onclick="loadProject()">Load project</button>
                                         </li>
                                 </ul>

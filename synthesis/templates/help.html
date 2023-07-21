@@ -73,29 +73,40 @@
     <p>
         To successfully generate the audio file, the IPA text area must follow a specific format that 
         <a href="https://pypi.org/project/speech-dataset-parser/">the speech-dataset-parser</a> can interpret. 
-        Follow these guidelines:
-        &diams; Each phoneme must be separated into a single interval, e.g., T|h|i|s| |i|s| |a| |t|e|x|t|.<br>
-        &diams; Stress marks should be placed directly on the vowel of the syllable, e.g., b|ˈo|d|i instead of ˈb|o|d|i (body).<br>
-        &diams; Tone marks should be placed directly on the vowel of the syllable, e.g., ʈʂʰ|w|a˥˩|n instead of ʈʂʰ|w|a|n˥˩ (串).
-        Use the following tone characters: ˥ ˦ ˧ ˨ ˩, e.g., ɑ˥˩.<br>
-        &diams; Use duration marks: ˘ ˑ ː, e.g., ʌː.<br>
+        Follow these guidelines:<br>
+
+        &diams; Each phoneme must be separated into a single interval, e.g., <span class="code">T|h|i|s| |i|s| |a| |t|e|x|t|</span>.<br>
+        
+        &diams; Stress marks should be placed directly on the vowel of the syllable, e.g., <span class="code">b|ˈo|d|i</span> instead of 
+        <span class="code">ˈb|o|d|i</span> (body).<br>
+        
+        &diams; Tone marks should be placed directly on the vowel of the syllable, e.g., <span class="code">ʈʂʰ|w|a˥˩|n</span> instead of 
+        <span class="code">ʈʂʰ|w|a|n˥˩</span> (串).
+        Use the following tone characters:  <span class="code">˥ ˦ ˧ ˨ ˩</span>, e.g., <span class="code">ɑ˥˩</span>.<br>
+        
+        &diams; Use duration marks: <span class="code">˘ ˑ ː</span>, e.g., <span class="code">ʌː</span>.<br>
+        
         &diams; Spell out numbers instead of using numerals.<br>
-        &diams; Use SIL0, SIL1, or SIL2 to represent spaces, depending on the duration of the pause. SIL0 indicates no pause, 
-        SIL1 indicates a short pause (e.g., after a comma ...|v|i|ˈɛ|n|ʌ|,|SIL1|ˈɔ|s|t|ɹ|i|ʌ|...), and SIL2 indicates 
-        a longer pause (e.g., after a sentence: ...|ˈɝ|θ|.|SIL2).<br>
+        
+        &diams; Use <span class="code">SIL0</span>, <span class="code">SIL1</span>, or <span class="code">SIL2</span> to represent spaces, 
+        depending on the duration of the pause. <span class="code">SIL0</span> indicates no pause, <span class="code">SIL1</span> indicates 
+        a short pause (e.g., after a comma <span class="code">...|v|i|ˈɛ|n|ʌ|,|SIL1|ˈɔ|s|t|ɹ|i|ʌ|...</span>), and 
+        <span class="code">SIL2</span> indicates a longer pause (e.g., after a sentence: <span class="code">...|ˈɝ|θ|.|SIL2</span>).<br>
+        
         &diams; Each line in the text file will be synthesized as a separate file, so it's recommended to place each sentence 
         on a single line. You can separate paragraphs with a blank line.<br>
-        &diams; Separate each symbol using the separator "|", e.g., s|ˌɪ|ɡ|ɝ|ˈɛ|t. This is useful when the model contains 
-        phonemes/symbols that consist of multiple characters, e.g., ˈɛ.<br>
+        
+        &diams; Separate each symbol using the separator "<span class="code">|</span>", e.g., <span class="code">s|ˌɪ|ɡ|ɝ|ˈɛ|t</span>. 
+        This is useful when the model contains phonemes/symbols that consist of multiple characters, e.g., <span class="code">ˈɛ</span>.<br>
     </p>
     <p>
         Example of a valid sentence: "As the overlying plate lifts up, it also forms mountain ranges." => 
-        ˈæ|z|SIL0|ð|ʌ|SIL0|ˌoʊ|v|ɝ|l|ˈaɪ|ɪ|ŋ|SIL0|p|l|ˈeɪ|t|SIL0|l|ˈɪ|f|t|s|SIL0|ˈʌ|p|,|SIL1|ɪ|t|SIL0|ˈɔ|l|s|oʊ|SIL0|f|ˈɔ|ɹ|m|z|SIL0|m|ˈaʊ|n|t|ʌ|n|SIL0|ɹ|ˈeɪ|n|d͡ʒ|ʌ|z|.|SIL2
+        <span class="code">ˈæ|z|SIL0|ð|ʌ|SIL0|ˌoʊ|v|ɝ|l|ˈaɪ|ɪ|ŋ|SIL0|p|l|ˈeɪ|t|SIL0|l|ˈɪ|f|t|s|SIL0|ˈʌ|p|,|SIL1|ɪ|t|SIL0|ˈɔ|l|s|oʊ|SIL0|f|ˈɔ|ɹ|m|z|SIL0|m|ˈaʊ|n|t|ʌ|n|SIL0|ɹ|ˈeɪ|n|d͡ʒ|ʌ|z|.|SIL2</span>
     </p>
     <p>
         Example of an invalid sentence: "Digestion is a vital process which involves the breakdown of 
         food into smaller and smaller components, until they can be absorbed and assimilated into the body."
-        => daɪˈʤɛsʧʌn ɪz ʌ ˈvaɪtʌl ˈpɹɑˌsɛs wɪʧ ɪnˈvɑlvz ðʌ ˈbɹeɪkˌdaʊn ʌv fud ˈɪntu ˈsmɔlɝ ænd ˈsmɔlɝ kʌmˈpoʊnʌnts, ʌnˈtɪl ðeɪ kæn bi ʌbˈzɔɹbd ænd ʌˈsɪmʌˌleɪtɪd ˈɪntu ðʌ ˈbɑdi.      
+        => <span class="code">daɪˈʤɛsʧʌn ɪz ʌ ˈvaɪtʌl ˈpɹɑˌsɛs wɪʧ ɪnˈvɑlvz ðʌ ˈbɹeɪkˌdaʊn ʌv fud ˈɪntu ˈsmɔlɝ ænd ˈsmɔlɝ kʌmˈpoʊnʌnts, ʌnˈtɪl ðeɪ kæn bi ʌbˈzɔɹbd ænd ʌˈsɪmʌˌleɪtɪd ˈɪntu ðʌ ˈbɑdi.</span>
     </p><br>
 
     <h3>IPA Chart</h3>
