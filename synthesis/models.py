@@ -2,6 +2,7 @@
 from django.conf import settings
 from django.db import models
 
+# General imports
 import logging
 
 # Folder management and command line tools
@@ -110,7 +111,7 @@ class Project:
     def __init__(self, cleaned_form_input: dict, session_key: str) -> None:
         self.session_key = session_key
         self.name: str = cleaned_form_input["project_name"]
-        self.text_input: str = cleaned_form_input["text_input"]
+        #self.text_input: str = cleaned_form_input["text_input"]
         self.ipa_input: str = cleaned_form_input["ipa_input"]
         self.model: str = cleaned_form_input["model"]
         self.voice: str = cleaned_form_input["voice"]

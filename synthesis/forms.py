@@ -18,22 +18,19 @@ class InputForm(forms.Form):
         min_length=3, 
         widget=forms.TextInput(attrs={"id": "project-name-field", "placeholder": "Example synthesis"}),
         label="Project name:",
-        initial="Example synthesis",
-        help_text="Provide a name for your project (min. 3 characters)."
+        initial="Example synthesis"
     )
     text_input = forms.CharField(
         max_length=500,
         required=False,
         widget=forms.Textarea(attrs={"id": "text-input-field"}),
-        label="Text:",
-        help_text="Add a version of the IPA input in the form of plain text for your reference (optional)."
+        label="Text:"
     )
     ipa_input = forms.CharField(
         max_length=500,
         min_length=1,
         widget=forms.Textarea(attrs={"id": "ipa-input-field"}),
-        label="IPA:",
-        help_text="Provide IPA input for synthesis (min. 1 character)."
+        label="IPA:"
     )
     model = forms.ChoiceField(
         choices=MODEL_OPTIONS, 
