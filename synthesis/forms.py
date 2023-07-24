@@ -1,4 +1,5 @@
 from django import forms
+from django.core.exceptions import ValidationError
 
 
 class InputForm(forms.Form):
@@ -77,6 +78,20 @@ class InputForm(forms.Form):
     
 
     def clean_ipa_input(self):
+        """
+        Returns ValidationError if the input uses unallowed signs.      
+        """
         ipa_input = self.cleaned_data['ipa_input']
-        cleaned_ipa_input = ipa_input   # TODO
-        return cleaned_ipa_input
+        characters = set("012|]˥˦˧˨˩'˘ˑː!?,.\"'ˈˌ:;̥̤̰̪̩̝̞̟̱̹̜̊́̄̀̈̃̚abcdefghijklmnoprqstuvwxyzABCDEFGHIJKLMNOPRQSTUVWXYZɑɐɒæʙɓβçɕðɗɖɛɜ3əɢɠʛɣɤˠʜɦħɪɨıɟʝʄᴊʲʟɬɭɮɫˡɰɯɱɴŋɲɳⁿɔɵøœɶɸɹʀʁɾɽɺɻʃʂθʈʉʊʌʋʍʷχʎʏɥʒʐʑʔʡʕʢˤǃʘǀǁǂʤɘɚɝʱˢʧɞʦʣʨʥ")
+        unallowed_signs = []
+        for sign in ipa_input:
+            if sign not in characters:
+                if sign not in unallowed_signs:
+                    unallowed_signs += sign
+        
+        if unallowed_signs:
+            formatted_unallowed_signs = ", ".join(unallowed_signs)
+            raise ValidationError(f"Used unallowed sign(s): {formatted_unallowed_signs}.")
+        
+        return ipa_input
+    
