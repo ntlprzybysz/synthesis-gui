@@ -82,15 +82,34 @@ class InputForm(forms.Form):
         Returns ValidationError if the input uses unallowed signs.      
         """
         ipa_input = self.cleaned_data['ipa_input']
-        characters = set("012|]˥˦˧˨˩'˘ˑː!?,.\"'ˈˌ:;̥̤̰̪̩̝̞̟̱̹̜̊́̄̀̈̃̚abcdefghijklmnoprqstuvwxyzABCDEFGHIJKLMNOPRQSTUVWXYZɑɐɒæʙɓβçɕðɗɖɛɜ3əɢɠʛɣɤˠʜɦħɪɨıɟʝʄᴊʲʟɬɭɮɫˡɰɯɱɴŋɲɳⁿɔɵøœɶɸɹʀʁɾɽɺɻʃʂθʈʉʊʌʋʍʷχʎʏɥʒʐʑʔʡʕʢˤǃʘǀǁǂʤɘɚɝʱˢʧɞʦʣʨʥ")
-        unallowed_signs = []
-        for sign in ipa_input:
-            if sign not in characters:
-                if sign not in unallowed_signs:
-                    unallowed_signs += sign
+        allowed_symbols = {
+            "separators": {"|"},
+            "pauses": {"SIL0", "SIL1", "SIL2"},
+            "tone_markers": {"˥", "˦", "˧", "˨", "˩"},
+            "length_markers": {"˘", "ˑ", "ː"},
+            "stress_markers": {"ˈ", "ˌ"},
+            "punctuation_marks": {",", "\"", "'", "-", "–", "—", "...", "…", ".", "?", "!", "(", ")", "[", "]", ":", ";"},
+            "vowels": {"i", "y", "ɨ", "ʉ", "ɯ", "u", "ɪ", "ʏ", "ʊ", "e", "ø", "ɘ", "ɵ", "ɤ", "o", "ə", "ɛ", "œ", "ɜ", "ɞ", 
+                       "ʌ", "ɔ", "æ", "ɐ", "a", "ɶ", "ä", "ɑ", "ɒ", "ɪ", "ɛ", "ʊ", "aɪ", "aʊ", "eɪ", "oʊ", "ɔɪ", "ɑɪ", "ɔr", 
+                       "ɛr", "ɪr"}, 
+            "consonants": {"p", "b", "t", "d", "k", "ɡ", "m", "n", "ɲ", "ŋ", "ʙ", "r", "ʀ", "ⱱ", "ɚ", "ɝ", "ɩ", "ɫ", "ɯ", "ɰ", 
+                           "ɳ", "ɺ", "ɾ", "ɻ", "ɾ", "ɸ", "β", "θ", "ð", "s", "z", "ʃ", "ʒ", "ç", "ʝ", "x", "ɣ", "χ", "ʁ", "ħ", 
+                           "ʕ", "h", "ɬ", "ɮ", "ʋ", "ɹ", "ɻ", "j", "ɰ", "ʍ", "w", "ʘ", "ǀ", "ǃ", "ǂ", "ǁ", "ɓ", "ɗ", "ɠ", "ʛ", 
+                           "t͡", "d͡", "ʈ͡", "ʂ", "ʐ", "ɖ͡", "ɕ", "θ", "ç", "ɸ", "x", "χ", "ħ", "b", "d", "f", "ɡ", "h", "dʒ", 
+                           "k", "l", "m", "n", "ŋ", "p", "ɹ", "s", "ʃ", "t", "θ", "v", "w", "j", "z", "ʒ"},
+            "other_symbols": {"ı", "ˤ", "‖", "⁀", "⁺", "⁼", "˗", "̊","̥","̤","̰","̪","̩","̝","̞","́","̄","̀","̈","̃","̟","̱","̹","̜", "̚"},
+        }
         
-        if unallowed_signs:
-            formatted_unallowed_signs = ", ".join(unallowed_signs)
+        # TODO 
+
+        allowed_symbols_values = allowed_symbols.values()
+        allowed_symbols_values = set(allowed_symbols_values)
+        symbols_input = set(ipa_input)
+
+        unallowed_symbols = list(symbols_input - allowed_symbols_values)
+
+        if unallowed_symbols:
+            formatted_unallowed_signs = ", ".join(unallowed_symbols)
             raise ValidationError(f"Used unallowed sign(s): {formatted_unallowed_signs}.")
         
         return ipa_input
