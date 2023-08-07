@@ -77,10 +77,12 @@ class InputForm(forms.Form):
         return ""
     
 
+    '''
     def clean_ipa_input(self):
         """
         Returns ValidationError if the input uses unallowed signs.      
         """
+
         ipa_input = self.cleaned_data['ipa_input']
         allowed_symbols = {
             "separators": {"|"},
@@ -111,6 +113,7 @@ class InputForm(forms.Form):
         if unallowed_symbols:
             formatted_unallowed_signs = ", ".join(unallowed_symbols)
             raise ValidationError(f"Used unallowed sign(s): {formatted_unallowed_signs}.")
-        
         return ipa_input
+    '''
+
     
