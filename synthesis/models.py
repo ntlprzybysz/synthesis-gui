@@ -4,6 +4,7 @@ from django.db import models
 
 # General imports
 import logging
+from typing import Optional, Tuple
 
 # Folder management and command line tools
 from pathlib import Path
@@ -11,107 +12,13 @@ import shutil
 import subprocess
 
 
-'''
-# Tacotron & Waveglow
-from argparse import Namespace
-from ordered_set import OrderedSet
-from tacotron_cli.defaults import DEFAULT_DEVICE, DEFAULT_MAX_DECODER_STEPS
-from tacotron_cli.inference import synthesize_ns
-from typing import Optional
-from waveglow_cli.defaults import DEFAULT_DENOISER_STRENGTH, DEFAULT_SIGMA
-from waveglow_cli.inference_v2 import infer_mels
-
-class TacotronObject:
-    """
-    Creates a Namespace object that is normally created in tacotron by parsing
-    command line arguments. It is used for synthesizing lines from a file.
-    """
-    def __init__(self, checkpoint_path, input_path, separator="", encoding="UTF-8", custom_speaker=None, \
-                 custom_lines=OrderedSet(), max_decoder_steps=DEFAULT_MAX_DECODER_STEPS, custom_seed=None, \
-                 paragraph_dirs=True, include_stats=True, device=DEFAULT_DEVICE, hparams=None, prepend="", \
-                 append="", output_dir=None, overwrite=True):
-        self.checkpoint_path: Path = checkpoint_path
-        self.input_path: Path = input_path
-        self.separator: str = separator
-        self.encoding: str = encoding
-        self.custom_speaker: Optional[str] = custom_speaker     # Str?
-        self.custom_lines: Optional(OrderedSet) = custom_lines
-        self.max_decoder_steps: int = max_decoder_steps
-        self.custom_seed: Optional[int] = custom_seed
-        self.paragraph_dirs: bool = paragraph_dirs
-        self.include_stats: bool = include_stats
-        self.device: str = device
-        self.hparams: Optional[str] = hparams   # Str?
-        self.prepend: str = prepend
-        self.append: str = append
-        self.output_dir: Optional[Path] = output_dir
-        self.overwrite: bool = overwrite
-
-    def create_namespace_and_synthesize(self):
-        ns = Namespace(
-            checkpoint = self.checkpoint_path,
-            text = self.input_path,
-            sep = self.separator,
-            encoding = self.encoding,
-            custom_speaker = self.custom_speaker,
-            custom_lines = self.custom_lines,
-            max_decoder_steps = self.max_decoder_steps,
-            custom_seed = self.custom_seed,
-            paragraph_directories = self.paragraph_dirs,
-            include_stats = self.include_stats,
-            device = self.device,
-            custom_hparams = self.hparams,
-            prepend = self.prepend,
-            append = self.append,
-            output_directory = self.output_dir,
-            overwrite = self.overwrite,
-            )
-        return synthesize_ns(ns)
-
-
-class WaveglowObject:
-    """
-    Creates a Namespace object that is normally created by waveglow by parsing
-    command line arguments. It is used for synthesizing mel-spectrograms into an audio signal.
-    """
-    def __init__(self, checkpoint_path, spectrogram_path, sigma=DEFAULT_SIGMA, \
-                 denoiser_strength=DEFAULT_DENOISER_STRENGTH, device=DEFAULT_DEVICE, \
-                 hparams=None, custom_seed=None, include_stats=True, output_dir=None, overwrite=True) -> None:
-        self.checkpoint: Path = checkpoint_path
-        self.folder: Path = spectrogram_path
-        self.sigma: float = sigma
-        self.denoiser_strength: float = denoiser_strength
-        self.device: str = device
-        self.custom_hparams: Optional[str] = hparams   # Str?
-        self.custom_seed: Optional[int] = custom_seed
-        self.include_stats: bool = include_stats
-        self.output_directory: Optional[Path] = output_dir
-        self.overwrite: bool = overwrite
-
-    def create_namespace_and_synthesize(self):
-        ns = Namespace(
-        checkpoint = self.checkpoint,
-        folder = self.folder,
-        sigma = self.sigma,
-        denoiser_strength = self.denoiser_strength,
-        device = self.device,
-        custom_hparams = self.custom_hparams,
-        custom_seed = self.custom_seed,
-        include_stats = self.include_stats,
-        outpur_directory = self.output_directory,
-        overwrite = self.overwrite,
-        )
-        return infer_mels(ns)
-'''
-
 class Project:
     """
-    Saves all data user provided about the project and provide a method to synthesize it.
+    Saves all data user provided about the project and synthesizes it.
     """
     def __init__(self, cleaned_form_input: dict, session_key: str) -> None:
         self.session_key = session_key
         self.name: str = cleaned_form_input["project_name"]
-        #self.text_input: str = cleaned_form_input["text_input"]
         self.ipa_input: str = cleaned_form_input["ipa_input"]
         self.model: str = cleaned_form_input["model"]
         self.voice: str = cleaned_form_input["voice"]
@@ -162,6 +69,51 @@ class Project:
             return logger
 
 
+        def _create_file_for_synthesis() -> Tuple[bool, Optional[str]]:
+            """
+            Creates a file with the user's IPA input that is necessary for the synthesis.
+
+            Returns True if succeeds, otherwise False and the error message.
+            """
+            try:
+                with open(self.input_file_path, "w") as file:
+                    file.write(self.ipa_input)
+            except Exception as e:
+                logger.error(f"Error during creating input file for synthesis: {e}")
+                return False, str(e)
+            return True, None
+
+
+        def _create_mel_spectrogram() -> Tuple[bool, Optional[str]]:
+            """
+            Synthesizes the IPA input into a mel-spectrogram using "tacotron-cli synthesize" command
+            with a command-line interface for Tacotron.
+
+            Returns True if succeeds, otherwise False and the error message.
+            """
+            cmd_synthesize_tacotron = f"tacotron-cli synthesize '{self.tacotron_checkpoint_file_path}' '{self.input_file_path}' --custom-seed 1111 --sep '|' -out '{self.project_dir_path}'"
+            try:
+                subprocess.run(cmd_synthesize_tacotron, shell=True, check=True)
+            except Exception as e:
+                return False, str(e)
+            return True, None
+
+
+        def _create_audio_files() -> Tuple[bool, Optional[str]]:
+            """
+            Synthesizes the mel-spectrogram into audio files using "waveglow-cli synthesize" command
+            with a command-line interface for Waveglow.
+
+            Returns True if succeeds, otherwise False and the error message.
+            """
+            cmd_synthesize_waveglow = f"waveglow-cli synthesize '{self.waveglow_checkpoint_file_path}' '{self.project_dir_path}' -o --custom-seed 1111 --denoiser-strength 0.0005 --sigma 1.0"
+            try:
+                subprocess.run(cmd_synthesize_waveglow, shell=True, check=True)
+            except Exception as e:
+                return False, str(e)
+            return True, None
+
+
         if not _get_project_directory():
             return False
 
@@ -170,58 +122,23 @@ class Project:
             return False
         logger.info(f"Created directories for a new project instance.")
 
-        try:
-            with open(self.input_file_path, "w") as file:
-                file.write(self.ipa_input)
-        except Exception as e:
-            logger.error(f"Error during creating input file for synthesis: {e}")
+        success, error_message = _create_file_for_synthesis()
+        if not success:
+            logger.error(f"Error during creating input file for synthesis: {error_message}")
             return False
         logger.info(f"Created input file for synthesis.")
 
-        # Tacotron with subprocess
-        cmd_synthesize_tacotron = f"tacotron-cli synthesize '{self.tacotron_checkpoint_file_path}' '{self.input_file_path}' --custom-seed 1111 --sep '|' -out '{self.project_dir_path}'"
-        try:
-            subprocess.run(cmd_synthesize_tacotron, shell=True, check=True)
-        except Exception as e:
-            logger.error(f"Error during Tacotron synthesis: {e}")
+        success, error_message = _create_mel_spectrogram()
+        if not success:
+            logger.error(f"Error during Tacotron synthesis: {error_message}")
             return False
         logger.info(f"Finished processing project with Tacotron.")
 
-        """
-        # Tacotron without subprocess
-        synthesize_tacotron = TacotronObject(checkpoint_path=tacotron_checkpoint_file_path, input_path=input_file_path, \
-                                                    separator="|", custom_seed=1111, output_dir=project_dir_path)
-        synthesize_tacotron.create_namespace_and_synthesize()
-        """
-
-        # Waveglow with subprocess
-        cmd_synthesize_waveglow = f"waveglow-cli synthesize '{self.waveglow_checkpoint_file_path}' '{self.project_dir_path}' -o --custom-seed 1111 --denoiser-strength 0.0005 --sigma 1.0"
-        try:
-            subprocess.run(cmd_synthesize_waveglow, shell=True, check=True)
-        except Exception as e:
-            logger.error(f"Error during Waveglow synthesis: {e}")
+        success, error_message = _create_audio_files()
+        if not success:
+            logger.error(f"Error during Waveglow synthesis: {error_message}")
             return False
         logger.info(f"Finished processing project with Waveglow.")
-      
-        """
-        # Waveglow without subprocess
-        # Checkpoint couldn't be loaded!
-        synthesize_waveglow = WaveglowObject(checkpoint_path=waveglow_checkpoint_file_path, spectrogram_path=project_dir_path, \
-                                                    overwrite=True, custom_seed=1111, denoiser_strength=0.0005, sigma=1.0, \
-                                                    output_dir=project_dir_path)
-        synthesize_waveglow.create_namespace_and_synthesize()
-        """
-        
-        """
-        # Cleaning up resulting folders
-        # <index>-<speaker_id>-<sentence_id>
-        wav_file_path = project_dir_path / "1-1-1" / "1-1.npy.wav"
-        shutil.move(wav_file_path, project_dir_path / "1-1.npy.wav")
-
-        subfolder_path = project_dir_path / "1-1-1"
-        if subfolder_path.is_dir():
-            shutil.rmtree(subfolder_path)
-        """
 
         logger.info(f"Synthesis done.")
         return True
