@@ -69,17 +69,53 @@ Download the models:
 wget "https://tuc.cloud/index.php/s/LH4Zzn7fPMb2w6s/download/101000.pt" -O "$TOOLS_DIR/tacotron.pt"
 wget "https://tuc.cloud/index.php/s/yBRaWz5oHrFwigf/download/LJS-v3-580000.pt" -O "$TOOLS_DIR/waveglow.pt"
 ```
-Your project structure should like like this now (it's okay if "media" folder is missing. It will be created as soon as you synthesize):
+
+6. Before publishing your code with a version control system or deploying the website, a `SECRET_KEY` variable from `settings.py` must be hidden for security reasons. Thus, this repository dosn't contain a hard-coded `SECRET_KEY` in `settings.py` and you need to create your own `SECRET_KEY` next.
+
+6a. Create a Python file with the following content:
 ```
-synthesis-gui
+import secrets
+new_secret_key = secrets.token_hex(32)
+print(new_secret_key)
+```
+
+Copy the resulting key.
+
+6b. Create `.env` file in your project repository with the content:
+```
+SECRET_KEY=your_generated_key
+```
+
+6c. If you use Git for version control, create a file `.gitgnore` in the directory of your repository and add the line:
+```
+.env
+```
+This ensures Git doesn't keep track of and will not publish this file even though it's in the tracked repository.
+
+6d. Set the environment variable when running your application:
+
+```
+export SECRET_KEY=your_generated_key
+python manage.py runserver
+```
+
+Your project structure should look a little something like this:
+```
+.
+├── .env
+├── .gitignore
 ├── db.sqlite3
 ├── manage.py
-├── media
 ├── Pipfile
 ├── Pipfile.lock
 ├── README.md
 ├── requirements.txt
-├── Screenshot_2023-06-21.png
+├── screenshots
+│   ├── Screenshot_2023-06-21.png
+│   ├── Screenshot_2023-07-18_home_synthesized.png
+│   ├── Screenshot_2023-07-21_about.png
+│   ├── Screenshot_2023-07-21_help.png
+│   └── Screenshot_2023-07-21_home.png
 ├── synthesis
 │   ├── admin.py
 │   ├── apps.py
@@ -93,7 +129,17 @@ synthesis-gui
 │   ├── __pycache__
 │   │   └── ...
 │   ├── static
+│   │   ├── admin
+│   │   │   └── ...
 │   │   ├── base.css
+│   │   ├── graphics
+│   │   │   ├── favicon.ico
+│   │   │   ├── help_btn.png
+│   │   │   ├── info_btn.png
+│   │   │   ├── logo_black_on_white_500x500.png
+│   │   │   ├── logo_project.xcf
+│   │   │   ├── logo_transparent_500x500.png
+│   │   │   └── menu_btn.png
 │   │   ├── main.js
 │   │   └── tools
 │   │       ├── tacotron.pt
@@ -116,42 +162,16 @@ synthesis-gui
     └── wsgi.py
 ```
 
-6. Run a local server for the website:
+7. Run a local server for the website:
 ```
 python manage.py runserver
 ```
 
-7. Open the website in your browser by visiting http://localhost:8000/synthesis/.
+8. Open the website in your browser by visiting http://localhost:8000/synthesis/.
 
-8. If you're done, close the server by pressing `CTRL` + `C`.
+9. If you're done, close the server by pressing `CTRL` + `C`.
 
-9. Deactivate the virtual environment:
+10. Deactivate the virtual environment:
 ```
 deactivate
-```
-
-## Hiding SECRET_KEY 
-
-*** Before publishing your code with a version control system or deploying the website, *** make sure that your `SECRET_KEY` variable from `settings.py` is hidden for security reasons.
-
-1. Create a `.env` file in your project directory (no name, just extension .env) and copy-paste `SECRET_KEY` variable from `settings.py`. Make sure to delete both the spaces before the equal sign as well as the quotation marks. For instance, if your `settings.py` included `SECRET_KEY = 'mysecretkey1234567890'`, your `.env` file should contain `SECRET_KEY=mysecretkey1234567890`.
-
-2. Modify your settings.py file to read the SECRET_KEY from the environment variable by adding the import and overwrwrite the `SECRET_KEY` as follows:
-
-```
-import os
-SECRET_KEY = os.environ.get('SECRET_KEY')
-```
-
-3. If you use Git for version control, create a file `.gitgnore` in the directory of your repository and add the line:
-```
-.env
-```
-This ensures Git doesn't keep track of and will not publish this file even though it's in the tracked repository.
-
-4. Set the environment variable when running your application:
-
-```
-export SECRET_KEY=mysecretkey1234567890
-python manage.py runserver
 ```
