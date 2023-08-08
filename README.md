@@ -129,3 +129,29 @@ python manage.py runserver
 ```
 deactivate
 ```
+
+## Hiding SECRET_KEY 
+
+*** Before publishing your code with a version control system or deploying the website, *** make sure that your `SECRET_KEY` variable from `settings.py` is hidden for security reasons.
+
+1. Create a `.env` file in your project directory (no name, just extension .env) and copy-paste `SECRET_KEY` variable from `settings.py`. Make sure to delete both the spaces before the equal sign as well as the quotation marks. For instance, if your `settings.py` included `SECRET_KEY = 'mysecretkey1234567890'`, your `.env` file should contain `SECRET_KEY=mysecretkey1234567890`.
+
+2. Modify your settings.py file to read the SECRET_KEY from the environment variable by adding the import and overwrwrite the `SECRET_KEY` as follows:
+
+```
+import os
+SECRET_KEY = os.environ.get('SECRET_KEY')
+```
+
+3. If you use Git for version control, create a file `.gitgnore` in the directory of your repository and add the line:
+```
+.env
+```
+This ensures Git doesn't keep track of and will not publish this file even though it's in the tracked repository.
+
+4. Set the environment variable when running your application:
+
+```
+export SECRET_KEY=mysecretkey1234567890
+python manage.py runserver
+```
