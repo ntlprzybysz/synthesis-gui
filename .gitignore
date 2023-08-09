@@ -1,3 +1,4 @@
 synthesis/static/tools/
 media/
 .env
+conf/
