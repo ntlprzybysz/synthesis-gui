@@ -16,7 +16,7 @@
         <div class="header">
                 <ul>
                         <li id="navigation-title">
-                                <a id="home-link" href="/synthesis/">
+                                <a id="home-link" href="{% url 'home' %}">
                                 <img src="/static/graphics/logo_transparent_500x500.png" alt="The logo of the project, a simplified representaton of 
                                 a neural network with a sound wave in the centre." style="float:left; width: 75px; height: 75px; margin-right: 25px;">
                                 <h1>Speech synthesis</h1>
@@ -37,7 +37,7 @@
                                 </li>
                                 <li>
                                         <button type="button" id="menu-button" class="nav-button"
-                                                onclick="window.location.href='/synthesis/';"><img
+                                                onclick="window.location.href='{% url 'home' %}'"><img
                                                         src="{% static 'graphics/menu_btn.png' %}"
                                                         style="width: 40%; height: auto;"></button>
                                 </li>
