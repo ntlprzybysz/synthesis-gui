@@ -25,7 +25,12 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['numlock.informatik.tu-chemnitz.de', '134.109.205.95']
+ALLOWED_HOSTS = [
+    'numlock.informatik.tu-chemnitz.de',
+    '134.109.205.95',
+    'http://numlock.informatik.tu-chemnitz.de',
+    'https://numlock.informatik.tu-chemnitz.de',
+]
 
 
 # Application definition
