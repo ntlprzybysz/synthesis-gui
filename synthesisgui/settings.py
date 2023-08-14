@@ -32,6 +32,7 @@ ALLOWED_HOSTS = [
     'https://numlock.informatik.tu-chemnitz.de',
 ]
 
+CELERY_BROKER_URL = 'pyamqp://guest@localhost//'
 
 # Application definition
 
