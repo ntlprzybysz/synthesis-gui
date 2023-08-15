@@ -7,5 +7,5 @@ def go_to_sleep(self, duration: int):
     progress_recorder = ProgressRecorder(self)
     for i in range(5):    
         sleep(duration)
-        progress_recorder.set_progress(i + 1, 5, f"On iteration {i}")
-    return "Done"
+        progress_recorder.set_progress(i + 1, 5, "Synthesis in progress")
+        return ""
