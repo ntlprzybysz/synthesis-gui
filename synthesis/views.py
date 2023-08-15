@@ -4,12 +4,14 @@ from django.shortcuts import render
 from .forms import InputForm
 from .models import Project
 
-from .tasks import mock_action
+# tests celery
+from .tasks import go_to_sleep
 
 def with_celery(request):
-    res = mock_action.delay()
+    task = go_to_sleep.delay(5)
     form = InputForm()
-    return render(request, "home.html", {"form": form})
+    return render(request, "home_celery.html", {"form": form, "task_id": task.task_id})
+# /tests celery
 
 def show_home(request):
     if request.method == "POST":
@@ -22,6 +24,8 @@ def show_home(request):
             if project.synthesize():
                 audio_url = settings.MEDIA_URL + session_key + "/1-1.npy.wav"
                 return render(request, "synthesized.html", {"form": form, "audio_url": audio_url})
+            
+            # TODO error page
             return render(request, "home.html", {"form": form})
 
     else:
