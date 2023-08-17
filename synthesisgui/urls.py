@@ -29,3 +29,9 @@ urlpatterns = [
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+# Custom error pages
+handler404 = "synthesis.views.show_404"
+handler500 = "synthesis.views.show_500"
+handler403 = "synthesis.views.show_403"
+handler400 = "synthesis.views.show_400"

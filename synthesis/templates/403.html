@@ -1,0 +1,24 @@
+{% extends "home.html" %}
+
+{% block title %}
+<title>Speech synthesis: 403</title>
+{% endblock %}
+
+
+{% block content %}
+<div class="content">
+    <h2>Access Forbidden: Error 403</h2>
+    
+    <p>You have encountered a Forbidden error while trying to access this webpage. This error occurs when the server understands your request, but you are not allowed to access the requested resource.</p>
+
+    <p>Possible reasons for encountering this error include:<br><br>
+        &diams; Insufficient permissions or credentials to access this content.<br>
+        &diams; Access restrictions imposed by the website's administrator.<br>
+        &diams; IP-based restrictions preventing your current location from accessing this resource.</p>
+    
+    <p>How can you proceed from here?<br><br>
+        &diams; Double-check that you are using the correct credentials or permissions to access this content.<br>
+        &diams; If you believe you should have access to this content, you can contact the website's <a href="https://github.com/ntlprzybysz/synthesis-gui">maintainer</a> or <a href="https://stefantaubert.com/">owner</a> for further assistance.<br>
+        &diams; Return to <a href="{% url 'home' %}">the main page</a> and explore other available content.</p>
+    </div>
+{% endblock %}

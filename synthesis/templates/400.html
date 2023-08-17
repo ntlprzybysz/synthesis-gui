@@ -1,0 +1,24 @@
+{% extends "home.html" %}
+
+{% block title %}
+<title>Speech synthesis: 400</title>
+{% endblock %}
+
+
+{% block content %}
+<div class="content">
+    <h2>Bad Request: Error 400</h2>
+    
+    <p>You have reached this webpage due to a Bad Request error. This error occurs when the server cannot understand or process the request you made due to a malformed or invalid request.</p>
+
+    <p>Possible reasons for encountering this error include:<br><br>
+        &diams; Submitting incomplete or improperly formatted data.<br>
+        &diams; Using an invalid URL or link to access the resource.<br>
+        &diams; Sending parameters or data that are not supported or recognized by the server.</p>
+    
+    <p>How can you proceed from here?<br><br>
+        &diams; Ensure that you have entered all required information correctly and that the URL is properly formed.<br>
+        &diams; Return to <a href="{% url 'home' %}">the main page</a> and navigate to the desired content through the provided links.<br>
+        &diams; If you believe this error is not due to your input, you can reach out to the website's <a href="https://github.com/ntlprzybysz/synthesis-gui">maintainer</a> or <a href="https://stefantaubert.com/">owner</a> to report the issue.</p>
+</div>
+{% endblock %}
