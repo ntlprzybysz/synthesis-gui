@@ -46,28 +46,7 @@ class Project:
             except:
                 return False
             return True
-
-
-        def _get_project_logger() -> logging.Logger:
-            """
-            Gets a logger for the project to monitor its progress.
-            """
-            log_format = "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
-            log_file_path = self.project_dir_path / "project.log"
-
-            logger = logging.getLogger(__name__)
-            logger.setLevel(logging.INFO)
-
-            formatter = logging.Formatter(log_format)
-
-            file_handler = logging.FileHandler(log_file_path)
-            file_handler.setLevel(logging.INFO)
-            file_handler.setFormatter(formatter)
-
-            logger.addHandler(file_handler)
-
-            return logger
-
+        
 
         def _create_file_for_synthesis() -> Tuple[bool, Optional[str]]:
             """
@@ -93,9 +72,9 @@ class Project:
             """
             cmd_synthesize_tacotron = f"tacotron-cli synthesize '{self.tacotron_checkpoint_file_path}' '{self.input_file_path}' --custom-seed 1111 --sep '|' -out '{self.project_dir_path}'"
             try:
-                subprocess.run(cmd_synthesize_tacotron, shell=True, check=True, timeout=120)
+                subprocess.run(cmd_synthesize_tacotron, shell=True, check=True, timeout=300)
             except subprocess.TimeoutExpired:
-                return False, "Subprocess timed out"
+                return False, "Subprocess timed out."
             except subprocess.CalledProcessError as e:
                 return False, str(e)
             except Exception as e:
@@ -112,9 +91,9 @@ class Project:
             """
             cmd_synthesize_waveglow = f"waveglow-cli synthesize '{self.waveglow_checkpoint_file_path}' '{self.project_dir_path}' -o --custom-seed 1111 --denoiser-strength 0.0005 --sigma 1.0"
             try:
-                subprocess.run(cmd_synthesize_waveglow, shell=True, check=True, timeout=120)
+                subprocess.run(cmd_synthesize_waveglow, shell=True, check=True, timeout=300)
             except subprocess.TimeoutExpired:
-                return False, "Subprocess timed out"
+                return False, "Subprocess timed out."
             except subprocess.CalledProcessError as e:
                 return False, str(e)
             except Exception as e:
@@ -124,28 +103,26 @@ class Project:
         if not _get_project_directory():
             return False
 
-        logger = _get_project_logger()
-        if logger is None:
-            return False
-        logger.info(f"Created directories for a new project instance.")
+        logger = logging.getLogger('django')
+        logger.info(f"with session key {self.session_key}: Created directories for a new project.")
 
         success, error_message = _create_file_for_synthesis()
         if not success:
-            logger.error(f"Error during creating input file for synthesis: {error_message}")
+            logger.error(f"with session key {self.session_key}: Error during creating input file for synthesis: {error_message}")
             return False
-        logger.info(f"Created input file for synthesis.")
+        logger.info(f"with session key {self.session_key}: Created input file for synthesis.")
 
         success, error_message = _create_mel_spectrogram()
         if not success:
-            logger.error(f"Error during Tacotron synthesis: {error_message}")
+            logger.error(f"with session key {self.session_key}: Error during Tacotron synthesis: {error_message}")
             return False
-        logger.info(f"Finished processing project with Tacotron.")
+        logger.info(f"with session key {self.session_key}: Finished processing project with Tacotron.")
 
         success, error_message = _create_audio_files()
         if not success:
-            logger.error(f"Error during Waveglow synthesis: {error_message}")
+            logger.error(f"with session key {self.session_key}: Error during Waveglow synthesis: {error_message}")
             return False
-        logger.info(f"Finished processing project with Waveglow.")
+        logger.info(f"with session key {self.session_key}: Finished processing project with Waveglow.")
 
-        logger.info(f"Synthesis done.")
+        logger.info(f"with session key {self.session_key}: Synthesis done.")
         return True

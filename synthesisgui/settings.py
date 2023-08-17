@@ -139,11 +139,39 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 
 # Sessions
+
 SESSION_ENGINE = "django.contrib.sessions.backends.db"
 
 
 # Celery
+
 CELERY_BROKER_URL = "pyamqp://guest@localhost//"
 CELERY_ACCEPT_CONTENT = ["json"]
 CELERY_TASK_SERIALIZER = "json"
 CELERY_RESULT_BACKEND = "django-db"
+
+
+# Logger
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': BASE_DIR / 'log' / 'django.log',
+            'formatter': 'custom',
+        },
+    },
+    'formatters': {
+        'custom': {
+            'format': '{asctime} {levelname} {module}: {message}',
+            'style': '{',
+        },
+    },
+    'root': {
+        'handlers': ['file'],
+        'level': 'DEBUG',
+    },
+}

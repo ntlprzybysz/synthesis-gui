@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.shortcuts import render
+import logging
 
 from .forms import InputForm
 from .models import Project
@@ -14,6 +15,7 @@ def with_celery(request):
 # /tests celery
 
 def show_home(request):
+    logger = logging.getLogger('django')
     if request.method == "POST":
         form = InputForm(request.POST)
         if form.is_valid(): # required fields filled in properly
@@ -23,15 +25,18 @@ def show_home(request):
 
             if project.synthesize():
                 audio_url = settings.MEDIA_URL + session_key + "/1-1.npy.wav"
-                return render(request, "synthesized.html", {"form": form, "audio_url": audio_url})
+                return render(request, "synthesis_success.html", {"form": form, "audio_url": audio_url})
             
-            # TODO error page
+            else:
+                return render(request, "synthesis_failed.html")
+        
+        else:
             return render(request, "home.html", {"form": form})
 
     else:
+        logger.info("This is a test log message.")
         form = InputForm()
-
-    return render(request, "home.html", {"form": form})
+        return render(request, "home.html", {"form": form})
 
 
 def show_about(request):
@@ -42,15 +47,17 @@ def show_help(request):
     return render(request, "help.html")
 
 
-# Custom error pages
 def show_404(request, exception):
     return render(request, "404.html", {}, status=404)
+
 
 def show_500(request, exception=None):
     return render(request, "500.html", {}, status=500)
 
+
 def show_403(request, exception=None):
     return render(request, "403.html", {}, status=403)
+
 
 def show_400(request, exception=None):
     return render(request, "400.html", {}, status=400)
