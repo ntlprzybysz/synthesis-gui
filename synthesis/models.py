@@ -35,7 +35,7 @@ class Project:
         """
         Uses user's IPA input and settings to generate an audio file with synthesised speech.
         """      
-        def _get_project_directory() -> bool:
+        def _get_project_directory() -> Tuple[bool, Optional[str]]:
             """
             Prepares a new directory for the project.
             """
@@ -43,9 +43,9 @@ class Project:
                 if self.project_dir_path.exists():
                     shutil.rmtree(self.project_dir_path)
                 self.project_dir_path.mkdir(parents=True, exist_ok=True)
-            except:
-                return False
-            return True
+            except Exception as e:
+                return False, str(e)
+            return True, None
         
 
         def _create_file_for_synthesis() -> Tuple[bool, Optional[str]]:
@@ -58,7 +58,6 @@ class Project:
                 with open(self.input_file_path, "w") as file:
                     file.write(self.ipa_input)
             except Exception as e:
-                logger.error(f"Error during creating input file for synthesis: {e}")
                 return False, str(e)
             return True, None
 
@@ -100,29 +99,31 @@ class Project:
                 return False, str(e)
             return True, None
 
-        if not _get_project_directory():
-            return False
-
         logger = logging.getLogger('django')
-        logger.info(f"with session key {self.session_key}: Created directories for a new project.")
+
+        success, error_message = _get_project_directory()
+        if not success:
+            logger.error(f"session key {self.session_key} Failed to create a project directory: {error_message}")
+            return False
+        logger.info(f"session key {self.session_key} Created a project directory.")
 
         success, error_message = _create_file_for_synthesis()
         if not success:
-            logger.error(f"with session key {self.session_key}: Error during creating input file for synthesis: {error_message}")
+            logger.error(f"session key {self.session_key} Error during creating input file for synthesis: {error_message}")
             return False
-        logger.info(f"with session key {self.session_key}: Created input file for synthesis.")
+        logger.info(f"session key {self.session_key} Created input file for synthesis.")
 
         success, error_message = _create_mel_spectrogram()
         if not success:
-            logger.error(f"with session key {self.session_key}: Error during Tacotron synthesis: {error_message}")
+            logger.error(f"session key {self.session_key} Error during Tacotron synthesis: {error_message}")
             return False
-        logger.info(f"with session key {self.session_key}: Finished processing project with Tacotron.")
+        logger.info(f"session key {self.session_key} Finished processing project with Tacotron.")
 
         success, error_message = _create_audio_files()
         if not success:
-            logger.error(f"with session key {self.session_key}: Error during Waveglow synthesis: {error_message}")
+            logger.error(f"session key {self.session_key} Error during Waveglow synthesis: {error_message}")
             return False
-        logger.info(f"with session key {self.session_key}: Finished processing project with Waveglow.")
+        logger.info(f"session key {self.session_key} Finished processing project with Waveglow.")
 
-        logger.info(f"with session key {self.session_key}: Synthesis done.")
+        logger.info(f"session key {self.session_key} Synthesis done.")
         return True
