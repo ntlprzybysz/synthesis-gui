@@ -2,6 +2,10 @@ from django.conf import settings
 from django.shortcuts import render
 import logging
 
+# 404 vs admin pages
+from django.http import Http404
+from django.contrib.admin.views.decorators import staff_member_required
+
 from .forms import InputForm
 from .models import Project
 
@@ -63,25 +67,32 @@ def show_help(request):
     return render(request, "help.html")
 
 
+@staff_member_required
+def admin_show_404(request, exception):
+    logger = logging.getLogger("django")
+    logger.warning(f"Admin 404 page returned for path: {request.path}")
+    return render(request, "admin_404.html", {}, status=404)
+
+
 def show_404(request, exception):
     logger = logging.getLogger("django")
-    logger.warning(f"404 page returned.")
+    logger.warning(f"Regular 404 page returned for path: {request.path}")
     return render(request, "404.html", {}, status=404)
 
 
 def show_500(request, exception=None):
     logger = logging.getLogger("django")
-    logger.warning(f"500 page returned.")
+    logger.warning(f"500 page returned for path: {request.path}.")
     return render(request, "500.html", {}, status=500)
 
 
 def show_403(request, exception=None):
     logger = logging.getLogger("django")
-    logger.warning(f"403 page returned.")
+    logger.warning(f"403 page returned for path: {request.path}.")
     return render(request, "403.html", {}, status=403)
 
 
 def show_400(request, exception=None):
     logger = logging.getLogger("django")
-    logger.warning(f"400 page returned.")
+    logger.warning(f"400 page returned for path: {request.path}.")
     return render(request, "400.html", {}, status=400)

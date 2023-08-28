@@ -25,13 +25,13 @@
                         <div id="navigation">
                                 <li>
                                         <button type="button" id="about-button" class="nav-button"
-                                                onclick="window.location.href='/synthesis/about';"><img
+                                                onclick="window.location.href='{% url 'about' %}';"><img
                                                         src="{% static 'graphics/info_btn.png' %}"
                                                         style="width: 40%; height: auto;"></button>
                                 </li>
                                 <li>
                                         <button type="button" id="help-button" class="nav-button"
-                                                onclick="window.location.href='/synthesis/help';"><img
+                                                onclick="window.location.href='{% url 'help' %}';"><img
                                                         src="{% static 'graphics/help_btn.png' %}"
                                                         style="width: 40%; height: auto;"></button>
                                 </li>
