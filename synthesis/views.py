@@ -30,7 +30,6 @@ def show_home(request):
             logger.info(f"Queued data for processing.")
             async_result = synthesize_with_celery.delay(form.cleaned_data, session_key)
 
-            logger.info(f"Returning audio for download.")
             audio_url = settings.MEDIA_URL + session_key + "/1-1.npy.wav"
             return render(request, "home.html", {"form": form, "audio_url": audio_url, "async_result": async_result})
 
