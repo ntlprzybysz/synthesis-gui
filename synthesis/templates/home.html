@@ -643,7 +643,8 @@
                                         </li>
                                         <li>
                                                 {% if async_result.status == "PENDING" %}
-                                                        <p>Synthesizing, please wait...</p>
+                                                        <p><img src="{% static 'graphics/loading.webp' %}" width="25" height="25"> Synthesizing, please wait.</p> 
+                                                        
                                                 {% elif async_result.status == "SUCCESS" %}
                                                         <li>
                                                                 <audio controls>
