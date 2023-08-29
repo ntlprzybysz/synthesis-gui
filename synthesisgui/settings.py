@@ -151,6 +151,7 @@ CELERY_BROKER_URL = "pyamqp://guest@localhost//"
 CELERY_ACCEPT_CONTENT = ["json"]
 CELERY_TASK_SERIALIZER = "json"
 CELERY_RESULT_BACKEND = "django-db"
+CELERY_CACHE_BACKEND = "django-cache"
 
 
 # Logger
@@ -174,6 +175,6 @@ LOGGING = {
     },
     'root': {
         'handlers': ['file'],
-        'level': 'DEBUG',
+        'level': 'INFO',
     },
 }

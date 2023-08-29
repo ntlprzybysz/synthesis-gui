@@ -24,7 +24,7 @@ urlpatterns = [
     path('', views.show_home, name='home'),
     path('admin/', admin.site.urls),
     path('synthesis/', include('synthesis.urls')),
-    path('celery-progress/', include('celery_progress.urls')),
+    #path('celery-progress/', include('celery_progress.urls')),
 ]
 
 if settings.DEBUG:

@@ -2,25 +2,51 @@ from django.conf import settings
 from django.shortcuts import render
 import logging
 
-# 404 vs admin pages
-from django.http import Http404
-from django.contrib.admin.views.decorators import staff_member_required
-
 from .forms import InputForm
+
+from .tasks import synthesize_with_celery
+
+
+"""
+def show_maintenance(request):
+    logger = logging.getLogger("django")
+    logger.warning(f"Returned maintenance.html for path: {request.path}")
+    return render(request, "maintenance.html")
+"""
+
+def show_home(request):
+    logger = logging.getLogger("django")
+
+    if request.method == "POST":
+        form = InputForm(request.POST)
+        logger.info(f"Received form.")
+
+        if form.is_valid():
+            logger.info(f"Form validated, submitting for processing.")
+
+            request.session.save()  # force session key generation
+            session_key = request.session.session_key
+
+            logger.info(f"Queued data for processing.")
+            async_result = synthesize_with_celery.delay(form.cleaned_data, session_key)
+
+            logger.info(f"Returning audio for download.")
+            audio_url = settings.MEDIA_URL + session_key + "/1-1.npy.wav"
+            return render(request, "home.html", {"form": form, "audio_url": audio_url, "async_result": async_result})
+
+        else:
+            logger.error(f"Failed validation of form, home.html returned.")
+            return render(request, "home.html", {"form": form})
+
+    else:
+        form = InputForm()
+        return render(request, "home.html", {"form": form})
+    
+
+"""
+# without Celery
+
 from .models import Project
-
-# tests celery
-
-from .tasks import go_to_sleep
-
-
-def with_celery(request):
-    task = go_to_sleep.delay(5)
-    form = InputForm()
-    return render(request, "home_celery.html", {"form": form, "task_id": task.task_id})
-
-# /tests celery
-
 
 def show_home(request):
     logger = logging.getLogger("django")
@@ -40,11 +66,7 @@ def show_home(request):
             if project.synthesize():
                 logger.info(f"Returning download page.")
                 audio_url = settings.MEDIA_URL + session_key + "/1-1.npy.wav"
-                return render(
-                    request,
-                    "synthesis_success.html",
-                    {"form": form, "audio_url": audio_url},
-                )
+                return render(request, "synthesis_success.html", {"form": form, "audio_url": audio_url},)
 
             else:
                 logger.error(f"Failed synthesis, returning synthesis_failed.html.")
@@ -57,7 +79,7 @@ def show_home(request):
     else:
         form = InputForm()
         return render(request, "home.html", {"form": form})
-
+"""
 
 def show_about(request):
     return render(request, "about.html")
@@ -65,13 +87,6 @@ def show_about(request):
 
 def show_help(request):
     return render(request, "help.html")
-
-
-@staff_member_required
-def admin_show_404(request, exception):
-    logger = logging.getLogger("django")
-    logger.warning(f"Admin 404 page returned for path: {request.path}")
-    return render(request, "admin_404.html", {}, status=404)
 
 
 def show_404(request, exception):

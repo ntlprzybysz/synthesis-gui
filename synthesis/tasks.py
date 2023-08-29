@@ -1,11 +1,14 @@
 from celery import shared_task
-from celery_progress.backend import ProgressRecorder
-from time import sleep
+#from celery_progress.backend import ProgressRecorder
 
-@shared_task(bind=True)
-def go_to_sleep(self, duration: int):
-    progress_recorder = ProgressRecorder(self)
-    for i in range(5):    
-        sleep(duration)
-        progress_recorder.set_progress(i + 1, 5, "Synthesis in progress")
-        return ""
+import logging
+from synthesis.models import Project
+
+
+@shared_task
+def synthesize_with_celery(cleaned_form_input: dict, session_key: str) -> bool:
+    logger = logging.getLogger("django")
+    project = Project(cleaned_form_input, session_key)
+    logger.info(f"Created new project.")
+
+    return project.synthesize()
