@@ -131,6 +131,8 @@ STATIC_ROOT = BASE_DIR / "synthesis" / "static"
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
 
+LOGGING_ROOT = BASE_DIR / "log"
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
@@ -152,6 +154,7 @@ CELERY_ACCEPT_CONTENT = ["json"]
 CELERY_TASK_SERIALIZER = "json"
 CELERY_RESULT_BACKEND = "django-db"
 CELERY_CACHE_BACKEND = "django-cache"
+CELERY_TASK_TRACK_STARTED = True
 
 
 # Logger

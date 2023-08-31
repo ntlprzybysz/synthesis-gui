@@ -642,10 +642,15 @@
                                                 {{ form.sentence }}
                                         </li>
                                         <li>
-                                                {% if async_result.status == "PENDING" %}
-                                                        <p><img src="{% static 'graphics/loading.webp' %}" width="25" height="25"> Synthesizing, please wait.</p> 
+                                                {% if task_status == "PENDING" or task_status == "STARTED" %}
+                                                        <p><img src="{% static 'graphics/loading.webp' %}" width="25" height="25"> Queuing task, please wait.</p> 
                                                         
-                                                {% elif async_result.status == "SUCCESS" %}
+                                                        <!-- call check_task_status(session_key, audio_url)
+                                                        and based on the update, show returned percentage 
+                                                        (e.g., |||............... 15%, ||||||||||||...... 60%), 
+                                                        and download link when done -->
+
+                                                {% elif task_status == "SUCCESS" %}
                                                         <li>
                                                                 <audio controls>
                                                                         <source src="{{ audio_url }}" type="audio/wav">
@@ -666,11 +671,14 @@
                                                                         });
                                                                 </script>
                                                         </li> 
-                                                {% elif async_result.status == "FAILURE" %}
+
+                                                {% elif task_status == "FAILURE" or task_status == "UNKNOWN" or task_status == "REVOKED" %}
                                                         <p>Synthesis failed. Please make sure you followed the <a href="{% url 'help' %}">guidelines</a> and try again. 
                                                         If the problem persists, please contact the <a href="https://github.com/ntlprzybysz/synthesis-gui">maintainer</a>.</p>
+                                                
                                                 {% else %}
                                                         <button id="synthesize-button" type="submit">Synthesize</button>
+
                                                 {% endif %}
                                         </li>
                                 </ul>
