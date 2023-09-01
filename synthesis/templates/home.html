@@ -644,10 +644,9 @@
                                         <li>
                                                 {% if task_queued == True %}
                                                         <script>
-                                                                function updateProgress() {
+                                                                function updateProgress(sessionKey, audioUrl) {
                                                                         var xhr = new XMLHttpRequest();
-                                                                        xhr.open('GET', '/check_task_status/?session_key={{ session_key }}&audio_url={{ audio_url }}', true);
-                                                                        xhr.setRequestHeader('Content-Type', 'application/json');
+                                                                        const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
                                                                         xhr.onreadystatechange = function () {
                                                                                 if (xhr.readyState === 4 && xhr.status === 200) {
                                                                                         var response = JSON.parse(xhr.responseText);
@@ -655,7 +654,7 @@
 
                                                                                         if (progress === 100) {
                                                                                                 document.getElementById('progress').textContent = 'Synthesis completed';
-                                                                                                document.getElementById('download-button').style.display = 'block';
+                                                                                                //document.getElementById('download-button').style.display = 'block';
                                                                                         } else if (progress === -1) {
                                                                                                 document.getElementById('progress').textContent = 'Synthesis failed';
                                                                                         } else {
@@ -663,17 +662,24 @@
                                                                                         }
                                                                                 }
                                                                         };
-                                                                        xhr.send();
+                                                                        xhr.open('POST', '{% url "task_status" %}', true);
+                                                                        xhr.setRequestHeader("X-CSRFToken", csrftoken); 
+                                                                        xhr.setRequestHeader('Content-Type', 'application/json');
+                                                                        xhr.send('session_key=' + sessionKey + '&audio_url=' + audioUrl);
                                                                 }
 
                                                                 // Start updating progress when the page loads
                                                                 document.addEventListener('DOMContentLoaded', function () {
-                                                                        updateProgress();
+                                                                        var sessionKey = "{{ session_key }}";
+                                                                        var audioUrl = "{{ audio_url }}";
+                                                                        updateProgress(sessionKey, audioUrl);
                                                                 });
                                                         </script>
 
                                                         <p><img src="{% static 'graphics/loading.webp' %}" width="25" height="25"> Queuing task,
                                                         please wait.</p>
+
+                                                        <div id ="progress"></div>
                                                         
                                                 <!--
                                                 {% elif task_status == "SUCCESS" %}
@@ -703,12 +709,12 @@
                                                         If the problem persists, please contact the <a
                                                                 href="https://github.com/ntlprzybysz/synthesis-gui">maintainer</a>.</p>
                                                 -->
-                                                
                                                 {% else %}
-                                                        <button id="synthesize-button" type="submit">Synthesize</button>
+                                                <button id="synthesize-button" type="submit">Synthesize</button>
                                                 {% endif %}
                                         </li>
                                 </ul>
+                        </li></div> <!-- ?? -->
                         </div>     
 
                 </form>

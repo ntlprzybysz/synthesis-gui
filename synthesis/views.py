@@ -15,12 +15,12 @@ def task_status(request):
     session_key = request.GET.get('session_key')
     audio_url = request.GET.get('audio_url')
 
-    logger.info(f"Checking task status.")
+    logger.info(f"Checking task status audio_url {audio_url}.")
     progress = check_task_status(session_key, audio_url)
 
     return JsonResponse({'progress': progress})
 
-"""
+
 def show_home(request):
     logger = logging.getLogger("django")
     logger.info(f"Returned maintenance.html for path: {request.path}")
@@ -38,7 +38,8 @@ def show_home(request):
         if form.is_valid():
             logger.info(f"Form validated, submitting for processing.")
 
-            request.session.save()  # force session key generation
+            if request.session.session_key is None:
+                request.session.save()
             session_key = request.session.session_key
 
             logger.info(f"Queued data for processing.")
@@ -56,7 +57,7 @@ def show_home(request):
         form = InputForm()
         return render(request, "home.html", {"form": form, "task_queued": False})
 
-
+"""
 """
 # without Celery
 
