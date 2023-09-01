@@ -6,18 +6,21 @@ from .forms import InputForm
 from .tasks import synthesize_with_celery
 
 from django.http import JsonResponse
-from tasks_utils import check_task_status
+from .tasks_utils import check_task_status
 
 
-def check_task_status_view(request):
+def task_status(request):
+    logger = logging.getLogger("django")
+
     session_key = request.GET.get('session_key')
     audio_url = request.GET.get('audio_url')
 
-    progress = check_task_status(session_key, audio_url)  # Call your check_task_status function here
+    logger.info(f"Checking task status.")
+    progress = check_task_status(session_key, audio_url)
 
     return JsonResponse({'progress': progress})
 
-
+"""
 def show_home(request):
     logger = logging.getLogger("django")
     logger.info(f"Returned maintenance.html for path: {request.path}")
@@ -40,18 +43,19 @@ def show_home(request):
 
             logger.info(f"Queued data for processing.")
             task = synthesize_with_celery.delay(form.cleaned_data, session_key)
+            logger.info(f"Starting status of queued task: {task.status}")
 
             audio_url = settings.MEDIA_URL + session_key + "/1-1.npy.wav"
-            return render(request, "home.html", {"form": form, "task_status": task.status, "session_key": session_key, "audio_url": audio_url})
+            return render(request, "home.html", {"form": form, "task_queued": True, "session_key": session_key, "audio_url": audio_url})
 
         else:
             logger.error(f"Failed validation of form, home.html returned.")
-            return render(request, "home.html", {"form": form})
+            return render(request, "home.html", {"form": form, "task_queued": False})
 
     else:
         form = InputForm()
-        return render(request, "home.html", {"form": form})
-"""
+        return render(request, "home.html", {"form": form, "task_queued": False})
+
 
 """
 # without Celery
