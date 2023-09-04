@@ -8,19 +8,23 @@ from .tasks import synthesize_with_celery
 from django.http import JsonResponse
 from .tasks_utils import check_task_status
 
-
 def task_status(request):
     logger = logging.getLogger("django")
 
-    session_key = request.GET.get('session_key')
-    audio_url = request.GET.get('audio_url')
+    session_key = request.POST.get('session_key')
+    audio_url = request.POST.get('audio_url')
 
-    logger.info(f"Checking task status audio_url {audio_url}.")
-    progress = check_task_status(session_key, audio_url)
+    if session_key and audio_url:
+        logger.info(f"session key {session_key} Sending data to check task status.")
 
-    return JsonResponse({'progress': progress})
+        progress = check_task_status(session_key, audio_url)
+        return JsonResponse({'progress': progress})
+    
+    else:
+        logger.error(f"Failed to deliver payload of XMLHttpRequest from updateProgress() to views.py. Session key from cookie: {request.COOKIES.get('sessionid')}.")
+        return JsonResponse({'progress': -1})
 
-
+"""
 def show_home(request):
     logger = logging.getLogger("django")
     logger.info(f"Returned maintenance.html for path: {request.path}")
@@ -57,7 +61,7 @@ def show_home(request):
         form = InputForm()
         return render(request, "home.html", {"form": form, "task_queued": False})
 
-"""
+
 """
 # without Celery
 

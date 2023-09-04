@@ -657,14 +657,17 @@
                                                                                                 //document.getElementById('download-button').style.display = 'block';
                                                                                         } else if (progress === -1) {
                                                                                                 document.getElementById('progress').textContent = 'Synthesis failed';
+                                                                                        //} else {
+                                                                                        //        document.getElementById('progress').textContent = 'Progress: ' + progress + '%';
+                                                                                        //}
                                                                                         } else {
-                                                                                                document.getElementById('progress').textContent = 'Progress: ' + progress + '%';
+                                                                                                document.getElementById('progress').textContent = "Processing task, please wait.";
                                                                                         }
                                                                                 }
                                                                         };
                                                                         xhr.open('POST', '{% url "task_status" %}', true);
                                                                         xhr.setRequestHeader("X-CSRFToken", csrftoken); 
-                                                                        xhr.setRequestHeader('Content-Type', 'application/json');
+                                                                        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
                                                                         xhr.send('session_key=' + sessionKey + '&audio_url=' + audioUrl);
                                                                 }
 
@@ -676,10 +679,10 @@
                                                                 });
                                                         </script>
 
-                                                        <p><img src="{% static 'graphics/loading.webp' %}" width="25" height="25"> Queuing task,
-                                                        please wait.</p>
+                                                        <!-- <p><img src="{% static 'graphics/loading.webp' %}" width="25" height="25"> Queuing task,
+                                                        please wait.</p> -->
 
-                                                        <div id ="progress"></div>
+                                                        <div id="progress"></div>
                                                         
                                                 <!--
                                                 {% elif task_status == "SUCCESS" %}
