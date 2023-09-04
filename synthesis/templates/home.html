@@ -657,11 +657,8 @@
                                                                                                 //document.getElementById('download-button').style.display = 'block';
                                                                                         } else if (progress === -1) {
                                                                                                 document.getElementById('progress').textContent = 'Synthesis failed';
-                                                                                        //} else {
-                                                                                        //        document.getElementById('progress').textContent = 'Progress: ' + progress + '%';
-                                                                                        //}
                                                                                         } else {
-                                                                                                document.getElementById('progress').textContent = "Processing task, please wait.";
+                                                                                                document.getElementById('progress').textContent = 'Progress: ' + progress + '%';
                                                                                         }
                                                                                 }
                                                                         };
@@ -679,10 +676,9 @@
                                                                 });
                                                         </script>
 
-                                                        <!-- <p><img src="{% static 'graphics/loading.webp' %}" width="25" height="25"> Queuing task,
-                                                        please wait.</p> -->
-
-                                                        <div id="progress"></div>
+                                                        <div id="progress">
+                                                                <p><img src="{% static 'graphics/loading.webp' %}" width="25" height="25"> Processing task, please wait.</p>
+                                                        </div>
                                                         
                                                 <!--
                                                 {% elif task_status == "SUCCESS" %}
@@ -712,8 +708,13 @@
                                                         If the problem persists, please contact the <a
                                                                 href="https://github.com/ntlprzybysz/synthesis-gui">maintainer</a>.</p>
                                                 -->
+                                                {% elif session_key == "_failed"}
+                                                        <button id="synthesize-button" type="submit">Synthesize</button><br>
+                                                        <p>Synthesis failed. Please make sure you followed the <a href="{% url 'help' %}">guidelines</a> and try again. If the problem persists, please contact the <a href="https://github.com/ntlprzybysz/synthesis-gui">maintainer</a>.</p>
+                                                
                                                 {% else %}
-                                                <button id="synthesize-button" type="submit">Synthesize</button>
+                                                        <button id="synthesize-button" type="submit">Synthesize</button>
+
                                                 {% endif %}
                                         </li>
                                 </ul>

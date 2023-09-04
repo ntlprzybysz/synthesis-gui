@@ -24,7 +24,7 @@ def task_status(request):
         logger.error(f"Failed to deliver payload of XMLHttpRequest from updateProgress() to views.py. Session key from cookie: {request.COOKIES.get('sessionid')}.")
         return JsonResponse({'progress': -1})
 
-"""
+
 def show_home(request):
     logger = logging.getLogger("django")
     logger.info(f"Returned maintenance.html for path: {request.path}")
@@ -40,27 +40,30 @@ def show_home(request):
         logger.info(f"Received form.")
 
         if form.is_valid():
-            logger.info(f"Form validated, submitting for processing.")
+            logger.info(f"Form validated, submitting data for processing.")
 
             if request.session.session_key is None:
                 request.session.save()
             session_key = request.session.session_key
 
-            logger.info(f"Queued data for processing.")
             task = synthesize_with_celery.delay(form.cleaned_data, session_key)
-            logger.info(f"Starting status of queued task: {task.status}")
+                        
+            if task.status == "PENDING" or task.status == "STARTED":
+                logger.info(f"Data submitted for processing.")
+                audio_url = settings.MEDIA_URL + session_key + "/1-1.npy.wav"
+                return render(request, "home.html", {"form": form, "task_queued": True, "session_key": session_key, "audio_url": audio_url})
 
-            audio_url = settings.MEDIA_URL + session_key + "/1-1.npy.wav"
-            return render(request, "home.html", {"form": form, "task_queued": True, "session_key": session_key, "audio_url": audio_url})
+            logger.error(f"Data couldn't be submitted for processing.")
+            return render(request, "home.html", {"form": form, "task_queued": False, "session_key": "_failed"})
 
         else:
             logger.error(f"Failed validation of form, home.html returned.")
-            return render(request, "home.html", {"form": form, "task_queued": False})
+            return render(request, "home.html", {"form": form, "task_queued": False,  "session_key": "_failed"})
 
     else:
         form = InputForm()
         return render(request, "home.html", {"form": form, "task_queued": False})
-
+"""
 
 """
 # without Celery

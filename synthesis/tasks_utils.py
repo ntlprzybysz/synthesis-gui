@@ -10,42 +10,35 @@ def check_task_status(session_key: str, audio_url: str) -> int:
     Monitors the progress of the synthesis task using log messages and returns the states accordingly.
     """
     def _check_task_status(line: str) -> int:
-        if "tasks" in line and "Created new project" in line:
-            logger.info(f"15%")
+        if "tasks" in line and "Created new project. Sending for processing" in line:
             return 15
 
         elif "models" in line and "Created a project directory" in line:
-            logger.info(f"30%.")
             return 30
 
         elif "models" in line and "Created input file for synthesis" in line:
-            logger.info(f"45%.")
             return 45
 
         elif "models" in line and "Finished processing project with Tacotron" in line:
-            logger.info(f"60%.")
             return 60
 
         elif "models" in line and "Finished processing project with Waveglow" in line:
-            logger.info(f"75%.")
             return 75
 
         elif "models" in line and "Synthesis done" in line:
-            #logger.info(f"95%.")
             #return 95
             return 100
 
         elif "trace" in line and "True" in line:
             file_exists = exists(audio_url)
             if file_exists:
-                logger.info(f"100%.")
                 return 100
             else:
                 logger.error(f"Synthesis done but audio file doesn't exist.")
                 return -1
 
         else:
-            logger.error(f"Returning task status -1.")
+            logger.error(f"Returning task status -1 for line: {line}.")
             return -1
 
     
@@ -64,8 +57,8 @@ def check_task_status(session_key: str, audio_url: str) -> int:
 
         last_session_log = str()
         for line in log_file_content:
-            if session_key in line:
-                if "Started checking task progress" not in line and "Sending data to check task status" not in line:
+            if session_key in line or "trace:" in line:
+                if "tasks:" in line or "models:" in line or "trace:" in line:
                     last_session_log = line
 
         new_state = _check_task_status(last_session_log)
@@ -79,6 +72,9 @@ def check_task_status(session_key: str, audio_url: str) -> int:
             state_change = False
         else:
             time += 1
+
+        if new_state >= 0:
+            logger.info(f"session key {session_key} State: {new_state}%, time in state: {time} of allowed 60.")
 
         sleep(1)
     
