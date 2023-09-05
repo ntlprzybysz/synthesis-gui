@@ -8,31 +8,48 @@ from .tasks import synthesize_with_celery
 from django.http import JsonResponse
 from .tasks_utils import check_task_status
 
-def task_status(request):
+
+def task_status(request) -> JsonResponse:
+    """
+    Checks the status of the submitted synthesis with its session key and an audio URL.
+
+    Returns a JSON response with the progress percentage in the format: {"progress":
+    <progress_percentage>}. <progress_percentage> is a positive number if the task is
+    processed and its status parsed correctly, otherwise it equals -1.
+    """
     logger = logging.getLogger("django")
 
-    session_key = request.POST.get('session_key')
-    audio_url = request.POST.get('audio_url')
-
-    if session_key and audio_url:
+    session_key = request.POST.get("session_key")
+    if session_key:
         logger.info(f"session key {session_key} Sending data to check task status.")
+        progress = check_task_status(session_key)
+        return JsonResponse({"progress": progress})
 
-        progress = check_task_status(session_key, audio_url)
-        return JsonResponse({'progress': progress})
-    
     else:
-        logger.error(f"Failed to deliver payload of XMLHttpRequest from updateProgress() to views.py. Session key from cookie: {request.COOKIES.get('sessionid')}.")
-        return JsonResponse({'progress': -1})
+        logger.error(
+            f"Failed to deliver payload of XMLHttpRequest from updateProgress() to views.py. \
+                     Session key from cookie: {request.COOKIES.get('sessionid')}."
+        )
+        return JsonResponse({"progress": -1})
 
 
+'''
 def show_home(request):
+    """
+    Renders the maintenance page instead of the home page. The subwebsites are still 
+    available but the form cannot be submitted.
+    """
     logger = logging.getLogger("django")
     logger.info(f"Returned maintenance.html for path: {request.path}")
     return render(request, "maintenance.html")
-"""
+'''
 
 
 def show_home(request):
+    """
+    Renders the home page with a form for submitting synthesis requests if the request method is GET.
+    If the request method is POST, it validates the form data and queues it for processing.
+    """
     logger = logging.getLogger("django")
 
     if request.method == "POST":
@@ -47,23 +64,59 @@ def show_home(request):
             session_key = request.session.session_key
 
             task = synthesize_with_celery.delay(form.cleaned_data, session_key)
-                        
+
             if task.status == "PENDING" or task.status == "STARTED":
                 logger.info(f"Data submitted for processing.")
                 audio_url = settings.MEDIA_URL + session_key + "/1-1.npy.wav"
-                return render(request, "home.html", {"form": form, "task_queued": True, "session_key": session_key, "audio_url": audio_url})
+                return render(
+                    request,
+                    "home.html",
+                    {
+                        "form": form,
+                        "task_queued": True,
+                        "session_key": session_key,
+                        "audio_url": audio_url,
+                    },
+                )
 
             logger.error(f"Data couldn't be submitted for processing.")
-            return render(request, "home.html", {"form": form, "task_queued": False, "session_key": "_failed"})
+            return render(
+                request,
+                "home.html",
+                {
+                    "form": form,
+                    "task_queued": False,
+                    "session_key": "_failed",
+                    "audio_url": "_null",
+                },
+            )
 
         else:
-            logger.error(f"Failed validation of form, home.html returned.")
-            return render(request, "home.html", {"form": form, "task_queued": False,  "session_key": "_failed"})
+            logger.error(f"Failed validation of form.")
+            return render(
+                request,
+                "home.html",
+                {
+                    "form": form,
+                    "task_queued": False,
+                    "session_key": "_failed",
+                    "audio_url": "_null",
+                },
+            )
 
     else:
         form = InputForm()
-        return render(request, "home.html", {"form": form, "task_queued": False})
-"""
+        return render(
+            request,
+            "home.html",
+            {
+                "form": form,
+                "task_queued": False,
+                "session_key": "_null",
+                "audio_url": "_null",
+            },
+        )
+
 
 """
 # without Celery
@@ -102,6 +155,7 @@ def show_home(request):
         form = InputForm()
         return render(request, "home.html", {"form": form})
 """
+
 
 def show_about(request):
     return render(request, "about.html")

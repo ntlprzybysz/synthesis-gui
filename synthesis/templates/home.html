@@ -644,7 +644,7 @@
                                         <li>
                                                 {% if task_queued == True %}
                                                         <script>
-                                                                function updateProgress(sessionKey, audioUrl) {
+                                                                function updateProgress(sessionKey) {
                                                                         var xhr = new XMLHttpRequest();
                                                                         const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
                                                                         xhr.onreadystatechange = function () {
@@ -665,19 +665,18 @@
                                                                         xhr.open('POST', '{% url "task_status" %}', true);
                                                                         xhr.setRequestHeader("X-CSRFToken", csrftoken); 
                                                                         xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-                                                                        xhr.send('session_key=' + sessionKey + '&audio_url=' + audioUrl);
+                                                                        xhr.send('session_key=' + sessionKey);
                                                                 }
 
                                                                 // Start updating progress when the page loads
                                                                 document.addEventListener('DOMContentLoaded', function () {
                                                                         var sessionKey = "{{ session_key }}";
-                                                                        var audioUrl = "{{ audio_url }}";
-                                                                        updateProgress(sessionKey, audioUrl);
+                                                                        updateProgress(sessionKey);
                                                                 });
                                                         </script>
 
                                                         <div id="progress">
-                                                                <p><img src="{% static 'graphics/loading.webp' %}" width="25" height="25"> Processing task, please wait.</p>
+                                                                <p><img src="{% static 'graphics/loading.webp' %}" width="25" height="25"> Synthesizing, please wait.</p>
                                                         </div>
                                                         
                                                 <!--
