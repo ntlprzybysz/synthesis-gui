@@ -1,7 +1,8 @@
-from django.conf import settings
-from os.path import exists
-import time
 import logging
+import time
+from os.path import exists
+
+from django.conf import settings
 
 
 def check_task_status(session_key: str) -> int:

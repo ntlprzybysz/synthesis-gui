@@ -10,8 +10,8 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
-from pathlib import Path
 import os
+from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -63,7 +63,7 @@ ROOT_URLCONF = "synthesisgui.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [os.path.join(BASE_DIR, 'synthesis', 'templates')],
+        "DIRS": [os.path.join(BASE_DIR, "synthesis", "templates")],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -144,7 +144,7 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 SESSION_ENGINE = "django.contrib.sessions.backends.db"
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
-SESSION_COOKIE_AGE = 3600   # 1h
+SESSION_COOKIE_AGE = 3600  # 1h
 
 
 # Celery
@@ -159,31 +159,31 @@ CELERY_CACHE_BACKEND = "django-cache"
 # Logger
 
 LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'handlers': {
-        'file': {
-            'level': 'INFO',
-            'class': 'logging.FileHandler',
-            'filename': BASE_DIR / 'log' / 'django.log',
-            'formatter': 'custom',
+    "version": 1,
+    "disable_existing_loggers": False,
+    "handlers": {
+        "file": {
+            "level": "INFO",
+            "class": "logging.FileHandler",
+            "filename": BASE_DIR / "log" / "django.log",
+            "formatter": "custom",
         },
     },
-    'formatters': {
-        'custom': {
-            'format': '{asctime} {levelname} {module}: {message}',
-            'style': '{',
+    "formatters": {
+        "custom": {
+            "format": "{asctime} {levelname} {module}: {message}",
+            "style": "{",
         },
     },
-    'root': {
-        'handlers': ['file'],
-        'level': 'INFO',
+    "root": {
+        "handlers": ["file"],
+        "level": "INFO",
     },
-    'loggers': {
-        'celery': {
-            'handlers': ['file'],
-            'level': 'INFO',
-            'propagate': False,
+    "loggers": {
+        "celery": {
+            "handlers": ["file"],
+            "level": "INFO",
+            "propagate": False,
         },
     },
 }

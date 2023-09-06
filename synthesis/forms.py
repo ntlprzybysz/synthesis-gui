@@ -1,5 +1,5 @@
 from django import forms
-from django.core.exceptions import ValidationError
+# from django.core.exceptions import ValidationError
 
 
 class InputForm(forms.Form):
@@ -65,8 +65,8 @@ class InputForm(forms.Form):
         """
         Substitutes all characters that aren't a letter with an underscore.
         """
-        project_name = self.cleaned_data['project_name']
-        cleaned_project_name = ''.join(c if c.isalpha() else '_' for c in project_name)
+        project_name = self.cleaned_data["project_name"]
+        cleaned_project_name = "".join(c if c.isalpha() else "_" for c in project_name)
         return cleaned_project_name
 
 
@@ -75,7 +75,7 @@ class InputForm(forms.Form):
         Discards all text input by subtituting it with an empty string.
         """
         return ""
-    
+
 
     '''
     def clean_ipa_input(self):
@@ -115,5 +115,3 @@ class InputForm(forms.Form):
             raise ValidationError(f"Used unallowed sign(s): {formatted_unallowed_signs}.")
         return ipa_input
     '''
-
-    

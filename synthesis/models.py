@@ -1,21 +1,18 @@
-# Django imports
-from django.conf import settings
-from django.db import models
-
-# General imports
 import logging
-from typing import Optional, Tuple
-
-# Folder management and command line tools
-from pathlib import Path
 import shutil
 import subprocess
+from pathlib import Path
+from typing import Optional, Tuple
+
+from django.conf import settings
+from django.db import models
 
 
 class Project:
     """
     Saves all data user provided about the project and synthesizes it.
     """
+
     def __init__(self, cleaned_form_input: dict, session_key: str) -> None:
         self.session_key = session_key
         self.name: str = cleaned_form_input["project_name"]
@@ -34,7 +31,8 @@ class Project:
     def synthesize(self) -> bool:
         """
         Uses user's IPA input and settings to generate an audio file with synthesised speech.
-        """      
+        """
+
         def _get_project_directory() -> Tuple[bool, Optional[str]]:
             """
             Prepares a new directory for the project.
@@ -46,7 +44,7 @@ class Project:
             except Exception as e:
                 return False, str(e)
             return True, None
-        
+
 
         def _create_file_for_synthesis() -> Tuple[bool, Optional[str]]:
             """
@@ -71,7 +69,9 @@ class Project:
             """
             cmd_synthesize_tacotron = f"tacotron-cli synthesize '{self.tacotron_checkpoint_file_path}' '{self.input_file_path}' --custom-seed 1111 --sep '|' -out '{self.project_dir_path}'"
             try:
-                subprocess.run(cmd_synthesize_tacotron, shell=True, check=True, timeout=300)
+                subprocess.run(
+                    cmd_synthesize_tacotron, shell=True, check=True, timeout=300
+                )
             except subprocess.TimeoutExpired:
                 return False, "Subprocess timed out."
             except subprocess.CalledProcessError as e:
@@ -90,7 +90,9 @@ class Project:
             """
             cmd_synthesize_waveglow = f"waveglow-cli synthesize '{self.waveglow_checkpoint_file_path}' '{self.project_dir_path}' -o --custom-seed 1111 --denoiser-strength 0.0005 --sigma 1.0"
             try:
-                subprocess.run(cmd_synthesize_waveglow, shell=True, check=True, timeout=300)
+                subprocess.run(
+                    cmd_synthesize_waveglow, shell=True, check=True, timeout=300
+                )
             except subprocess.TimeoutExpired:
                 return False, "Subprocess timed out."
             except subprocess.CalledProcessError as e:
@@ -99,31 +101,43 @@ class Project:
                 return False, str(e)
             return True, None
 
-        logger = logging.getLogger('django')
+        logger = logging.getLogger("django")
 
         success, error_message = _get_project_directory()
         if not success:
-            logger.error(f"session key {self.session_key} Failed to create a project directory: {error_message}")
+            logger.error(
+                f"session key {self.session_key} Failed to create a project directory: {error_message}"
+            )
             return False
         logger.info(f"session key {self.session_key} Created a project directory.")
 
         success, error_message = _create_file_for_synthesis()
         if not success:
-            logger.error(f"session key {self.session_key} Error during creating input file for synthesis: {error_message}")
+            logger.error(
+                f"session key {self.session_key} Error during creating input file for synthesis: {error_message}"
+            )
             return False
         logger.info(f"session key {self.session_key} Created input file for synthesis.")
 
         success, error_message = _create_mel_spectrogram()
         if not success:
-            logger.error(f"session key {self.session_key} Error during Tacotron synthesis: {error_message}")
+            logger.error(
+                f"session key {self.session_key} Error during Tacotron synthesis: {error_message}"
+            )
             return False
-        logger.info(f"session key {self.session_key} Finished processing project with Tacotron.")
+        logger.info(
+            f"session key {self.session_key} Finished processing project with Tacotron."
+        )
 
         success, error_message = _create_audio_files()
         if not success:
-            logger.error(f"session key {self.session_key} Error during Waveglow synthesis: {error_message}")
+            logger.error(
+                f"session key {self.session_key} Error during Waveglow synthesis: {error_message}"
+            )
             return False
-        logger.info(f"session key {self.session_key} Finished processing project with Waveglow.")
+        logger.info(
+            f"session key {self.session_key} Finished processing project with Waveglow."
+        )
 
         logger.info(f"session key {self.session_key} Synthesis done.")
         return True
