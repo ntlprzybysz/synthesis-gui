@@ -200,9 +200,9 @@
     </p>
     <button type="button" id="synthesize" class="primary-button">Synthesize</button>
     <p>
-        While the input is being processed, the button will display "Synthesizing...". This may take a few minutes.
+        While the input is being processed, the button will be replaced with:
     </p>
-    <button type="button" id="synthesizing" class="primary-button">Synthesizing...</button>  
+    <img src="{% static 'graphics/loading.webp' %}" width="25" height="25"> Synthesizing, please wait. This can take a few minutes."<br>
     <p>
         Once the audio is ready, you'll have options to play it back and download it.
     </p>

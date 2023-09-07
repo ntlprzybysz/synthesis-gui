@@ -714,8 +714,10 @@
                                                                                                         
                                                 {% elif session_key == "_failed" %}
                                                         <li>
-                                                                <button id="synthesize-button" type="submit">Synthesize</button><br>
-                                                                <p>Synthesis failed. Please make sure you followed the <a href="{% url 'help' %}">guidelines</a> and try again. If the problem persists, please contact the <a href="https://github.com/ntlprzybysz/synthesis-gui">maintainer</a>.</p>                                                        
+                                                                <button id="synthesize-button" type="submit">Synthesize</button>
+                                                        </li>
+                                                        <li>
+                                                                <p>Synthesis failed. Please make sure you followed the <a href="{% url 'help' %}">guidelines</a> and try again. If the problem persists, please contact the <a href="https://github.com/ntlprzybysz/synthesis-gui">maintainer</a>.</p>
                                                         </li>
                                                 
                                                 {% else %}
