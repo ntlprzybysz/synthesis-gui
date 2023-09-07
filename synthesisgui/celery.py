@@ -9,9 +9,6 @@ from django.conf import settings
 
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "synthesisgui.settings")
-#settings.configure()
-
-#SECRET_KEY = settings.SECRET_KEY
 
 app = Celery("synthesisgui")
 

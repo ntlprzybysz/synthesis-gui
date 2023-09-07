@@ -35,7 +35,7 @@ def check_task_status(session_key: str) -> int:
             file_exists = exists(output_file_path)
             if file_exists:
                 logger.info(
-                    f"session key {session_key} Confirmed existance of audio file: {output_file_path}."
+                    f"session key {session_key} Confirmed existence of audio file: {output_file_path}."
                 )
                 return 100
             else:

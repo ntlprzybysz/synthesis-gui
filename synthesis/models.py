@@ -1,4 +1,5 @@
 import logging
+import os
 import shutil
 import subprocess
 from pathlib import Path
@@ -66,8 +67,19 @@ class Project:
             with a command-line interface for Tacotron.
 
             Returns True if succeeds, otherwise False and the error message.
+
+            Note:
+            The first "if" makes sure the correct environment is used if the command is meant to run
+            as a Celery task when Celery works as a Deamon. For it to work, the file
+            /etc/systemd/system/celery.service should include the path variable:
+            # Environment=TACOTRON_CLI_PATH=/path/to/virtualenv/bin/tacotron-cli
             """
-            cmd_synthesize_tacotron = f"tacotron-cli synthesize '{self.tacotron_checkpoint_file_path}' '{self.input_file_path}' --custom-seed 1111 --sep '|' -out '{self.project_dir_path}'"
+            tacotron_cli_path = os.environ.get("TACOTRON_CLI_PATH")
+            if tacotron_cli_path:
+                cmd_synthesize_tacotron = f"{tacotron_cli_path} synthesize '{self.tacotron_checkpoint_file_path}' '{self.input_file_path}' --custom-seed 1111 --sep '|' -out '{self.project_dir_path}'"
+            else:
+                cmd_synthesize_tacotron = f"tacotron-cli synthesize '{self.tacotron_checkpoint_file_path}' '{self.input_file_path}' --custom-seed 1111 --sep '|' -out '{self.project_dir_path}'"
+
             try:
                 subprocess.run(
                     cmd_synthesize_tacotron, shell=True, check=True, timeout=300
@@ -87,8 +99,19 @@ class Project:
             with a command-line interface for Waveglow.
 
             Returns True if succeeds, otherwise False and the error message.
+
+            Note:
+            The first "if" makes sure the correct environment is used if the command is meant to run
+            as a Celery task when Celery works as a Deamon. For it to work, the file
+            /etc/systemd/system/celery.service should include the path variable:
+            # Environment=WAVEGLOW_CLI_PATH=/path/to/virtualenv/bin/waveglow-cli
             """
-            cmd_synthesize_waveglow = f"waveglow-cli synthesize '{self.waveglow_checkpoint_file_path}' '{self.project_dir_path}' -o --custom-seed 1111 --denoiser-strength 0.0005 --sigma 1.0"
+            waveglow_cli_path = os.environ.get("WAVEGLOW_CLI_PATH")
+            if waveglow_cli_path:
+                cmd_synthesize_waveglow = f"{waveglow_cli_path} synthesize '{self.waveglow_checkpoint_file_path}' '{self.project_dir_path}' -o --custom-seed 1111 --denoiser-strength 0.0005 --sigma 1.0"
+            else:
+                cmd_synthesize_waveglow = f"waveglow-cli synthesize '{self.waveglow_checkpoint_file_path}' '{self.project_dir_path}' -o --custom-seed 1111 --denoiser-strength 0.0005 --sigma 1.0"
+
             try:
                 subprocess.run(
                     cmd_synthesize_waveglow, shell=True, check=True, timeout=300
@@ -100,6 +123,7 @@ class Project:
             except Exception as e:
                 return False, str(e)
             return True, None
+
 
         logger = logging.getLogger("django")
 
