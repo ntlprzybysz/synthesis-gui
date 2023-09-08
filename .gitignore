@@ -1,5 +1,7 @@
-synthesis/static/tools/
-media/
 .env
+celerybeat-schedule.db
 conf/
+db.sqlite3
 log/
+media/
+synthesis/static/tools/
