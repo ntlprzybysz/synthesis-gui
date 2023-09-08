@@ -17,8 +17,9 @@
                 <ul>
                         <li id="navigation-title">
                                 <a id="home-link" href="{% url 'home' %}">
-                                        <img src="/static/graphics/logo_transparent_500x500.png" alt="The logo of the project, a simplified representaton of 
-                                a neural network with a sound wave in the centre."
+                                        <img src="/static/graphics/logo_transparent_500x500.png" alt="The logo of 
+                                        the project, a simplified representaton of a neural network with a sound wave 
+                                        in the centre."
                                                 style="float:left; width: 75px; height: 75px; margin-right: 25px;">
                                         <h1>Speech synthesis</h1>
                                 </a>
@@ -641,94 +642,43 @@
                                                 {{ form.sentence.label_tag }}
                                                 {{ form.sentence }}
                                         </li>
-                                                {% if task_queued == True %}
-                                                        <script>
-                                                                function updateProgress(sessionKey) {
-                                                                        var xhr = new XMLHttpRequest();
-                                                                        const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
-                                                                        xhr.onreadystatechange = function () {
-                                                                                if (xhr.readyState === 4 && xhr.status === 200) {
-                                                                                        var response = JSON.parse(xhr.responseText);
-                                                                                        var progress = response.progress;
+                                        {% if task_queued == True %}
+                                        <script>
+                                                // starts updating progress when the part of the page loads
+                                                document.addEventListener('DOMContentLoaded', function () {
+                                                        var sessionKey = "{{ session_key }}";
+                                                        var audioUrl = "{{ audio_url }}";
+                                                        var taskStatusUrl = "{% url 'task_status' %}";
+                                                        var helpUrl = "{% url 'help' %}";
+                                                        updateProgress(sessionKey, taskStatusUrl, audioUrl, helpUrl);
+                                                });
+                                        </script>
 
-                                                                                        if (progress === 100) {
-                                                                                                var progressDiv = document.getElementById('progress');
-                                                                                                var audioUrl = "{{ audio_url }}";
+                                        <li id="progress">
+                                                <p><img src="{% static 'graphics/loading.webp' %}" width="25"
+                                                                height="25"> Synthesizing, please wait. This can take a
+                                                        few minutes.</p>
+                                        </li>
 
-                                                                                                var htmlContent = `
-                                                                                                        <li>
-                                                                                                                <button id="synthesize-button" type="submit">Synthesize</button>
-                                                                                                        </li>
-                                                                                                        <li>
-                                                                                                                <audio controls>
-                                                                                                                        <source src="${audioUrl}" type="audio/wav">
-                                                                                                                        <p>Your browser does not support the audio tag.</p>
-                                                                                                                </audio>
-                                                                                                        </li>
-                                                                                                        <li>
-                                                                                                                <button id="download-button"
-                                                                                                                style="font-size: medium; font-family: Deja Vu Serif, sans-serif; text-align: center; width: min-content;"
-                                                                                                                download>Download</button>
-                                                                                                        </li>
-                                                                                                `;
+                                        {% elif session_key == "_failed" %}
+                                        <li>
+                                                <button id="synthesize-button" type="submit">Synthesize</button>
+                                        </li>
+                                        <li>
+                                                <p>Synthesis failed. Please make sure you followed the <a
+                                                                href="{% url 'help' %}">guidelines</a> and try again. If
+                                                        the problem persists, please contact the <a
+                                                                href="https://github.com/ntlprzybysz/synthesis-gui">maintainer</a>.
+                                                </p>
+                                        </li>
 
-                                                                                                progressDiv.innerHTML = htmlContent;
-
-                                                                                                var downloadBtn = document.getElementById('download-button');
-                                                                                                downloadBtn.addEventListener('click', function () {
-                                                                                                        event.preventDefault();
-                                                                                                        window.open(audioUrl, '_blank');
-                                                                                                });
-                                                                                        
-                                                                                        } else {
-                                                                                                var progressDiv = document.getElementById('progress');
-                                                                                                var audioUrl = "{{ audio_url }}";
-
-                                                                                                var htmlContent = `
-                                                                                                        <li>
-                                                                                                                <button id="synthesize-button" type="submit">Synthesize</button><br>
-                                                                                                                <p>Synthesis failed. Please make sure you followed the <a href="{% url 'help' %}">guidelines</a> and try again. If the problem persists, please contact the <a href="https://github.com/ntlprzybysz/synthesis-gui">maintainer</a>.</p>
-                                                                                                        </li>
-                                                                                                `;
-
-                                                                                                progressDiv.innerHTML = htmlContent;
-                                                                                        }
-                                                                                }
-                                                                        };
-                                                                        xhr.open('POST', '{% url "task_status" %}', true);
-                                                                        xhr.setRequestHeader("X-CSRFToken", csrftoken); 
-                                                                        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-                                                                        xhr.send('session_key=' + sessionKey);
-                                                                }
-
-                                                                // Start updating progress when the page loads
-                                                                document.addEventListener('DOMContentLoaded', function () {
-                                                                        var sessionKey = "{{ session_key }}";
-                                                                        updateProgress(sessionKey);
-                                                                });
-                                                        </script>
-                                                        
-                                                        <li id="progress">
-                                                                <p><img src="{% static 'graphics/loading.webp' %}" width="25" height="25"> Synthesizing, please wait. This can take a few minutes.</p>
-                                                        </li>
-                                                                                                        
-                                                {% elif session_key == "_failed" %}
-                                                        <li>
-                                                                <button id="synthesize-button" type="submit">Synthesize</button>
-                                                        </li>
-                                                        <li>
-                                                                <p>Synthesis failed. Please make sure you followed the <a href="{% url 'help' %}">guidelines</a> and try again. If the problem persists, please contact the <a href="https://github.com/ntlprzybysz/synthesis-gui">maintainer</a>.</p>
-                                                        </li>
-                                                
-                                                {% else %}
-                                                        <li>
-                                                                <button id="synthesize-button" type="submit">Synthesize</button>
-                                                        </li>
-                                                {% endif %}
+                                        {% else %}
+                                        <li>
+                                                <button id="synthesize-button" type="submit">Synthesize</button>
+                                        </li>
+                                        {% endif %}
                                 </ul>
-                        </li></div> <!-- TODO missing tags -->
-                        </div>     
-
+                        </div>
                 </form>
         </div>
         {% endblock %}

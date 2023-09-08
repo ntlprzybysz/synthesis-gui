@@ -125,3 +125,58 @@ function loadProject() {
 
     input.click();
 }
+
+function updateProgress(sessionKey, taskStatusUrl, audioUrl, helpUrl) {
+    var xhr = new XMLHttpRequest();
+    const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            var response = JSON.parse(xhr.responseText);
+            var progress = response.progress;
+
+            if (progress === 100) {
+                var progressDiv = document.getElementById('progress');
+
+                var htmlContent = `
+                                    <li>
+                                            <button id="synthesize-button" type="submit">Synthesize</button>
+                                    </li>
+                                    <li>
+                                            <audio controls>
+                                                    <source src="${audioUrl}" type="audio/wav">
+                                                    <p>Your browser does not support the audio tag.</p>
+                                            </audio>
+                                    </li>
+                                    <li>
+                                            <button id="download-button"
+                                            style="font-size: medium; font-family: Deja Vu Serif, sans-serif; text-align: center; width: min-content;"
+                                            download>Download</button>
+                                    </li>
+                            `;
+
+                progressDiv.innerHTML = htmlContent;
+
+                var downloadBtn = document.getElementById('download-button');
+                downloadBtn.addEventListener('click', function () {
+                    event.preventDefault();
+                    window.open(audioUrl, '_blank');
+                });
+
+            } else {
+                var progressDiv = document.getElementById('progress');
+                var htmlContent = `
+                                    <li>
+                                            <button id="synthesize-button" type="submit">Synthesize</button><br>
+                                            <p>Synthesis failed. Please make sure you followed the <a href="${audioUrl}">guidelines</a> and try again. If the problem persists, please contact the <a href="https://github.com/ntlprzybysz/synthesis-gui">maintainer</a>.</p>
+                                    </li>
+                                `;
+
+                progressDiv.innerHTML = htmlContent;
+            }
+        }
+    };
+    xhr.open('POST', taskStatusUrl, true);
+    xhr.setRequestHeader("X-CSRFToken", csrftoken);
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhr.send('session_key=' + sessionKey);
+}
