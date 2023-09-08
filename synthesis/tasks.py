@@ -46,6 +46,7 @@ def clean_media_folder() -> None:
     except:
         logger.warning(f"Failed to clear media directory '{media_dir_path}'")
 
+
 '''
 @app.task
 def print_scheduled_task_msg() -> None:
@@ -55,4 +56,5 @@ def print_scheduled_task_msg() -> None:
 
     except Exception as e:
         logger.warning(f"Failed to print a scheduled test message: {str(e)}")
+
 '''

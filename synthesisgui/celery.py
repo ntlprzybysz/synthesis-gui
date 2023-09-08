@@ -36,11 +36,11 @@ app.conf.beat_schedule = {
         "task": "synthesis.tasks.clean_media_folder",
         "schedule": crontab(minute=0, hour=0, day_of_week=4),  # Runs on Thursday at midnight
     },
+
     #"scheduled-test-task": {
     #    "task": "synthesis.tasks.print_scheduled_task_msg",
     #    "schedule": crontab(minute="*"),
     #},
-
 }
 
 app.conf.timezone = "Europe/Berlin"
