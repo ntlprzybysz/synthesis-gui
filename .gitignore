@@ -1,7 +1,9 @@
+*.pyc
+*.sqlite3
 .env
+__pycache__/
 celerybeat-schedule.db
 conf/
-*.sqlite3
 log/
 media/
 synthesis/static/tools/
