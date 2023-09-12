@@ -159,11 +159,8 @@ function loadProject() {
  *
  * @param {string} sessionKey - The session key for the request.
  * @param {object} urls - An object containing various URLs generated dynamically in the main html template.
- * @returns {number} - The current progress status.
  */
 function updateProgress(sessionKey, urls) {
-    var currentStatus = 0;
-
     var xhr = new XMLHttpRequest();
     const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
     xhr.onreadystatechange = function () {
@@ -254,8 +251,6 @@ function updateProgress(sessionKey, urls) {
     xhr.setRequestHeader("X-CSRFToken", csrftoken);
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     xhr.send('session_key=' + sessionKey);
-
-    return progress;
 }
 
 
