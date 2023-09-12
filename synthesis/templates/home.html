@@ -642,23 +642,23 @@
                                                 {{ form.sentence.label_tag }}
                                                 {{ form.sentence }}
                                         </li>
+
                                         {% if task_queued == True %}
+                                        <li id="progress">
+                                                <p>.................. 0% Synthesizing, please wait. This can take a
+                                                        few minutes.</p>
+                                        </li>
                                         <script>
-                                                // starts updating progress when the part of the page loads
                                                 document.addEventListener('DOMContentLoaded', function () {
                                                         var sessionKey = "{{ session_key }}";
                                                         var audioUrl = "{{ audio_url }}";
                                                         var taskStatusUrl = "{% url 'task_status' %}";
                                                         var helpUrl = "{% url 'help' %}";
-                                                        updateProgress(sessionKey, taskStatusUrl, audioUrl, helpUrl);
+
+                                                        updateAndSchedule(sessionKey, taskStatusUrl, audioUrl, helpUrl);
                                                 });
                                         </script>
 
-                                        <li id="progress">
-                                                <p><img src="{% static 'graphics/loading.webp' %}" width="25"
-                                                                height="25"> Synthesizing, please wait. This can take a
-                                                        few minutes.</p>
-                                        </li>
 
                                         {% elif session_key == "_failed" %}
                                         <li>

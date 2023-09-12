@@ -126,7 +126,9 @@ function loadProject() {
     input.click();
 }
 
-function updateProgress(sessionKey, taskStatusUrl, audioUrl, helpUrl) {
+function updateProgress(sessionKey, taskStatusUrl, audioUrl, helpUrl) {    
+    var currentStatus = 0;
+    
     var xhr = new XMLHttpRequest();
     const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
     xhr.onreadystatechange = function () {
@@ -161,13 +163,51 @@ function updateProgress(sessionKey, taskStatusUrl, audioUrl, helpUrl) {
                     event.preventDefault();
                     window.open(audioUrl, '_blank');
                 });
+            
+            } else if (progress >= 0 && progress <= 100) {
+                let barStatus = ".................. 0%";
+                switch (progress)
+                {
+                    case 15:
+                        barStatus = "|||............... 15%";
+                        break;
+
+                    case 30:
+                        barStatus = "||||||............ 30%";
+                        break;
+
+                    case 45:
+                        barStatus = "|||||||||......... 45%";
+                        break;
+
+                    case 60:
+                        barStatus = "||||||||||||...... 60%";
+                        break;
+
+                    case 75:
+                        barStatus = "|||||||||||||||... 75%";
+                        break;
+
+                    default:
+                        barStatus = ".................. 0%";
+                }
+
+                var progressDiv = document.getElementById('progress');
+                var htmlContent = `
+                                    <li>
+                                        <p>${barStatus} Synthesizing, please wait. This can take a
+                                        few minutes.</p>
+                                    </li>
+                                `;
+
+                progressDiv.innerHTML = htmlContent;
 
             } else {
                 var progressDiv = document.getElementById('progress');
                 var htmlContent = `
                                     <li>
                                             <button id="synthesize-button" type="submit">Synthesize</button><br>
-                                            <p>Synthesis failed. Please make sure you followed the <a href="${audioUrl}">guidelines</a> and try again. If the problem persists, please contact the <a href="https://github.com/ntlprzybysz/synthesis-gui">maintainer</a>.</p>
+                                            <p>Synthesis failed. Please make sure you followed the <a href="${helpUrl}">guidelines</a> and try again. If the problem persists, please contact the <a href="https://github.com/ntlprzybysz/synthesis-gui">maintainer</a>.</p>
                                     </li>
                                 `;
 
@@ -179,4 +219,21 @@ function updateProgress(sessionKey, taskStatusUrl, audioUrl, helpUrl) {
     xhr.setRequestHeader("X-CSRFToken", csrftoken);
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     xhr.send('session_key=' + sessionKey);
+
+    return progress;
+}
+
+
+function updateAndSchedule(sessionKey, taskStatusUrl, audioUrl, helpUrl) {
+    console.log("Updating progress...");
+    updateProgress(sessionKey, taskStatusUrl, audioUrl, helpUrl);
+
+    var currentStatus = document.getElementById('progress').innerHTML;
+    console.log("Current status: " + currentStatus + ", contains: " + currentStatus.includes("Synthesizing, please wait."))
+    if (currentStatus.includes("Synthesizing, please wait.")) {
+            console.log("Scheduling the next update...");
+            setTimeout(function () {
+                updateAndSchedule(sessionKey, taskStatusUrl, audioUrl, helpUrl);
+            }, 1000);   // updates status in 1 sec
+    }
 }

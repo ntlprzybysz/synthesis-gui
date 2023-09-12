@@ -51,14 +51,13 @@ def check_task_status(session_key: str) -> int:
             return -1
 
     logger = logging.getLogger("django")
-    logger.info(f"session key {session_key} Started checking task progress.")
 
     state = 0
     start_time = time.time()
     elapsed_time = 0
     log_file_path = settings.LOGGING_ROOT / "django.log"
 
-    while elapsed_time < 300 and (state >= 0 and state < 100):
+    while (elapsed_time < 300):
         log_file_content = str()
         try:
             with open(log_file_path, "r") as log_file:
