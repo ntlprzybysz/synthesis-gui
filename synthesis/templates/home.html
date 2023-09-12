@@ -645,17 +645,21 @@
 
                                         {% if task_queued == True %}
                                         <li id="progress">
-                                                <p>.................. 0% Synthesizing, please wait. This can take a
+                                                <p><img src="{% static 'graphics/loading.webp' %}" width="25"
+                                                        height="25"> 0% Synthesizing, please wait. This can take a
                                                         few minutes.</p>
                                         </li>
                                         <script>
                                                 document.addEventListener('DOMContentLoaded', function () {
+                                                        var urls = {
+                                                                audioUrl: "{{ audio_url }}",
+                                                                taskStatusUrl: "{% url 'task_status' %}",
+                                                                helpUrl: "{% url 'help' %}",
+                                                                loadingImageUrl: "{% static 'graphics/loading.webp' %}",
+                                                        };
                                                         var sessionKey = "{{ session_key }}";
-                                                        var audioUrl = "{{ audio_url }}";
-                                                        var taskStatusUrl = "{% url 'task_status' %}";
-                                                        var helpUrl = "{% url 'help' %}";
 
-                                                        updateAndSchedule(sessionKey, taskStatusUrl, audioUrl, helpUrl);
+                                                        updateAndSchedule(sessionKey, urls);
                                                 });
                                         </script>
 

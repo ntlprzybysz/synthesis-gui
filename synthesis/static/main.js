@@ -1,3 +1,8 @@
+/**
+ * Inserts the given symbol into the text field at the current cursor position.
+ *
+ * @param {string} symbol - The symbol to be inserted.
+ */
 function insertSymbol(symbol) {
     var textFieldValue = document.getElementById("ipa-input-field");
     var cursorPosition = textFieldValue.selectionStart;
@@ -12,6 +17,11 @@ function insertSymbol(symbol) {
 }
 
 
+/**
+ * Saves project information to a text file with a sanitized filename and initiates the download.
+ *
+ * @param {Object} projectInformation - An object containing project-related information.
+ */
 function saveFile(projectInformation) {
     var fileName = "synthesis_" + projectInformation["projectName"];
     var pattern = /[^a-z]/gi;
@@ -32,6 +42,9 @@ function saveFile(projectInformation) {
 }
 
 
+/**
+ * Saves user input from the project name and text input fields to a text file.
+ */
 function saveTextInput() {
     var projectNameFieldValue = document.getElementById("project-name-field").value;
     var textFieldValue = document.getElementById("text-input-field").value;
@@ -45,6 +58,9 @@ function saveTextInput() {
 }
 
 
+/**
+ * Saves user input from the project name and IPA input fields to a text file.
+ */
 function saveIpaInput() {
     var projectNameFieldValue = document.getElementById("project-name-field").value;
     var ipaFieldValue = document.getElementById("ipa-input-field").value;
@@ -58,6 +74,9 @@ function saveIpaInput() {
 }
 
 
+/**
+ * Saves project information to a text file.
+ */
 function saveProject() {
     var projectNameFieldValue = document.getElementById("project-name-field").value;
     var textFieldValue = document.getElementById("text-input-field").value;
@@ -79,6 +98,11 @@ function saveProject() {
 }
 
 
+/**
+ * Loads project information from a text file and populates corresponding input fields.
+ *
+ * @param {File} file - The file containing project information.
+ */
 function loadInput(file) {
     const reader = new FileReader();
 
@@ -113,6 +137,9 @@ function loadInput(file) {
 }
 
 
+/**
+ * Allows the user to select and load a project file from their local system.
+ */
 function loadProject() {
     const input = document.createElement("input");
     input.type = "file";
@@ -126,9 +153,17 @@ function loadProject() {
     input.click();
 }
 
-function updateProgress(sessionKey, taskStatusUrl, audioUrl, helpUrl) {    
+
+/**
+ * Updates the progress status on the web page based on server response on the task status.
+ *
+ * @param {string} sessionKey - The session key for the request.
+ * @param {object} urls - An object containing various URLs generated dynamically in the main html template.
+ * @returns {number} - The current progress status.
+ */
+function updateProgress(sessionKey, urls) {
     var currentStatus = 0;
-    
+
     var xhr = new XMLHttpRequest();
     const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
     xhr.onreadystatechange = function () {
@@ -145,7 +180,7 @@ function updateProgress(sessionKey, taskStatusUrl, audioUrl, helpUrl) {
                                     </li>
                                     <li>
                                             <audio controls>
-                                                    <source src="${audioUrl}" type="audio/wav">
+                                                    <source src="${urls.audioUrl}" type="audio/wav">
                                                     <p>Your browser does not support the audio tag.</p>
                                             </audio>
                                     </li>
@@ -161,41 +196,41 @@ function updateProgress(sessionKey, taskStatusUrl, audioUrl, helpUrl) {
                 var downloadBtn = document.getElementById('download-button');
                 downloadBtn.addEventListener('click', function () {
                     event.preventDefault();
-                    window.open(audioUrl, '_blank');
+                    window.open(urls.audioUrl, '_blank');
                 });
-            
+
             } else if (progress >= 0 && progress <= 100) {
-                let barStatus = ".................. 0%";
-                switch (progress)
-                {
+                let barStatus = "0%";
+                switch (progress) {
                     case 15:
-                        barStatus = "|||............... 15%";
+                        barStatus = "15%";
                         break;
 
                     case 30:
-                        barStatus = "||||||............ 30%";
+                        barStatus = "30%";
                         break;
 
                     case 45:
-                        barStatus = "|||||||||......... 45%";
+                        barStatus = "45%";
                         break;
 
                     case 60:
-                        barStatus = "||||||||||||...... 60%";
+                        barStatus = "60%";
                         break;
 
                     case 75:
-                        barStatus = "|||||||||||||||... 75%";
+                        barStatus = "75%";
                         break;
 
                     default:
-                        barStatus = ".................. 0%";
+                        barStatus = "0%";
                 }
 
                 var progressDiv = document.getElementById('progress');
                 var htmlContent = `
                                     <li>
-                                        <p>${barStatus} Synthesizing, please wait. This can take a
+                                        <p><img src="${urls.loadingImageUrl}" width="25"
+                                        height="25"> ${barStatus} Synthesizing, please wait. This can take a
                                         few minutes.</p>
                                     </li>
                                 `;
@@ -207,7 +242,7 @@ function updateProgress(sessionKey, taskStatusUrl, audioUrl, helpUrl) {
                 var htmlContent = `
                                     <li>
                                             <button id="synthesize-button" type="submit">Synthesize</button><br>
-                                            <p>Synthesis failed. Please make sure you followed the <a href="${helpUrl}">guidelines</a> and try again. If the problem persists, please contact the <a href="https://github.com/ntlprzybysz/synthesis-gui">maintainer</a>.</p>
+                                            <p>Synthesis failed. Please make sure you followed the <a href="${urls.helpUrl}">guidelines</a> and try again. If the problem persists, please contact the <a href="https://github.com/ntlprzybysz/synthesis-gui">maintainer</a>.</p>
                                     </li>
                                 `;
 
@@ -215,7 +250,7 @@ function updateProgress(sessionKey, taskStatusUrl, audioUrl, helpUrl) {
             }
         }
     };
-    xhr.open('POST', taskStatusUrl, true);
+    xhr.open('POST', urls.taskStatusUrl, true);
     xhr.setRequestHeader("X-CSRFToken", csrftoken);
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     xhr.send('session_key=' + sessionKey);
@@ -224,16 +259,19 @@ function updateProgress(sessionKey, taskStatusUrl, audioUrl, helpUrl) {
 }
 
 
-function updateAndSchedule(sessionKey, taskStatusUrl, audioUrl, helpUrl) {
-    console.log("Updating progress...");
-    updateProgress(sessionKey, taskStatusUrl, audioUrl, helpUrl);
+/**
+ * Updates the progress and schedules periodic updates.
+ *
+ * @param {string} sessionKey - The session key for tracking the progress.
+ * @param {object} urls - An object containing various URLs generated dynamically in the main html template.
+ */
+function updateAndSchedule(sessionKey, urls) {
+    updateProgress(sessionKey, urls);
 
     var currentStatus = document.getElementById('progress').innerHTML;
-    console.log("Current status: " + currentStatus + ", contains: " + currentStatus.includes("Synthesizing, please wait."))
     if (currentStatus.includes("Synthesizing, please wait.")) {
-            console.log("Scheduling the next update...");
-            setTimeout(function () {
-                updateAndSchedule(sessionKey, taskStatusUrl, audioUrl, helpUrl);
-            }, 1000);   // updates status in 1 sec
+        setTimeout(function () {
+            updateAndSchedule(sessionKey, urls);
+        }, 1000);
     }
 }
