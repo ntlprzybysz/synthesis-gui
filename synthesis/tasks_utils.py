@@ -1,8 +1,7 @@
 import logging
 import time
-import re
+from datetime import datetime
 from os.path import exists
-from datetime import datetime, timedelta
 
 from django.conf import settings
 
@@ -12,6 +11,7 @@ def check_task_status(session_key: str) -> int:
     Checks the progress of the synthesis task using log messages and the project's session key.
     Returns a positive value that represents the current state of the task, negative in case of errors.
     """
+
     def _read_log_from_file() -> list[str]:
         log = list()
         try:
@@ -22,30 +22,24 @@ def check_task_status(session_key: str) -> int:
         finally:
             return log
 
-
-    def _get_logs_last_10_mins(log: list[str]) -> list[str]:
+    def _get_project_entries(log: list[str]) -> list[str]:
         """
-        Returns log entries from the last 10 minutes based on their timestamps.
+        Returns log entries from the last project started by the user (every user
+        has a unique session_key, but the same user can start multiple projects).
         """
-        current_time = datetime.now()
+        project_entries = list()
 
-        entries_last_10_mins = list()
-        for entry in log:
-            log_pattern = r'\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2},?\d{0,3} \w+ [^:]+: .+'
-            if re.match(log_pattern, entry):
-                splitted_line = entry.split()
-                log_timestamp = splitted_line[0] + " " + splitted_line[1]
-                try:
-                    log_format = "%Y-%m-%d %H:%M:%S,%f"
-                    log_datetime = datetime.strptime(log_timestamp, log_format)
+        first_entry_index = -1
+        expected_content = f"{session_key} Created new project."
+        for index, entry in enumerate(log):
+            if expected_content in entry:
+                first_entry_index = index
 
-                    if current_time - log_datetime <= timedelta(minutes=10):
-                        entries_last_10_mins.append(entry)
-                except ValueError:
-                    continue
-                    
-        return entries_last_10_mins
+        for index, entry in enumerate(log):
+            if index >= first_entry_index:
+                project_entries.append(entry)
 
+        return project_entries
 
     def _get_last_relevant_entry(log: list[str]) -> str:
         """
@@ -58,9 +52,11 @@ def check_task_status(session_key: str) -> int:
                 if "tasks:" in entry or "models:" in entry or "trace:" in entry:
                     last_relevant_entry = entry
         return last_relevant_entry
-                    
 
     def _get_current_task_status(entry: str) -> int:
+        """
+        Returns the current task status as an integer code based on the given entry from the log.
+        """
         if "tasks" in entry and "Created new project. Sending for processing" in entry:
             return 15
 
@@ -71,7 +67,7 @@ def check_task_status(session_key: str) -> int:
             return 45
 
         elif "models" in entry and "Finished processing project with Tacotron" in entry:
-            return 60
+            return 50
 
         elif "models" in entry and "Finished processing project with Waveglow" in entry:
             return 75
@@ -99,17 +95,26 @@ def check_task_status(session_key: str) -> int:
             )
             return -1
 
-    '''
-    def _check_times_revisited(log_file_content, state: int) -> int:
+    def _get_time_in_state(log, state: int) -> int:
         """
-        Checks how many times the task has been in this state based on logs.
+        Returns how many seconds have elapsed since the state was visited
+        for the first time in this project.
         """
-        revisited = 0
-        for line in log_file_content:
-            if f"{session_key} State: {state}%" in line:
-                revisited += 1
-        return revisited
-    '''
+        first_entry = log[0]
+        if len(first_entry) == 0:
+            return -1
+
+        first_entry = first_entry.split()
+        start_time = first_entry[0] + " " + first_entry[1]
+        entry_format = "%Y-%m-%d %H:%M:%S,%f"
+        start_time = datetime.strptime(start_time, entry_format)
+
+        current_time = datetime.now()
+
+        elapsed_time = current_time - start_time
+        elapsed_time = int(elapsed_time.total_seconds())
+
+        return elapsed_time
 
     logger = logging.getLogger("django")
 
@@ -121,22 +126,36 @@ def check_task_status(session_key: str) -> int:
     while (time_in_state < 300) and (state_changed == False):
         log = _read_log_from_file()
         if not log:
-            logger.error(f"session key {session_key} No logs available to check status.")
+            logger.error(
+                f"session key {session_key} No logs available to check status."
+            )
             return -1
-   
-        log = _get_logs_last_10_mins(log)
+
+        log = _get_project_entries(log)
         if not log:
-            logger.error(f"session key {session_key} No logs from last 10 minutes available to check status.")
+            logger.error(
+                f"session key {session_key} No logs from last 10 minutes available to check status."
+            )
             return -1
-       
+
         last_entry = _get_last_relevant_entry(log)
         if len(last_entry) == 0:
-            logger.error(f"session key {session_key} No relevant log line from last 10 minutes available to check status.")
+            logger.error(
+                f"session key {session_key} No relevant log line from last 10 minutes available to check status."
+            )
             return -1
 
         current_state = _get_current_task_status(last_entry)
-        
-        #time_in_state = _check_times_revisited(logs, new_state)
+
+        elapsed_time = _get_time_in_state(log, current_state)
+        if elapsed_time < 0:
+            logger.error(
+                f"session key {session_key} Couldn't calculate elapsed time in state {current_state}%."
+            )
+            return -1
+        if elapsed_time > 300:
+            logger.error(f"session key {session_key} Timed out {current_state}%.")
+            return -1
 
         if current_state < state or current_state > state:
             state = current_state
@@ -146,7 +165,7 @@ def check_task_status(session_key: str) -> int:
 
         if current_state >= 0:
             logger.info(
-                f"session key {session_key} State: {current_state}%, time in state: {time_in_state}s of allowed 300s."
+                f"session key {session_key} State: {current_state}%, time in state: {elapsed_time}s/300s."
             )
 
         time.sleep(1)

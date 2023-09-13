@@ -197,37 +197,11 @@ function updateProgress(sessionKey, urls) {
                 });
 
             } else if (progress >= 0 && progress <= 100) {
-                let barStatus = "0%";
-                switch (progress) {
-                    case 15:
-                        barStatus = "15%";
-                        break;
-
-                    case 30:
-                        barStatus = "30%";
-                        break;
-
-                    case 45:
-                        barStatus = "45%";
-                        break;
-
-                    case 60:
-                        barStatus = "60%";
-                        break;
-
-                    case 75:
-                        barStatus = "75%";
-                        break;
-
-                    default:
-                        barStatus = "0%";
-                }
-
                 var progressDiv = document.getElementById('progress');
                 var htmlContent = `
                                     <li>
                                         <p><img src="${urls.loadingImageUrl}" width="25"
-                                        height="25"> ${barStatus} Synthesizing, please wait. This can take a
+                                        height="25"> ${progress}% Synthesizing, please wait. This can take a
                                         few minutes.</p>
                                     </li>
                                 `;
