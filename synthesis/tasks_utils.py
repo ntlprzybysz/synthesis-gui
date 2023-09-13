@@ -12,58 +12,74 @@ def check_task_status(session_key: str) -> int:
     Checks the progress of the synthesis task using log messages and the project's session key.
     Returns a positive value that represents the current state of the task, negative in case of errors.
     """
-    def _get_logs_from_file() -> list[str]:
-        log_file_content = list()
+    def _read_log_from_file() -> list[str]:
+        log = list()
         try:
             with open(log_file_path, "r") as log_file:
-                log_file_content = log_file.readlines()
+                log = log_file.readlines()
         except Exception as e:
             logger.error(f"session key {session_key} Couldn't open log file.")
         finally:
-            return log_file_content
+            return log
 
 
-    def _get_logs_from_last_10_mins(logs: list[str]) -> list[str]:
+    def _get_logs_last_10_mins(log: list[str]) -> list[str]:
+        """
+        Returns log entries from the last 10 minutes based on their timestamps.
+        """
         current_time = datetime.now()
 
-        logs_from_last_10_mins = list()
-        for line in logs:
+        entries_last_10_mins = list()
+        for entry in log:
             log_pattern = r'\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2},?\d{0,3} \w+ [^:]+: .+'
-            if re.match(log_pattern, line):
-                splitted_line = line.split()
+            if re.match(log_pattern, entry):
+                splitted_line = entry.split()
                 log_timestamp = splitted_line[0] + " " + splitted_line[1]
                 try:
                     log_format = "%Y-%m-%d %H:%M:%S,%f"
                     log_datetime = datetime.strptime(log_timestamp, log_format)
 
                     if current_time - log_datetime <= timedelta(minutes=10):
-                        logs_from_last_10_mins.append(line)
+                        entries_last_10_mins.append(entry)
                 except ValueError:
                     continue
                     
-        return logs_from_last_10_mins
+        return entries_last_10_mins
 
 
-    def _check_current_task_status(line: str) -> int:
-        if "tasks" in line and "Created new project. Sending for processing" in line:
+    def _get_last_relevant_entry(log: list[str]) -> str:
+        """
+        Returns the last relevant log entry from a list of logs. For an entry to be relavant,
+        it must contain key words associated with task status description.
+        """
+        last_relevant_entry = ""
+        for entry in log:
+            if session_key in entry or "trace:" in entry:
+                if "tasks:" in entry or "models:" in entry or "trace:" in entry:
+                    last_relevant_entry = entry
+        return last_relevant_entry
+                    
+
+    def _get_current_task_status(entry: str) -> int:
+        if "tasks" in entry and "Created new project. Sending for processing" in entry:
             return 15
 
-        elif "models" in line and "Created a project directory" in line:
+        elif "models" in entry and "Created a project directory" in entry:
             return 30
 
-        elif "models" in line and "Created input file for synthesis" in line:
+        elif "models" in entry and "Created input file for synthesis" in entry:
             return 45
 
-        elif "models" in line and "Finished processing project with Tacotron" in line:
+        elif "models" in entry and "Finished processing project with Tacotron" in entry:
             return 60
 
-        elif "models" in line and "Finished processing project with Waveglow" in line:
+        elif "models" in entry and "Finished processing project with Waveglow" in entry:
             return 75
 
-        elif "models" in line and "Synthesis done" in line:
+        elif "models" in entry and "Synthesis done" in entry:
             return 95
 
-        elif "trace" in line and "True" in line:
+        elif "trace" in entry and "True" in entry:
             output_file_path = settings.MEDIA_ROOT / session_key / "1-1.npy.wav"
             file_exists = exists(output_file_path)
             if file_exists:
@@ -79,7 +95,7 @@ def check_task_status(session_key: str) -> int:
 
         else:
             logger.error(
-                f"session key {session_key} Returning task status -1 for line: {line}."
+                f"session key {session_key} Returning task status -1 for line: {entry}."
             )
             return -1
 
@@ -103,35 +119,34 @@ def check_task_status(session_key: str) -> int:
     time_in_state = 0
 
     while (time_in_state < 300) and (state_changed == False):
-        log_file_content = _get_logs_from_file()
-        if not log_file_content:
+        log = _read_log_from_file()
+        if not log:
             logger.error(f"session key {session_key} No logs available to check status.")
             return -1
    
-        log_file_content = _get_logs_from_last_10_mins(log_file_content)
-        if not log_file_content:
+        log = _get_logs_last_10_mins(log)
+        if not log:
             logger.error(f"session key {session_key} No logs from last 10 minutes available to check status.")
             return -1
+       
+        last_entry = _get_last_relevant_entry(log)
+        if len(last_entry) == 0:
+            logger.error(f"session key {session_key} No relevant log line from last 10 minutes available to check status.")
+            return -1
 
-        last_session_log = str()
-        for line in log_file_content:
-            if session_key in line or "trace:" in line:
-                if "tasks:" in line or "models:" in line or "trace:" in line:
-                    last_session_log = line
-
-        new_state = _check_current_task_status(last_session_log)
+        current_state = _get_current_task_status(last_entry)
         
-        #time_in_state = _check_times_revisited(log_file_content, new_state)
+        #time_in_state = _check_times_revisited(logs, new_state)
 
-        if new_state < state or new_state > state:
-            state = new_state
+        if current_state < state or current_state > state:
+            state = current_state
             state_changed = True
         else:
             state_changed = False
 
-        if new_state >= 0:
+        if current_state >= 0:
             logger.info(
-                f"session key {session_key} State: {new_state}%, time in state: {time_in_state}s of allowed 300s."
+                f"session key {session_key} State: {current_state}%, time in state: {time_in_state}s of allowed 300s."
             )
 
         time.sleep(1)
