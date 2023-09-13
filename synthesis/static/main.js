@@ -238,8 +238,8 @@ function updateProgress(sessionKey, urls) {
                 var progressDiv = document.getElementById('progress');
                 var htmlContent = `
                                     <li>
-                                            <button id="synthesize-button" type="submit">Synthesize</button><br>
-                                            <p>Synthesis failed. Please make sure you followed the <a href="${urls.helpUrl}">guidelines</a> and try again. If the problem persists, please contact the <a href="https://github.com/ntlprzybysz/synthesis-gui">maintainer</a>.</p>
+                                            <button id="synthesize-button" type="submit">Synthesize</button>
+                                            <p> Synthesis failed. Please make sure you followed the <a href="${urls.helpUrl}">guidelines</a> and try again. If the problem persists, please contact the <a href="https://github.com/ntlprzybysz/synthesis-gui">maintainer</a>.</p>
                                     </li>
                                 `;
 
