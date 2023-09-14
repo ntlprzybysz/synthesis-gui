@@ -155,6 +155,72 @@ function loadProject() {
 
 
 /**
+ * Displays the audio playback and download in the output part of the website.
+ */
+function showSuccess(audioUrl) {
+    var progressDiv = document.getElementById('progress');
+
+    var htmlContent = `
+                        <li>
+                                <button id="synthesize-button" type="submit">Synthesize</button>
+                        </li>
+                        <li>
+                                <audio controls>
+                                        <source src="${audioUrl}" type="audio/wav">
+                                        <p>Your browser does not support the audio tag.</p>
+                                </audio>
+                        </li>
+                        <li>
+                                <button id="download-button"
+                                style="font-size: medium; font-family: Deja Vu Serif, sans-serif; text-align: center; width: min-content;"
+                                download>Download</button>
+                        </li>
+                `;
+
+    progressDiv.innerHTML = htmlContent;
+
+    var downloadBtn = document.getElementById('download-button');
+    downloadBtn.addEventListener('click', function () {
+        event.preventDefault();
+        window.open(audioUrl, '_blank');
+    });
+}
+
+
+/**
+ * Updates the progress in the output part of the website.
+ */
+function showProgress(loadingImageUrl, progress) {
+    var progressDiv = document.getElementById('progress');
+    var htmlContent = `
+                        <li>
+                            <p><img src="${loadingImageUrl}" width="25"
+                            height="25"> ${progress}% Synthesizing, please wait. This can take a
+                            few minutes.</p>
+                        </li>
+                    `;
+
+    progressDiv.innerHTML = htmlContent;
+}
+
+
+/**
+ * Displays an error message in the output part of the website.
+ */
+function showFailed(helpUrl) {
+    var progressDiv = document.getElementById('progress');
+    var htmlContent = `
+                        <li>
+                                <button id="synthesize-button" type="submit">Synthesize</button>
+                                <p> Synthesis failed. Please make sure you followed the <a href="${helpUrl}">guidelines</a> and try again. If the problem persists, please contact the <a href="https://github.com/ntlprzybysz/synthesis-gui">maintainer</a>.</p>
+                        </li>
+                    `;
+
+    progressDiv.innerHTML = htmlContent;
+}
+
+
+/**
  * Updates the progress status on the web page based on server response on the task status.
  *
  * @param {string} sessionKey - The session key for the request.
@@ -169,55 +235,11 @@ function updateProgress(sessionKey, urls) {
             var progress = response.progress;
 
             if (progress === 100) {
-                var progressDiv = document.getElementById('progress');
-
-                var htmlContent = `
-                                    <li>
-                                            <button id="synthesize-button" type="submit">Synthesize</button>
-                                    </li>
-                                    <li>
-                                            <audio controls>
-                                                    <source src="${urls.audioUrl}" type="audio/wav">
-                                                    <p>Your browser does not support the audio tag.</p>
-                                            </audio>
-                                    </li>
-                                    <li>
-                                            <button id="download-button"
-                                            style="font-size: medium; font-family: Deja Vu Serif, sans-serif; text-align: center; width: min-content;"
-                                            download>Download</button>
-                                    </li>
-                            `;
-
-                progressDiv.innerHTML = htmlContent;
-
-                var downloadBtn = document.getElementById('download-button');
-                downloadBtn.addEventListener('click', function () {
-                    event.preventDefault();
-                    window.open(urls.audioUrl, '_blank');
-                });
-
+                showSuccess(urls.audioUrl);
             } else if (progress >= 0 && progress <= 100) {
-                var progressDiv = document.getElementById('progress');
-                var htmlContent = `
-                                    <li>
-                                        <p><img src="${urls.loadingImageUrl}" width="25"
-                                        height="25"> ${progress}% Synthesizing, please wait. This can take a
-                                        few minutes.</p>
-                                    </li>
-                                `;
-
-                progressDiv.innerHTML = htmlContent;
-
+                showProgress(urls.loadingImageUrl, progress);
             } else {
-                var progressDiv = document.getElementById('progress');
-                var htmlContent = `
-                                    <li>
-                                            <button id="synthesize-button" type="submit">Synthesize</button>
-                                            <p> Synthesis failed. Please make sure you followed the <a href="${urls.helpUrl}">guidelines</a> and try again. If the problem persists, please contact the <a href="https://github.com/ntlprzybysz/synthesis-gui">maintainer</a>.</p>
-                                    </li>
-                                `;
-
-                progressDiv.innerHTML = htmlContent;
+                showFailed(urls.helpUrl);
             }
         }
     };
