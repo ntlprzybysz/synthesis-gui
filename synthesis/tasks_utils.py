@@ -11,7 +11,6 @@ def check_task_status(session_key: str) -> int:
     Checks the progress of the synthesis task using log messages and the project's session key.
     Returns a positive value that represents the current state of the task, negative in case of errors.
     """
-
     def _read_log_from_file() -> list[str]:
         log = list()
         try:
@@ -21,6 +20,7 @@ def check_task_status(session_key: str) -> int:
             logger.error(f"session key {session_key} Couldn't open log file.")
         finally:
             return log
+
 
     def _get_project_entries(log: list[str]) -> list[str]:
         """
@@ -35,11 +35,15 @@ def check_task_status(session_key: str) -> int:
             if expected_content in entry:
                 first_entry_index = index
 
+        if first_entry_index < 0:
+            return project_entries
+
         for index, entry in enumerate(log):
             if index >= first_entry_index:
                 project_entries.append(entry)
 
         return project_entries
+
 
     def _get_last_relevant_entry(log: list[str]) -> str:
         """
@@ -52,6 +56,7 @@ def check_task_status(session_key: str) -> int:
                 if "tasks:" in entry or "models:" in entry or "trace:" in entry:
                     last_relevant_entry = entry
         return last_relevant_entry
+
 
     def _get_current_task_status(entry: str) -> int:
         """
@@ -79,21 +84,13 @@ def check_task_status(session_key: str) -> int:
             output_file_path = settings.MEDIA_ROOT / session_key / "1-1.npy.wav"
             file_exists = exists(output_file_path)
             if file_exists:
-                logger.info(
-                    f"session key {session_key} Confirmed existence of audio file: {output_file_path}."
-                )
                 return 100
             else:
-                logger.error(
-                    f"session key {session_key} Synthesis done but audio file {output_file_path} doesn't exist."
-                )
                 return -1
 
         else:
-            logger.error(
-                f"session key {session_key} Returning task status -1 for line: {entry}."
-            )
             return -1
+
 
     def _get_time_in_state(log, state: int) -> int:
         """
@@ -116,6 +113,7 @@ def check_task_status(session_key: str) -> int:
 
         return elapsed_time
 
+
     logger = logging.getLogger("django")
 
     state = 0
@@ -127,34 +125,40 @@ def check_task_status(session_key: str) -> int:
         log = _read_log_from_file()
         if not log:
             logger.error(
-                f"session key {session_key} No logs available to check status."
+                f"session key {session_key} No logs found."
             )
             return -1
 
         log = _get_project_entries(log)
         if not log:
             logger.error(
-                f"session key {session_key} No logs from last 10 minutes available to check status."
+                f"session key {session_key} No logs found for this project."
             )
             return -1
 
         last_entry = _get_last_relevant_entry(log)
         if len(last_entry) == 0:
             logger.error(
-                f"session key {session_key} No relevant log line from last 10 minutes available to check status."
+                f"session key {session_key} No relevant log entry found for this project."
             )
             return -1
 
         current_state = _get_current_task_status(last_entry)
+        if current_state < 0:
+            logger.error(
+                f"session key {session_key} Couldn't determine current task state or output file doesn't exist."
+            )
+            return -1
 
         elapsed_time = _get_time_in_state(log, current_state)
         if elapsed_time < 0:
             logger.error(
-                f"session key {session_key} Couldn't calculate elapsed time in state {current_state}%."
+                f"session key {session_key} Couldn't calculate elapsed time at {current_state}%."
             )
             return -1
+        
         if elapsed_time > 300:
-            logger.error(f"session key {session_key} Timed out {current_state}%.")
+            logger.error(f"session key {session_key} Timed out at {current_state}%.")
             return -1
 
         if current_state < state or current_state > state:
