@@ -33,24 +33,17 @@ def task_status(request) -> JsonResponse:
         return JsonResponse({"progress": -1})
 
 
-'''
 def show_home(request):
     """
-    Renders the maintenance page instead of the home page. The subwebsites are still 
-    available but the form cannot be submitted.
-    """
-    logger = logging.getLogger("django")
-    logger.info(f"Returned maintenance.html for path: {request.path}")
-    return render(request, "maintenance.html")
-'''
-
-
-def show_home(request):
-    """
-    Renders the home page with a form for submitting synthesis requests if the request method is GET.
+    Renders the maintenance page if the MAINTENANCE_MODE is on in settings.py.
+    Otherwise, renders the home page with a form for submitting synthesis requests if the request method is GET.
     If the request method is POST, it validates the form data and queues it for processing.
     """
     logger = logging.getLogger("django")
+
+    if settings.MAINTENANCE_MODE:
+        logger.info(f"Returned maintenance.html for path: {request.path}")
+        return render(request, "maintenance.html")
 
     if request.method == "POST":
         form = InputForm(request.POST)
@@ -118,50 +111,31 @@ def show_home(request):
         )
 
 
-"""
-# without Celery
-
-from .models import Project
-
-def show_home(request):
+def show_about(request):
+    """
+    Renders the maintenance page if the MAINTENANCE_MODE is on in settings.py.
+    Otherwise, renders the about page.
+    """
     logger = logging.getLogger("django")
 
-    if request.method == "POST":
-        form = InputForm(request.POST)
-        logger.info(f"Received form.")
-
-        if form.is_valid():
-            logger.info(f"Form validated, submitting for processing.")
-
-            request.session.save()  # force session key generation
-            session_key = request.session.session_key
-            project = Project(form.cleaned_data, session_key)
-            logger.info(f"Created new project.")
-
-            if project.synthesize():
-                logger.info(f"Returning download page.")
-                audio_url = settings.MEDIA_URL + session_key + "/1-1.npy.wav"
-                return render(request, "synthesis_success.html", {"form": form, "audio_url": audio_url},)
-
-            else:
-                logger.error(f"Failed synthesis, returning synthesis_failed.html.")
-                return render(request, "synthesis_failed.html")
-
-        else:
-            logger.error(f"Failed validation of form, home.html returned.")
-            return render(request, "home.html", {"form": form})
-
-    else:
-        form = InputForm()
-        return render(request, "home.html", {"form": form})
-"""
-
-
-def show_about(request):
+    if settings.MAINTENANCE_MODE:
+        logger.info(f"Returned maintenance.html for path: {request.path}")
+        return render(request, "maintenance.html")
+    
     return render(request, "about.html")
 
 
 def show_help(request):
+    """
+    Renders the maintenance page if the MAINTENANCE_MODE is on in settings.py.
+    Otherwise, renders the help page.
+    """
+    logger = logging.getLogger("django")
+
+    if settings.MAINTENANCE_MODE:
+        logger.info(f"Returned maintenance.html for path: {request.path}")
+        return render(request, "maintenance.html")
+    
     return render(request, "help.html")
 
 

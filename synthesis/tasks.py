@@ -7,6 +7,8 @@ from celery import shared_task
 from django.conf import settings
 from synthesis.models import Project
 
+#from .tasks_utils import send_alert
+
 # from celery_progress.backend import ProgressRecorder
 
 
@@ -46,6 +48,21 @@ def clean_media_folder() -> None:
     except:
         logger.warning(f"Failed to clear media directory '{media_dir_path}'")
 
+'''
+@app.task
+def send_test_alert() -> None:
+    logger = logging.getLogger("django")
+    
+    try:
+        send_alert("Test message", "from Django")
+        logger.info(f"Sent mail")
+
+    except Exception as e:
+        logger.warning(f"Failed to send mail: {str(e)}")
+
+    except:
+        logger.warning(f"Failed to send mail")
+'''
 
 '''
 @app.task

@@ -1,9 +1,13 @@
 import logging
+import os
+import re
 import time
 from datetime import datetime
 from os.path import exists
 
 from django.conf import settings
+from sendgrid import SendGridAPIClient
+from sendgrid.helpers.mail import Mail
 
 
 def check_task_status(session_key: str) -> int:
@@ -175,3 +179,90 @@ def check_task_status(session_key: str) -> int:
         time.sleep(1)
 
     return state
+
+"""
+def analyse_log_for_problems() -> None:
+    def _read_log_from_file() -> list[str]:
+        log_file_path = settings.LOGGING_ROOT / "django.log"
+        log = list()
+        try:
+            with open(log_file_path, "r") as log_file:
+                log = log_file.readlines()
+        except Exception as e:
+            logger.error(f"Couldn't open log file.")
+        finally:
+            return log
+
+    def _find_new_entries(log: list[str]) -> list[str]:
+        # TODO only entries that haven't been analysed should be left
+        pass
+
+    def _format_entry(entry: str) -> str:
+        formatted_entry = entry[:101]
+        formatted_entry = re.sub(r'\d', 'x', formatted_entry)
+        formatted_entry = "-> " + formatted_entry
+        return formatted_entry
+
+    logger = logging.getLogger("django")
+    
+    fatalities = list()
+    errors = list()
+    warnings = list()
+
+    log = _read_log_from_file()
+    log = _find_new_entries(log) # TODO
+
+    for entry in log:
+        if "FATAL" in entry:
+            fatalities.append(_format_entry(entry))
+
+        if "ERROR" in entry:
+            errors.append(_format_entry(entry))
+
+        if "WARNING" in entry:
+            warnings.append(_format_entry(entry))
+
+    if fatalities or errors or warnings:
+        message = list()
+
+        if fatalities:
+            message.append("The following fatalities have been detected:</strong>")
+            for fatality in fatalities:
+                message.append(fatality)
+                message.append("<br>")
+        message.append("<br>")
+
+        if errors:
+            message.append("<strong>The following errors have been detected:</strong>")
+            for error in errors:
+                message.append(warning)
+                message.append("<br>")
+        message.append("<br>")
+
+        if warnings:
+            message.append("<strong>The following warnings have been detected:</strong>")
+            for warning in warnings:
+                message.append(warning)
+                message.append("<br>")
+
+        send_report()
+"""
+
+def send_report(mail_body: str) -> None:
+    logger = logging.getLogger("django")
+
+    message = Mail(
+        from_email=settings.PROJECT_EMAIL,
+        to_emails=settings.PROJECT_EMAIL,
+        subject='Report from Speech Synthesis GUI via SendGrid',
+        html_content=mail_body)
+    
+    if settings.SENDGRID_API_KEY is None:
+        logger.info(f"SENDGRID_API_KEY is None")
+
+    try:
+        sg = SendGridAPIClient(settings.SENDGRID_API_KEY)
+        response = sg.send(message)
+        logger.info(f"Sent an alert email.")
+    except Exception as e:
+        logger.error(f"Couldn't send an alert email: {e}")

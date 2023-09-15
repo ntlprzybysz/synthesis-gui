@@ -36,6 +36,10 @@ app.conf.beat_schedule = {
         "task": "synthesis.tasks.clean_media_folder",
         "schedule": crontab(minute=0, hour=0, day_of_week=4),  # Runs on Thursday at midnight
     },
+    #"scheduled-test_alert": {
+    #    "task": "synthesis.tasks.send_test_alert",
+    #    "schedule": crontab(minute='*/2')
+    #},
 
     #"scheduled-test-task": {
     #    "task": "synthesis.tasks.print_scheduled_task_msg",
