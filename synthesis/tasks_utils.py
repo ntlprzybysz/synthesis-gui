@@ -1,13 +1,28 @@
 import logging
-import os
 import re
 import time
-from datetime import datetime
+from datetime import datetime, timedelta
 from os.path import exists
+from typing import Tuple
 
 from django.conf import settings
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
+
+
+def read_log_from_file() -> list[str]:
+    logger = logging.getLogger("django")
+    log_file_path = settings.LOGGING_ROOT / "django.log"
+    log = list()
+    try:
+        with open(log_file_path, "r") as log_file:
+            log = log_file.readlines()
+    except Exception as e:
+        logger.error(f"Couldn't read from log file: {e}.")
+    except:
+        logger.error(f"Couldn't read from log file.")
+    finally:
+        return log
 
 
 def check_task_status(session_key: str) -> int:
@@ -15,17 +30,6 @@ def check_task_status(session_key: str) -> int:
     Checks the progress of the synthesis task using log messages and the project's session key.
     Returns a positive value that represents the current state of the task, negative in case of errors.
     """
-    def _read_log_from_file() -> list[str]:
-        log = list()
-        try:
-            with open(log_file_path, "r") as log_file:
-                log = log_file.readlines()
-        except Exception as e:
-            logger.error(f"session key {session_key} Couldn't open log file.")
-        finally:
-            return log
-
-
     def _get_project_entries(log: list[str]) -> list[str]:
         """
         Returns log entries from the last project started by the user (every user
@@ -122,11 +126,10 @@ def check_task_status(session_key: str) -> int:
 
     state = 0
     state_changed = False
-    log_file_path = settings.LOGGING_ROOT / "django.log"
     time_in_state = 0
 
     while (time_in_state < 300) and (state_changed == False):
-        log = _read_log_from_file()
+        log = read_log_from_file()
         if not log:
             logger.error(
                 f"session key {session_key} No logs found."
@@ -180,37 +183,87 @@ def check_task_status(session_key: str) -> int:
 
     return state
 
-"""
-def analyse_log_for_problems() -> None:
-    def _read_log_from_file() -> list[str]:
-        log_file_path = settings.LOGGING_ROOT / "django.log"
-        log = list()
-        try:
-            with open(log_file_path, "r") as log_file:
-                log = log_file.readlines()
-        except Exception as e:
-            logger.error(f"Couldn't open log file.")
-        finally:
-            return log
 
+def mail_report(mail_body: str) -> bool:
+    logger = logging.getLogger("django")
+
+    message = Mail(
+        from_email=settings.PROJECT_EMAIL,
+        to_emails=settings.PROJECT_EMAIL,
+        subject='Report from Speech Synthesis GUI',
+        html_content=mail_body)
+    
+    if settings.SENDGRID_API_KEY is None:
+        logger.info(f"SENDGRID_API_KEY is None")
+
+    try:
+        sg = SendGridAPIClient(settings.SENDGRID_API_KEY)
+        response = sg.send(message)
+        return True
+    except Exception as e:
+        logger.error(f"Failed to mail report: {e}")
+        return False
+    except:
+        return False
+    
+
+def analyse_log_for_problems() -> Tuple[bool, str]:
+    """
+    Analyses log for problems based on a time frame and key words.
+    Returns a report if problems were detected.
+    """
     def _find_new_entries(log: list[str]) -> list[str]:
-        # TODO only entries that haven't been analysed should be left
-        pass
+        """
+        Returns a list of entries from the last day.
+        """
+        new_entries = list()
+        
+        period = timedelta(days=1, hours=0, minutes=0)  # TODO
+        current_time = datetime.now()
+        start_time = current_time - period
+        
+        entry_format = "%Y-%m-%d %H:%M:%S,%f"
+
+        for entry in log:
+            current_entry = entry.split()
+            entry_time = current_entry[0] + " " + current_entry[1]
+            entry_time = datetime.strptime(entry_time, entry_format)
+            if entry_time >= start_time:
+                new_entries.append(entry)
+
+        return new_entries
 
     def _format_entry(entry: str) -> str:
-        formatted_entry = entry[:101]
-        formatted_entry = re.sub(r'\d', 'x', formatted_entry)
-        formatted_entry = "-> " + formatted_entry
+        """
+        Returns a shortened version of the entry with numbers hidden for security.
+        """   
+        datestamp, rest_of_entry = re.match(r'^(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2},\d{3}) (.*)$', entry).groups()
+        formatted_rest = re.sub(r'\d', 'x', rest_of_entry)
+        formatted_entry = f"{datestamp} {formatted_rest}"
+        formatted_entry = formatted_entry[:101]
+
         return formatted_entry
 
-    logger = logging.getLogger("django")
-    
+    logger = logging.getLogger("django")  
+
+    report = ""
     fatalities = list()
     errors = list()
     warnings = list()
 
-    log = _read_log_from_file()
-    log = _find_new_entries(log) # TODO
+    log = read_log_from_file()
+    if not log:
+        logger.error(
+            f"No logs found."
+        )
+        return False, report
+
+    log = _find_new_entries(log)
+    if not log:
+        logger.info(
+            f"No new entries found."
+        )
+        return True, report
 
     for entry in log:
         if "FATAL" in entry:
@@ -223,46 +276,28 @@ def analyse_log_for_problems() -> None:
             warnings.append(_format_entry(entry))
 
     if fatalities or errors or warnings:
-        message = list()
+        logger.info(f"Issues detected in log, preparing mail report...")
+        reports = list()
 
         if fatalities:
-            message.append("The following fatalities have been detected:</strong>")
+            reports.append("The following fatalities have been detected:</strong>")
             for fatality in fatalities:
-                message.append(fatality)
-                message.append("<br>")
-        message.append("<br>")
+                reports.append(fatality)
+        reports.append("<br>")
 
         if errors:
-            message.append("<strong>The following errors have been detected:</strong>")
+            reports.append("<strong>The following errors have been detected:</strong>")
             for error in errors:
-                message.append(warning)
-                message.append("<br>")
-        message.append("<br>")
+                reports.append(error)
+        reports.append("<br>")
 
         if warnings:
-            message.append("<strong>The following warnings have been detected:</strong>")
+            reports.append("<strong>The following warnings have been detected:</strong>")
             for warning in warnings:
-                message.append(warning)
-                message.append("<br>")
+                reports.append(warning)
 
-        send_report()
-"""
+        report = "\n".join(reports)
+        return True, report
 
-def send_report(mail_body: str) -> None:
-    logger = logging.getLogger("django")
-
-    message = Mail(
-        from_email=settings.PROJECT_EMAIL,
-        to_emails=settings.PROJECT_EMAIL,
-        subject='Report from Speech Synthesis GUI via SendGrid',
-        html_content=mail_body)
-    
-    if settings.SENDGRID_API_KEY is None:
-        logger.info(f"SENDGRID_API_KEY is None")
-
-    try:
-        sg = SendGridAPIClient(settings.SENDGRID_API_KEY)
-        response = sg.send(message)
-        logger.info(f"Sent an alert email.")
-    except Exception as e:
-        logger.error(f"Couldn't send an alert email: {e}")
+    logger.info(f"No issues were detected in log during time frame.")
+    return True, report

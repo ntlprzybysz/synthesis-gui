@@ -7,9 +7,7 @@ from celery import shared_task
 from django.conf import settings
 from synthesis.models import Project
 
-#from .tasks_utils import send_alert
-
-# from celery_progress.backend import ProgressRecorder
+from .tasks_utils import analyse_log_for_problems, mail_report
 
 
 @shared_task
@@ -31,6 +29,8 @@ def synthesize_with_celery(cleaned_form_input: dict, session_key: str) -> bool:
 def clean_media_folder() -> None:
     logger = logging.getLogger("django")
 
+    logger.info(f"Performing scheduled media folder cleaning...")
+
     media_dir_path = Path(settings.MEDIA_ROOT)
 
     try:
@@ -46,32 +46,22 @@ def clean_media_folder() -> None:
         logger.warning(f"Failed to clear media directory '{media_dir_path}': {str(e)}")
 
     except:
-        logger.warning(f"Failed to clear media directory '{media_dir_path}'")
+        logger.warning(f"Failed to clear media directory '{media_dir_path}'.")
 
-'''
+
 @app.task
-def send_test_alert() -> None:
+def analyse_log_and_mail_report() -> None:
     logger = logging.getLogger("django")
+
+    logger.info(f"Starting scheduled log analysis...")
+
+    success, report = analyse_log_for_problems()
+    if not success:
+        logger.warning(f"Failed to perform scheduled log analysis.")
     
-    try:
-        send_alert("Test message", "from Django")
-        logger.info(f"Sent mail")
+    if report:
+        success = mail_report(report)
+        if success:
+            logger.info(f"Mailed report.")
 
-    except Exception as e:
-        logger.warning(f"Failed to send mail: {str(e)}")
-
-    except:
-        logger.warning(f"Failed to send mail")
-'''
-
-'''
-@app.task
-def print_scheduled_task_msg() -> None:
-    logger = logging.getLogger("django")
-    try:
-        logger.info(f"This is a scheduled test message.")
-
-    except Exception as e:
-        logger.warning(f"Failed to print a scheduled test message: {str(e)}")
-
-'''
+    logger.info(f"Scheduled log analysis done.")

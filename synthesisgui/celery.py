@@ -30,21 +30,18 @@ def debug_task(self):
     print("Request: {0!r}".format(self.request))
 
 
-# Removes content of media folder in background
 app.conf.beat_schedule = {
+    # Removes content of media folder in background
     "scheduled-cleaning-media-folder": {
         "task": "synthesis.tasks.clean_media_folder",
-        "schedule": crontab(minute=0, hour=0, day_of_week=4),  # Runs on Thursday at midnight
+        "schedule": crontab(day_of_week=4, hour=2, minute=0),  # Runs on Thursday at 2 am
     },
-    #"scheduled-test_alert": {
-    #    "task": "synthesis.tasks.send_test_alert",
-    #    "schedule": crontab(minute='*/2')
-    #},
-
-    #"scheduled-test-task": {
-    #    "task": "synthesis.tasks.print_scheduled_task_msg",
-    #    "schedule": crontab(minute="*"),
-    #},
+    # Analyses log for issues and mails a report if an were found
+    "scheduled-log-analysis": {
+        "task": "synthesis.tasks.analyse_log_and_mail_report",
+        #"schedule": crontab(hour=3, minute=0),  # Runs every day at 3 am
+        "schedule": crontab(day_of_week=1, hour=13, minute=15),
+    },
 }
 
 app.conf.timezone = "Europe/Berlin"
