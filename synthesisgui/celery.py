@@ -36,11 +36,10 @@ app.conf.beat_schedule = {
         "task": "synthesis.tasks.clean_media_folder",
         "schedule": crontab(day_of_week=4, hour=2, minute=0),  # Runs on Thursday at 2 am
     },
-    # Analyses log for issues and mails a report if an were found
+    # Analyses log for issues and mails a report if any were found
     "scheduled-log-analysis": {
         "task": "synthesis.tasks.analyse_log_and_mail_report",
-        #"schedule": crontab(hour=3, minute=0),  # Runs every day at 3 am
-        "schedule": crontab(day_of_week=1, hour=13, minute=15),
+        "schedule": crontab(hour=3, minute=0),  # Runs every day at 3 am
     },
 }
 

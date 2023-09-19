@@ -30,18 +30,22 @@ def check_task_status(session_key: str) -> int:
     Checks the progress of the synthesis task using log messages and the project's session key.
     Returns a positive value that represents the current state of the task, negative in case of errors.
     """
+
     def _get_project_entries(log: list[str]) -> list[str]:
         """
         Returns log entries from the last project started by the user (every user
-        has a unique session_key, but the same user can start multiple projects).
+        has a unique session_key, but the same user can start multiple projects)
+        that starts with a date.
         """
         project_entries = list()
 
         first_entry_index = -1
         expected_content = f"{session_key} Created new project."
         for index, entry in enumerate(log):
-            if expected_content in entry:
-                first_entry_index = index
+            date_pattern = r"\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2},\d{3}"
+            if re.match(date_pattern, entry):
+                if expected_content in entry:
+                    first_entry_index = index
 
         if first_entry_index < 0:
             return project_entries
@@ -51,7 +55,6 @@ def check_task_status(session_key: str) -> int:
                 project_entries.append(entry)
 
         return project_entries
-
 
     def _get_last_relevant_entry(log: list[str]) -> str:
         """
@@ -64,7 +67,6 @@ def check_task_status(session_key: str) -> int:
                 if "tasks:" in entry or "models:" in entry or "trace:" in entry:
                     last_relevant_entry = entry
         return last_relevant_entry
-
 
     def _get_current_task_status(entry: str) -> int:
         """
@@ -99,7 +101,6 @@ def check_task_status(session_key: str) -> int:
         else:
             return -1
 
-
     def _get_time_in_state(log, state: int) -> int:
         """
         Returns how many seconds have elapsed since the state was visited
@@ -121,7 +122,6 @@ def check_task_status(session_key: str) -> int:
 
         return elapsed_time
 
-
     logger = logging.getLogger("django")
 
     state = 0
@@ -131,16 +131,12 @@ def check_task_status(session_key: str) -> int:
     while (time_in_state < 300) and (state_changed == False):
         log = read_log_from_file()
         if not log:
-            logger.error(
-                f"session key {session_key} No logs found."
-            )
+            logger.error(f"session key {session_key} No logs found.")
             return -1
 
         log = _get_project_entries(log)
         if not log:
-            logger.error(
-                f"session key {session_key} No logs found for this project."
-            )
+            logger.error(f"session key {session_key} No logs found for this project.")
             return -1
 
         last_entry = _get_last_relevant_entry(log)
@@ -163,7 +159,7 @@ def check_task_status(session_key: str) -> int:
                 f"session key {session_key} Couldn't calculate elapsed time at {current_state}%."
             )
             return -1
-        
+
         if elapsed_time > 300:
             logger.error(f"session key {session_key} Timed out at {current_state}%.")
             return -1
@@ -190,9 +186,10 @@ def mail_report(mail_body: str) -> bool:
     message = Mail(
         from_email=settings.PROJECT_EMAIL,
         to_emails=settings.PROJECT_EMAIL,
-        subject='Report from Speech Synthesis GUI',
-        html_content=mail_body)
-    
+        subject="Report from Speech Synthesis GUI",
+        html_content=mail_body,
+    )
+
     if settings.SENDGRID_API_KEY is None:
         logger.info(f"SENDGRID_API_KEY is None")
 
@@ -205,46 +202,51 @@ def mail_report(mail_body: str) -> bool:
         return False
     except:
         return False
-    
+
 
 def analyse_log_for_problems() -> Tuple[bool, str]:
     """
     Analyses log for problems based on a time frame and key words.
     Returns a report if problems were detected.
     """
+
     def _find_new_entries(log: list[str]) -> list[str]:
         """
-        Returns a list of entries from the last day.
+        Returns a list of entries from the last day that begin with a date.
         """
         new_entries = list()
-        
-        period = timedelta(days=1, hours=0, minutes=0)  # TODO
+
+        period = timedelta(days=1, hours=0, minutes=0)
         current_time = datetime.now()
         start_time = current_time - period
-        
+
         entry_format = "%Y-%m-%d %H:%M:%S,%f"
 
         for entry in log:
-            current_entry = entry.split()
-            entry_time = current_entry[0] + " " + current_entry[1]
-            entry_time = datetime.strptime(entry_time, entry_format)
-            if entry_time >= start_time:
-                new_entries.append(entry)
+            date_pattern = r"\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2},\d{3}"
+            if re.match(date_pattern, entry):
+                current_entry = entry.split()
+                entry_time = current_entry[0] + " " + current_entry[1]
+                entry_time = datetime.strptime(entry_time, entry_format)
+                if entry_time >= start_time:
+                    new_entries.append(entry)
 
         return new_entries
 
     def _format_entry(entry: str) -> str:
         """
-        Returns a shortened version of the entry with numbers hidden for security.
-        """   
-        datestamp, rest_of_entry = re.match(r'^(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2},\d{3}) (.*)$', entry).groups()
-        formatted_rest = re.sub(r'\d', 'x', rest_of_entry)
+        Returns a shortened version of the entry with certain information hidden.
+        """
+        datestamp, rest_of_entry = re.match(
+            r"^(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2},\d{3}) (.*)$", entry
+        ).groups()
+        formatted_rest = re.sub(r"\d", "x", rest_of_entry)
         formatted_entry = f"{datestamp} {formatted_rest}"
-        formatted_entry = formatted_entry[:101]
+        formatted_entry = formatted_entry[:101] + "... <br>"
 
         return formatted_entry
 
-    logger = logging.getLogger("django")  
+    logger = logging.getLogger("django")
 
     report = ""
     fatalities = list()
@@ -253,16 +255,12 @@ def analyse_log_for_problems() -> Tuple[bool, str]:
 
     log = read_log_from_file()
     if not log:
-        logger.error(
-            f"No logs found."
-        )
+        logger.error(f"No logs found.")
         return False, report
 
     log = _find_new_entries(log)
     if not log:
-        logger.info(
-            f"No new entries found."
-        )
+        logger.info(f"No new entries found.")
         return True, report
 
     for entry in log:
@@ -276,23 +274,29 @@ def analyse_log_for_problems() -> Tuple[bool, str]:
             warnings.append(_format_entry(entry))
 
     if fatalities or errors or warnings:
-        logger.info(f"Issues detected in log, preparing mail report...")
+        logger.info(f"Issues detected in logs, preparing mail report...")
         reports = list()
 
         if fatalities:
-            reports.append("The following fatalities have been detected:</strong>")
+            reports.append(
+                "<strong>The following fatalities have been detected:</strong><br>"
+            )
             for fatality in fatalities:
                 reports.append(fatality)
         reports.append("<br>")
 
         if errors:
-            reports.append("<strong>The following errors have been detected:</strong>")
+            reports.append(
+                "<strong>The following errors have been detected:</strong><br>"
+            )
             for error in errors:
                 reports.append(error)
         reports.append("<br>")
 
         if warnings:
-            reports.append("<strong>The following warnings have been detected:</strong>")
+            reports.append(
+                "<strong>The following warnings have been detected:</strong><br>"
+            )
             for warning in warnings:
                 reports.append(warning)
 

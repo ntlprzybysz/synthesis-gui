@@ -53,15 +53,19 @@ def clean_media_folder() -> None:
 def analyse_log_and_mail_report() -> None:
     logger = logging.getLogger("django")
 
-    logger.info(f"Starting scheduled log analysis...")
+    if settings.MAIL_REPORTS:
+        logger.info(f"Starting scheduled log analysis...")
 
-    success, report = analyse_log_for_problems()
-    if not success:
-        logger.warning(f"Failed to perform scheduled log analysis.")
-    
-    if report:
-        success = mail_report(report)
-        if success:
-            logger.info(f"Mailed report.")
+        success, report = analyse_log_for_problems()
+        if not success:
+            logger.warning(f"Failed to perform scheduled log analysis.")
+        
+        if report:
+            success = mail_report(report)
+            if success:
+                logger.info(f"Mailed report.")
 
-    logger.info(f"Scheduled log analysis done.")
+        logger.info(f"Scheduled log analysis done.")
+        
+    else:
+        logger.info(f"Didn't perform scheduled log analysis because MAIL_REPORTS is set to False.")
