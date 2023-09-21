@@ -19,7 +19,7 @@ class InputForm(forms.Form):
         max_length=254,
         min_length=3,
         widget=forms.TextInput(
-            attrs={"id": "project-name-field", "placeholder": "Example synthesis"}
+            attrs={"id": "project-name-field", "placeholder": "Example synthesis", "aria-label": "Project name"}
         ),
         label="Project name:",
         initial="Example synthesis",
@@ -28,14 +28,14 @@ class InputForm(forms.Form):
     text_input = forms.CharField(
         max_length=500,
         required=False,
-        widget=forms.Textarea(attrs={"id": "text-input-field"}),
+        widget=forms.Textarea(attrs={"id": "text-input-field", "class": "form-select", "aria-label": "Text input"}),
         label="Text:",
     )
 
     ipa_input = forms.CharField(
         max_length=500,
         min_length=1,
-        widget=forms.Textarea(attrs={"id": "ipa-input-field"}),
+        widget=forms.Textarea(attrs={"id": "ipa-input-field", "class": "form-select", "aria-label": "IPA input"}),
         label="IPA:",
     )
 
@@ -43,21 +43,21 @@ class InputForm(forms.Form):
         choices=MODEL_OPTIONS,
         initial=MODEL_OPTIONS[0],
         label="Model:",
-        widget=forms.Select(attrs={"id": "model-select-field"}),
+        widget=forms.Select(attrs={"id": "model-select-field", "aria-label": "Model"}),
     )
 
     voice = forms.ChoiceField(
         choices=VOICE_OPTIONS,
         initial=VOICE_OPTIONS[0],
         label="Voice:",
-        widget=forms.Select(attrs={"id": "voice-select-field"}),
+        widget=forms.Select(attrs={"id": "voice-select-field", "aria-label": "Voice"}),
     )
 
     sentence = forms.ChoiceField(
         choices=SENTENCE_OPTIONS,
         initial=SENTENCE_OPTIONS[0],
         label="Sentence:",
-        widget=forms.Select(attrs={"id": "sentence-select-field"}),
+        widget=forms.Select(attrs={"id": "sentence-select-field", "aria-label": "Sentence"}),
     )
 
 

@@ -223,20 +223,14 @@ function showSuccess(audioUrl) {
     var progressDiv = document.getElementById('progress');
 
     var htmlContent = `
-                        <li>
-                                <button id="synthesize-button" type="submit">Synthesize</button>
-                        </li>
-                        <li>
-                                <audio controls>
-                                        <source src="${audioUrl}" type="audio/wav">
-                                        <p>Your browser does not support the audio tag.</p>
-                                </audio>
-                        </li>
-                        <li>
-                                <button id="download-button"
-                                style="font-size: medium; font-family: Deja Vu Serif, sans-serif; text-align: center; width: min-content;"
-                                download>Download</button>
-                        </li>
+                        <button id="synthesize-button" class="btn btn-light" type="submit">Synthesize</button>
+
+                        <audio controls>
+                                <source src="${audioUrl}" type="audio/wav">
+                                <p>Your browser does not support the audio tag.</p>
+                        </audio>
+
+                        <button id="download-button" class="btn btn-light" download>Download</button>
                 `;
 
     progressDiv.innerHTML = htmlContent;
@@ -255,11 +249,9 @@ function showSuccess(audioUrl) {
 function showProgress(loadingImageUrl, progress) {
     var progressDiv = document.getElementById('progress');
     var htmlContent = `
-                        <li>
-                            <p><img src="${loadingImageUrl}" width="25"
-                            height="25"> ${progress}% Synthesizing, please wait. This can take a
-                            few minutes.</p>
-                        </li>
+                        <p><img src="${loadingImageUrl}" width="25"
+                        height="25"> ${progress}% Synthesizing, please wait. This can take a
+                        few minutes.</p>
                     `;
 
     progressDiv.innerHTML = htmlContent;
@@ -272,10 +264,8 @@ function showProgress(loadingImageUrl, progress) {
 function showFailed(helpUrl) {
     var progressDiv = document.getElementById('progress');
     var htmlContent = `
-                        <li>
-                                <button id="synthesize-button" type="submit">Synthesize</button>
-                                <p> Synthesis failed. Please make sure you followed the <a href="${helpUrl}">guidelines</a> and try again. If the problem persists, please contact the <a href="https://github.com/ntlprzybysz/synthesis-gui">maintainer</a>.</p>
-                        </li>
+                        <button id="synthesize-button" class="btn btn-light" type="submit">Synthesize</button>
+                        <p> Synthesis failed. Please make sure you followed the <a href="${helpUrl}">guidelines</a> and try again. If the problem persists, please contact the <a href="https://github.com/ntlprzybysz/synthesis-gui">maintainer</a>.</p>
                     `;
 
     progressDiv.innerHTML = htmlContent;
