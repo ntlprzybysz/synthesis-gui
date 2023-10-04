@@ -6,7 +6,7 @@
 
 
 {% block content %}
-<div class="container-xxl mx-5">
+<div class="container-xxl mx-5 mt-3">
     <h2>How to Use This Website?</h2>
     <p>
         This website provides a user-friendly interface for speech synthesis tools. In simple terms, 
@@ -25,7 +25,7 @@
         At the top of the page, you have the option to enter a custom name for your project or leave it as 
         the default value, "Example synthesis." The default value is automatically saved, even if you 
         leave the field blank.</p>
-        <label for="project-name">Project name:</label>
+        <label for="project-name" class="col-form-label">Project name: </label>
         <input type="text" class="form-control" style="width: 250px;" id="project-name" value="Example synthesis">
     <br><br><br>
 
@@ -36,8 +36,8 @@
         By saving the file, you can close the website, return later, and resume your work by loading 
         the saved project file using the "Load project" button.
     </p>
-    <button type="button" id="save-project-button" class="btn btn-light">Save project</button>
-    <button type="button" id="load-project-button" class="btn btn-light">Load project</button>
+    <button type="button" id="save-project-button" class="btn btn-light btn-outline-dark btn-sm">Save project</button>
+    <button type="button" id="load-project-button" class="btn btn-light btn-outline-dark btn-sm">Load project</button>
     <br><br><br>
 
     <h3>Load Example Dropdown Menu</h3>
@@ -68,7 +68,7 @@
     </p>
     <label for="text-input">Text:</label>
     <textarea id="text-input" class="form-control" style="width: 800px; height: 100px;">Printing, in the only sense with which we are at present concerned, differs from most if not from all the arts and crafts represented in the Exhibition in being comparatively modern.</textarea>
-    <button type="button" id="save-text-input-btn" class="btn btn-light">Save</button>
+    <button type="button" id="save-text-input-btn" class="btn btn-light btn-outline-dark btn-sm">Save</button>
     <br><br><br>
 
     <h3>IPA Area Field</h3>
@@ -83,7 +83,7 @@
     </p>
     <label for="ipa-input">IPA:</label>
     <textarea id="ipa-input" class="form-control" style="width: 800px; height: 100px;">p˘|r˘|ˈɪː|n˘|t|ɪː|ŋː|,|SIL2|ɪː|n|SIL0|ð|əː|SIL1|ˈoʊ|n|l˘|i|SIL0|sː|ˈɛˑ|n|s|SIL0|w˘|ˈɪ˘|ðː|SIL0|w|ˈɪ|tʃ|SIL0|w|ˈi|SIL0|ˈɑ|r|SIL0|ˈæ|t|SIL0|p˘|r˘|ˈɛ|z|ə|n˘|t|SIL0|k˘|ə˘|n|s|ˈʌrː|n|dː|,|SIL3|d|ˈɪ|f|ərˑ|zː|SIL1|f˘|r˘|ˈʌ˘|mˑ|SIL0|m˘|ˈoʊˑ|s|t˘|SIL0|ˈɪ|f|SIL0|n|ˈɑ|t|SIL0|f˘|r˘|ˈʌ˘|m|SIL0|ˈɔ|lˑ|SIL0|ðˑ|əː|SIL0|ˈɑ|r|t|s˘|SIL0|ə|n|d|SIL0|k|r˘|ˈæ|f|t˘|s|SIL0|r|ˌɛ˘|p|r˘|ɪ˘|z|ˈɛ|n˘|t|ɪ|d|SIL0|ɪː|n|SIL0|ð˘|ə|SIL0|ˌɛˑ|k|s˘|ə|b|ˈɪˑ|ʃ|əˑ|nː|SIL2|ɪ|n|SIL0|b˘|ˈi˘|ɪː|ŋ˘|SIL0|k˘|ə˘|m|p|ˈɛr|ə|t|ɪ|v|l|i|SIL0|mˑ|ˈɑː|d|ər|nː|.|SIL2</textarea>
-    <button type="button" id="save-text-input-btn" class="btn btn-light">Save</button>
+    <button type="button" id="save-text-input-btn" class="btn btn-light btn-outline-dark btn-sm">Save</button>
     <br><br>
     <p>
         To successfully generate the audio file, the IPA text area must follow a specific format that 
@@ -178,8 +178,8 @@
             </tbody>
     </table>
     <label for="ipa-input-field">IPA:</label><br>
-    <textarea id="ipa-input-field" class="form-control" style="width: 800px; height: 100px;"></textarea><br>
-    <button type="button" id="save-text-input-btn" class="btn btn-light">Save</button>
+    <textarea id="ipa-input-field" class="form-control" style="width: 800px; height: 100px;"></textarea>
+    <button type="button" id="save-text-input-btn" class="btn btn-light btn-outline-dark btn-sm">Save</button>
     <br><br><br>
 
     <h3>Settings</h3>
@@ -213,7 +213,7 @@
     <p>
         Once your IPA input is ready for synthesis, click the "Synthesize" button. This will initiate the processing.
     </p>
-    <button type="button" id="synthesize" class="btn btn-light">Synthesize</button>
+    <button type="button" id="synthesize" class="btn btn-light btn-outline-dark btn-sm">Synthesize</button>
     <p>
         While the input is being processed, the button will be replaced with a message: "Synthesizing, please wait. This can take a few minutes."
     </p>
@@ -224,7 +224,7 @@
             <source src="" type="audio/wav">
             Your browser does not support the audio tag.
     </audio>
-    <button id="download-button" class="btn btn-light">Download</button>
+    <button id="download-button" class="btn btn-light btn-outline-dark btn-sm">Download</button>
     <br><br><br>
     <h3>Further questions, problems, feedback</h3>
     <p>

@@ -15,7 +15,7 @@
 <body>
     {% block sidebar %}
     <div class="header">
-        <nav class="navbar navbar-expand-lg bg-secondary-subtle">
+        <nav class="navbar navbar-expand-lg bg-light">
             <div class="container-fluid mt-3 mb-3">
                 <a class="navbar-brand" href="{% url 'home' %}">
                     <img src="/static/graphics/logo_transparent_500x500.png" alt="Logo" width="90" height="auto"
@@ -46,18 +46,18 @@
             {% csrf_token %}
             {{ form.non_field_errors }}
 
-            <div class="row p-0">
+            <div class="row p-0 align-items-end mt-3">
                 <div class="col-md-8 col-12">
                     {{ form.project_name.errors }}
                     {{ form.project_name.label_tag }}
                     {{ form.project_name }}
                 </div>
                 <div class="col-md-2 col-12 mt-3">
-                    <button type="button" id="save-project-button" class="btn btn-light" onclick="saveProject()">
+                    <button type="button" id="save-project-button" class="btn btn-light btn-outline-dark btn-sm" onclick="saveProject()">
                         Save project
                     </button>
 
-                    <button type="button" id="load-project-button" class="btn btn-light" onclick="loadProject()">
+                    <button type="button" id="load-project-button" class="btn btn-light btn-outline-dark btn-sm" onclick="loadProject()">
                         Load project
                     </button>
                 </div>
@@ -77,15 +77,17 @@
 
             <div class="mt-2 p-3 border border-dark">
                 <div class="row">
-                    <h2>Input</h2>
+                    <div class="col">
+                        <h2>Input</h2>
+                    </div>
                 </div>
-                <div class="row mt-3">
+                <div class="row justify-content-center align-items-end mt-3">
                     <div class="input-fields">
                         <div class="col-md-4 col-sm-12 col-12 mb-3" id="text-input">
                             {{ form.text_input.errors }}
                             {{ form.text_input.label_tag }}
                             {{ form.text_input }}
-                            <button type="button" id="save-text-input-button" class="btn btn-light"
+                            <button type="button" id="save-text-input-button" class="btn btn-light btn-outline-dark btn-sm"
                                 onclick="saveTextInput()">Save</button>
                         </div>
                 
@@ -93,12 +95,12 @@
                             {{ form.ipa_input.errors }}
                             {{ form.ipa_input.label_tag }}
                             {{ form.ipa_input }}
-                            <button type="button" id="save-ipa-input-button" class="btn btn-light"
+                            <button type="button" id="save-ipa-input-button" class="btn btn-light btn-outline-dark btn-sm"
                                 onclick="saveIpaInput()">Save</button>
                         </div>
                 
                         <div class="col-md-4 col-sm-6 col-12 mt-3" id="input-ipa-chart">
-                            <label for="ipa-chart">Insert symbol at cursor position:</label>
+                            <label for="ipa-chart" class="form-label">Insert symbol at cursor position:</label>
                             <table id="ipa-chart" name="ipa-chart">
                                 <tbody>
                                     <tr>
@@ -392,13 +394,13 @@
                         <h2>Settings</h2>
                     </div>
                 </div>
-                <div class="row mt-3">
-                    <div class="col-2">
+                <div class="row justify-content-start align-items-end mt-3">
+                    <div class="col-md-2 col-12 mt-3">
                         {{ form.model.errors }}
                         {{ form.model.label_tag }}
                         {{ form.model }}
                     </div>
-                    <div class="col-2">
+                    <div class="col-md-2 col-12 mt-3">
                         {{ form.voice.errors }}
                         {{ form.voice.label_tag }}
                         {{ form.voice }}
@@ -414,15 +416,15 @@
                         <h2>Output</h2>
                     </div>
                 </div>
-                <div class="row mt-3">
-                    <div class="col-2">
+                <div class="row justify-content-start align-items-end mt-3">
+                    <div class="col-md-2 col-12 mt-3">
                         {{ form.sentence.errors }}
                         {{ form.sentence.label_tag }}
                         {{ form.sentence }}
                     </div>
 
                     {% if task_queued == True %}
-                    <div class="col-10" id="progress">
+                    <div class="col-md-10 col-12 mt-3" id="progress">
                             <p><img src="{% static 'graphics/loading.webp' %}" width="25"
                                     height="25"> Synthesizing, please wait. This can take a
                                     few minutes.</p>
@@ -443,10 +445,10 @@
 
 
                     {% elif session_key == "_failed" %}
-                    <div class="col-10">
-                            <button id="synthesize-button" class="btn btn-light" type="submit">Synthesize</button>
+                    <div class="col-md-10 col-12 mt-3">
+                            <button id="synthesize-button" class="btn btn-light btn-outline-dark btn-sm" type="submit">Synthesize</button>
                     </div>
-                    <div class="col-10">
+                    <div class="col-md-10 col-12 mt-3">
                             <p>Synthesis failed. Please make sure you followed the <a
                                             href="{% url 'help' %}">guidelines</a> and try again. If
                                     the problem persists, please contact the <a
@@ -455,8 +457,8 @@
                     </div>
 
                     {% else %}
-                    <div class="col-10">
-                            <button id="synthesize-button" class="btn btn-light" type="submit">Synthesize</button>
+                    <div class="col-md-10 col-12 mt-3">
+                            <button id="synthesize-button" class="btn btn-light btn-outline-dark btn-sm" type="submit">Synthesize</button>
                     </div>
                     {% endif %}
                 </div>
@@ -467,7 +469,7 @@
 
     <br>
 
-    <div class="footer col-md-4 d-flex align-items-center">
+    <div class="footer col-12 justify-content-start">
         <span class="mb-3 mb-md-0 text-body-secondary">© Copyright 2023, 
             <a href="https://stefantaubert.com/">Stefan Taubert</a> and 
             <a href="https://www.linkedin.com/in/ntl-przybysz/">Natalia Przybysz</a>.
