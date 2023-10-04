@@ -10,11 +10,13 @@ textarea,
 }
 
 a {
-    color: black;
+    color: #212529;
+    text-decoration: underline;
 }
 
 a:hover {
     color: #414141;
+    text-decoration: underline;
 }
 
 h1 {

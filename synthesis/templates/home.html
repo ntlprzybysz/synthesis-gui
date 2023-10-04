@@ -16,7 +16,7 @@
     {% block sidebar %}
     <div class="header">
         <nav class="navbar navbar-expand-lg bg-secondary-subtle">
-            <div class="container-fluid">
+            <div class="container-fluid mt-3 mb-3">
                 <a class="navbar-brand" href="{% url 'home' %}">
                     <img src="/static/graphics/logo_transparent_500x500.png" alt="Logo" width="90" height="auto"
                         class="d-inline-block align-middle">
@@ -41,7 +41,7 @@
     {% endblock %}
 
     {% block content %}
-    <div class="content container-fluid">        
+    <div class="container-xxl mx-5">        
         <form method="post" novalidate>
             {% csrf_token %}
             {{ form.non_field_errors }}
@@ -64,7 +64,7 @@
                 <div class="col-md-2 col-12 mt-3">
                     <label for="example-select-field">Load example: </label> 
                     <select class="form-select" name="example-select-field" id="example" aria-label="Load example"> 
-                        <option value="none">----</option> 
+                        <option selected>---</option>
                         <option value="quick">Quick test</option> 
                         <option value="printing">Printing</option> 
                         <option value="mountain">Mountain</option> 
@@ -89,7 +89,7 @@
                                 onclick="saveTextInput()">Save</button>
                         </div>
                 
-                        <div class="col-md-4 col-sm-6 col-12" id="ipa-input">
+                        <div class="col-md-4 col-sm-6 col-12 mt-3" id="ipa-input">
                             {{ form.ipa_input.errors }}
                             {{ form.ipa_input.label_tag }}
                             {{ form.ipa_input }}
@@ -97,7 +97,7 @@
                                 onclick="saveIpaInput()">Save</button>
                         </div>
                 
-                        <div class="col-md-4 col-sm-6 col-12" id="input-ipa-chart">
+                        <div class="col-md-4 col-sm-6 col-12 mt-3" id="input-ipa-chart">
                             <label for="ipa-chart">Insert symbol at cursor position:</label>
                             <table id="ipa-chart" name="ipa-chart">
                                 <tbody>

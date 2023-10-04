@@ -1,4 +1,5 @@
 from django import forms
+
 # from django.core.exceptions import ValidationError
 
 
@@ -19,7 +20,13 @@ class InputForm(forms.Form):
         max_length=254,
         min_length=3,
         widget=forms.TextInput(
-            attrs={"id": "project-name-field", "placeholder": "Example synthesis", "aria-label": "Project name"}
+            attrs={
+                "id": "project-name-field",
+                "placeholder": "Example synthesis",
+                "class": "form-control",
+                "style": "width: 250px;",
+                "aria-label": "Project name",
+            }
         ),
         label="Project name:",
         initial="Example synthesis",
@@ -28,14 +35,28 @@ class InputForm(forms.Form):
     text_input = forms.CharField(
         max_length=500,
         required=False,
-        widget=forms.Textarea(attrs={"id": "text-input-field", "class": "form-select", "aria-label": "Text input"}),
+        widget=forms.Textarea(
+            attrs={
+                "id": "text-input-field",
+                "class": "form-control",
+                "style": "width: 400px; height: 500px;",
+                "aria-label": "Text input",
+            }
+        ),
         label="Text:",
     )
 
     ipa_input = forms.CharField(
         max_length=500,
         min_length=1,
-        widget=forms.Textarea(attrs={"id": "ipa-input-field", "class": "form-select", "aria-label": "IPA input"}),
+        widget=forms.Textarea(
+            attrs={
+                "id": "ipa-input-field",
+                "class": "form-control",
+                "style": "width: 400px; height: 500px;",
+                "aria-label": "IPA input",
+            }
+        ),
         label="IPA:",
     )
 
@@ -43,23 +64,40 @@ class InputForm(forms.Form):
         choices=MODEL_OPTIONS,
         initial=MODEL_OPTIONS[0],
         label="Model:",
-        widget=forms.Select(attrs={"id": "model-select-field", "aria-label": "Model"}),
+        widget=forms.Select(
+            attrs={
+                "id": "model-select-field",
+                "class": "form-select",
+                "aria-label": "Model",
+            }
+        ),
     )
 
     voice = forms.ChoiceField(
         choices=VOICE_OPTIONS,
         initial=VOICE_OPTIONS[0],
         label="Voice:",
-        widget=forms.Select(attrs={"id": "voice-select-field", "aria-label": "Voice"}),
+        widget=forms.Select(
+            attrs={
+                "id": "voice-select-field",
+                "class": "form-select",
+                "aria-label": "Voice",
+            }
+        ),
     )
 
     sentence = forms.ChoiceField(
         choices=SENTENCE_OPTIONS,
         initial=SENTENCE_OPTIONS[0],
         label="Sentence:",
-        widget=forms.Select(attrs={"id": "sentence-select-field", "aria-label": "Sentence"}),
+        widget=forms.Select(
+            attrs={
+                "id": "sentence-select-field",
+                "class": "form-select",
+                "aria-label": "Sentence",
+            }
+        ),
     )
-
 
     def clean_project_name(self):
         """
@@ -69,13 +107,11 @@ class InputForm(forms.Form):
         cleaned_project_name = "".join(c if c.isalpha() else "_" for c in project_name)
         return cleaned_project_name
 
-
     def clean_text_input(self):
         """
         Discards all text input by subtituting it with an empty string.
         """
         return ""
-
 
     '''
     def clean_ipa_input(self):

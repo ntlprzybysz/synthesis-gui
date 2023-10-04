@@ -6,7 +6,7 @@
 
 
 {% block content %}
-<div class="content">
+<div class="container-xxl mx-5">
     <h2>How to Use This Website?</h2>
     <p>
         This website provides a user-friendly interface for speech synthesis tools. In simple terms, 
@@ -16,7 +16,7 @@
     <p>
         You can listen to a sample audio of the following text: "The North Wind and the Sun were disputing which was 
         the stronger, when a traveler came along wrapped in a warm cloak." 
-        <a href="https://tuc.cloud/index.php/s/gzaYDNKinHw6GCz">Click here to listen</a> (headphones recommended).
+        <a href="https://tuc.cloud/index.php/s/gzaYDNKinHw6GCz" class="link-dark link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">Click here to listen</a> (headphones recommended).
     </p>
     <br>
 
@@ -26,7 +26,7 @@
         the default value, "Example synthesis." The default value is automatically saved, even if you 
         leave the field blank.</p>
         <label for="project-name">Project name:</label>
-        <input type="text" id="project-name" value="Example synthesis">
+        <input type="text" class="form-control" style="width: 250px;" id="project-name" value="Example synthesis">
     <br><br><br>
 
     <h3>Save and Load Buttons</h3>
@@ -38,6 +38,21 @@
     </p>
     <button type="button" id="save-project-button" class="btn btn-light">Save project</button>
     <button type="button" id="load-project-button" class="btn btn-light">Load project</button>
+    <br><br><br>
+
+    <h3>Load Example Dropdown Menu</h3>
+    <p>
+        This dropdown menu allows you to populate the project name, text and IPA input fields
+        with input that works with the tools this app uses.
+    </p>
+    <label for="example-select-field">Load example: </label> 
+    <select class="form-select" name="example-select-test-field" id="example-test" aria-label="Load example"> 
+        <option selected>---</option>
+        <option value="quick">Quick test</option> 
+        <option value="printing">Printing</option> 
+        <option value="mountain">Mountain</option> 
+        <option value="wind">North Wind</option> 
+    </select>
     <br><br><br>
 
     <h3>Text Area Field</h3>
@@ -52,7 +67,7 @@
         The saved file can be loaded to continue your work when you revisit the website.
     </p>
     <label for="text-input">Text:</label>
-    <textarea id="text-input" style="width: 800px; height: 100px;">Printing, in the only sense with which we are at present concerned, differs from most if not from all the arts and crafts represented in the Exhibition in being comparatively modern.</textarea>
+    <textarea id="text-input" class="form-control" style="width: 800px; height: 100px;">Printing, in the only sense with which we are at present concerned, differs from most if not from all the arts and crafts represented in the Exhibition in being comparatively modern.</textarea>
     <button type="button" id="save-text-input-btn" class="btn btn-light">Save</button>
     <br><br><br>
 
@@ -67,12 +82,12 @@
         The saved file can be loaded to continue your work when you revisit the website.
     </p>
     <label for="ipa-input">IPA:</label>
-    <textarea id="ipa-input" style="width: 800px; height: 100px;">p˘|r˘|ˈɪː|n˘|t|ɪː|ŋː|,|SIL2|ɪː|n|SIL0|ð|əː|SIL1|ˈoʊ|n|l˘|i|SIL0|sː|ˈɛˑ|n|s|SIL0|w˘|ˈɪ˘|ðː|SIL0|w|ˈɪ|tʃ|SIL0|w|ˈi|SIL0|ˈɑ|r|SIL0|ˈæ|t|SIL0|p˘|r˘|ˈɛ|z|ə|n˘|t|SIL0|k˘|ə˘|n|s|ˈʌrː|n|dː|,|SIL3|d|ˈɪ|f|ərˑ|zː|SIL1|f˘|r˘|ˈʌ˘|mˑ|SIL0|m˘|ˈoʊˑ|s|t˘|SIL0|ˈɪ|f|SIL0|n|ˈɑ|t|SIL0|f˘|r˘|ˈʌ˘|m|SIL0|ˈɔ|lˑ|SIL0|ðˑ|əː|SIL0|ˈɑ|r|t|s˘|SIL0|ə|n|d|SIL0|k|r˘|ˈæ|f|t˘|s|SIL0|r|ˌɛ˘|p|r˘|ɪ˘|z|ˈɛ|n˘|t|ɪ|d|SIL0|ɪː|n|SIL0|ð˘|ə|SIL0|ˌɛˑ|k|s˘|ə|b|ˈɪˑ|ʃ|əˑ|nː|SIL2|ɪ|n|SIL0|b˘|ˈi˘|ɪː|ŋ˘|SIL0|k˘|ə˘|m|p|ˈɛr|ə|t|ɪ|v|l|i|SIL0|mˑ|ˈɑː|d|ər|nː|.|SIL2</textarea>
+    <textarea id="ipa-input" class="form-control" style="width: 800px; height: 100px;">p˘|r˘|ˈɪː|n˘|t|ɪː|ŋː|,|SIL2|ɪː|n|SIL0|ð|əː|SIL1|ˈoʊ|n|l˘|i|SIL0|sː|ˈɛˑ|n|s|SIL0|w˘|ˈɪ˘|ðː|SIL0|w|ˈɪ|tʃ|SIL0|w|ˈi|SIL0|ˈɑ|r|SIL0|ˈæ|t|SIL0|p˘|r˘|ˈɛ|z|ə|n˘|t|SIL0|k˘|ə˘|n|s|ˈʌrː|n|dː|,|SIL3|d|ˈɪ|f|ərˑ|zː|SIL1|f˘|r˘|ˈʌ˘|mˑ|SIL0|m˘|ˈoʊˑ|s|t˘|SIL0|ˈɪ|f|SIL0|n|ˈɑ|t|SIL0|f˘|r˘|ˈʌ˘|m|SIL0|ˈɔ|lˑ|SIL0|ðˑ|əː|SIL0|ˈɑ|r|t|s˘|SIL0|ə|n|d|SIL0|k|r˘|ˈæ|f|t˘|s|SIL0|r|ˌɛ˘|p|r˘|ɪ˘|z|ˈɛ|n˘|t|ɪ|d|SIL0|ɪː|n|SIL0|ð˘|ə|SIL0|ˌɛˑ|k|s˘|ə|b|ˈɪˑ|ʃ|əˑ|nː|SIL2|ɪ|n|SIL0|b˘|ˈi˘|ɪː|ŋ˘|SIL0|k˘|ə˘|m|p|ˈɛr|ə|t|ɪ|v|l|i|SIL0|mˑ|ˈɑː|d|ər|nː|.|SIL2</textarea>
     <button type="button" id="save-text-input-btn" class="btn btn-light">Save</button>
     <br><br>
     <p>
         To successfully generate the audio file, the IPA text area must follow a specific format that 
-        <a href="https://pypi.org/project/speech-dataset-parser/">the speech-dataset-parser</a> can interpret. 
+        <a href="https://pypi.org/project/speech-dataset-parser/" class="link-dark link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">the speech-dataset-parser</a> can interpret. 
         Follow these guidelines:<br>
 
         &diams; Each phoneme must be separated into a single interval, e.g., <span class="code">T|h|i|s| |i|s| |a| |t|e|x|t|</span>.<br>
@@ -163,7 +178,7 @@
             </tbody>
     </table>
     <label for="ipa-input-field">IPA:</label><br>
-    <textarea id="ipa-input-field" style="width: 800px; height: 100px;"></textarea><br>
+    <textarea id="ipa-input-field" class="form-control" style="width: 800px; height: 100px;"></textarea><br>
     <button type="button" id="save-text-input-btn" class="btn btn-light">Save</button>
     <br><br><br>
 
@@ -176,12 +191,12 @@
         sticking to the default values for now.
     </p>
     <label for="model">Model:</label>
-    <select name="model" id="model">
-        <option value="ljspeech">LJSpeech 1.1</option>
+    <select class="form-select" name="model" id="model">
+        <option selected>LJSpeech 1.1</option>
     </select>
     <label for="voice">Voice:</label>
-    <select name="voice" id="voice">
-        <option value="lindajohnson">Linda Johnson</option>
+    <select class="form-select" name="voice" id="voice">
+        <option selected>Linda Johnson</option>
     </select>
     <br><br><br>
 
@@ -192,8 +207,8 @@
         to select the specific sentence you want to synthesize.
     </p>
     <label for="sentence">Sentence:</label>
-    <select name="sentence" id="sentence">
-        <option value="sentence">Sentence 1</option>
+    <select class="form-select" name="sentence" id="sentence">
+        <option selected>Sentence 1</option>
     </select>
     <p>
         Once your IPA input is ready for synthesis, click the "Synthesize" button. This will initiate the processing.
@@ -214,7 +229,7 @@
     <h3>Further questions, problems, feedback</h3>
     <p>
         If you have any additional questions, encounter issues while using this website, 
-        or would like to provide feedback, please reach out <a href="https://stefantaubert.com/">the project owner</a>.
+        or would like to provide feedback, please reach out <a href="https://stefantaubert.com/" class="link-dark link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">the project owner</a>.
     </p>
     <br><br><br>
 </div>
