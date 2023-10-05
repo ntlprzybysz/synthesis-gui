@@ -49,7 +49,7 @@
             <div class="row p-0 align-items-end mt-3">
                 <div class="col-md-8 col-12">
                     {{ form.project_name.errors }}
-                    {{ form.project_name.label_tag }}
+                    <label for="project-name-field" class="form-label">Project name:</label>
                     {{ form.project_name }}
                 </div>
                 <div class="col-md-2 col-12 mt-3">
@@ -81,27 +81,27 @@
                         <h2>Input</h2>
                     </div>
                 </div>
-                <div class="row justify-content-center align-items-end mt-3">
-                    <div class="input-fields">
-                        <div class="col-md-4 col-sm-12 col-12 mb-3" id="text-input">
-                            {{ form.text_input.errors }}
-                            {{ form.text_input.label_tag }}
-                            {{ form.text_input }}
-                            <button type="button" id="save-text-input-button" class="btn btn-light btn-outline-dark btn-sm"
-                                onclick="saveTextInput()">Save</button>
-                        </div>
-                
-                        <div class="col-md-4 col-sm-6 col-12 mt-3" id="ipa-input">
-                            {{ form.ipa_input.errors }}
-                            {{ form.ipa_input.label_tag }}
-                            {{ form.ipa_input }}
-                            <button type="button" id="save-ipa-input-button" class="btn btn-light btn-outline-dark btn-sm"
-                                onclick="saveIpaInput()">Save</button>
-                        </div>
-                
-                        <div class="col-md-4 col-sm-6 col-12 mt-3" id="input-ipa-chart">
-                            <label for="ipa-chart" class="form-label">Insert symbol at cursor position:</label>
-                            <table id="ipa-chart" name="ipa-chart">
+                <div class="row align-items-start justify-content-evenly mt-3 input-fields">
+                    <div class="col-lg-4 col-md-6 col-12 mx-3 mb-3">
+                        {{ form.text_input.errors }}
+                        <label for="text-input-field" class="form-label">Text:</label>
+                        {{ form.text_input }}
+                        <button type="button" id="save-text-input-button" class="btn btn-light btn-outline-dark btn-sm"
+                            onclick="saveTextInput()">Save</button>
+                    </div>
+            
+                    <div class="col-lg-4 col-md-6 col-12 mx-3 mb-3">
+                        {{ form.ipa_input.errors }}
+                        <label for="ipa-input-field" class="form-label">IPA:</label>
+                        {{ form.ipa_input }}
+                        <button type="button" id="save-ipa-input-button" class="btn btn-light btn-outline-dark btn-sm"
+                            onclick="saveIpaInput()">Save</button>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6 col-12 mx-3 mb-3">
+                        <label for="ipa-chart" class="form-label">Insert symbol at cursor position:</label>
+                        <div class="table-responsive-md">
+                            <table class="table table-sm table-borderless" id="ipa-chart" name="ipa-chart">
                                 <tbody>
                                     <tr>
                                         <!-- ɑɐɒæʙɓβçɕð -->
@@ -449,10 +449,11 @@
                             <button id="synthesize-button" class="btn btn-light btn-outline-dark btn-sm" type="submit">Synthesize</button>
                     </div>
                     <div class="col-md-10 col-12 mt-3">
-                            <p>Synthesis failed. Please make sure you followed the <a
-                                            href="{% url 'help' %}">guidelines</a> and try again. If
-                                    the problem persists, please contact the <a
-                                            href="https://github.com/ntlprzybysz/synthesis-gui">maintainer</a>.
+                            <p>
+                                Synthesis failed. Please make sure you followed the 
+                                <a href="{% url 'help' %}">guidelines</a> and try again. 
+                                If the problem persists, please contact the 
+                                <a href="https://github.com/ntlprzybysz/synthesis-gui">maintainer</a>.
                             </p>
                     </div>
 

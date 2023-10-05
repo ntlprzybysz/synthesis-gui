@@ -28,7 +28,6 @@ class InputForm(forms.Form):
                 "aria-label": "Project name",
             }
         ),
-        label="Project name:",
         initial="Example synthesis",
     )
 
@@ -39,7 +38,7 @@ class InputForm(forms.Form):
             attrs={
                 "id": "text-input-field",
                 "class": "form-control",
-                "style": "width: 400px; height: 500px;",
+                "style": "height: 500px; font-family: Andale Mono, monospace;",
                 "aria-label": "Text input",
             }
         ),
@@ -53,11 +52,10 @@ class InputForm(forms.Form):
             attrs={
                 "id": "ipa-input-field",
                 "class": "form-control",
-                "style": "width: 400px; height: 500px;",
+                "style": "height: 500px; font-family: Andale Mono, monospace;",
                 "aria-label": "IPA input",
             }
         ),
-        label="IPA:",
     )
 
     model = forms.ChoiceField(

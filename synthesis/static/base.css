@@ -3,7 +3,6 @@ body {
     font-size: medium;
 }
 
-textarea, 
 .code {
     font-family: Andale Mono, monospace;
     font-size: large;
@@ -17,20 +16,4 @@ a {
 a:hover {
     color: #414141;
     text-decoration: underline;
-}
-
-h1 {
-    font-family: Noto Sans, sans-serif;
-    font-size: xx-large;
-    font-weight: normal;
-    margin-left: 20px;
-    white-space: nowrap;
-}
-
-h2, 
-h3 {
-    font-family: Noto Sans, sans-serif;
-    font-size: x-large;
-    font-weight: normal;
-    text-decoration: none;
 }
