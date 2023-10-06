@@ -37,7 +37,7 @@ class InputForm(forms.Form):
         widget=forms.Textarea(
             attrs={
                 "id": "text-input-field",
-                "class": "form-control",
+                "class": "form-control mb-1",
                 "style": "height: 500px; font-family: Andale Mono, monospace;",
                 "aria-label": "Text input",
             }
@@ -51,7 +51,7 @@ class InputForm(forms.Form):
         widget=forms.Textarea(
             attrs={
                 "id": "ipa-input-field",
-                "class": "form-control",
+                "class": "form-control mb-1",
                 "style": "height: 500px; font-family: Andale Mono, monospace;",
                 "aria-label": "IPA input",
             }
@@ -65,7 +65,7 @@ class InputForm(forms.Form):
         widget=forms.Select(
             attrs={
                 "id": "model-select-field",
-                "class": "form-select",
+                "class": "form-select me-3",
                 "aria-label": "Model",
             }
         ),

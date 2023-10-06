@@ -44,45 +44,66 @@
     <div class="container-xxl mx-5">        
         <form method="post" novalidate>
             {% csrf_token %}
-            {{ form.non_field_errors }}
 
-            <div class="row p-0 align-items-end mt-3">
-                <div class="col-md-8 col-12">
-                    {{ form.project_name.errors }}
-                    <label for="project-name-field" class="form-label">Project name:</label>
-                    {{ form.project_name }}
+            {% if form.non_field_errors %}
+                <div class="row p-0 align-items-end mt-3 mb-1">
+                    <div class="col-12">
+                        {{ form.non_field_errors }}                    
+                    </div>
                 </div>
-                <div class="col-md-2 col-12 mt-3">
-                    <button type="button" id="save-project-button" class="btn btn-light btn-outline-dark btn-sm" onclick="saveProject()">
-                        Save project
-                    </button>
+            {% endif %}
 
-                    <button type="button" id="load-project-button" class="btn btn-light btn-outline-dark btn-sm" onclick="loadProject()">
-                        Load project
-                    </button>
+            <div class="row p-0 align-items-end mt-5 mb-1">
+                <div class="col-md-8 col-12 mb-1">
+                    <div class="row justify-content-start">
+                        {% if form.project_name.errors %}
+                            <div class="col">
+                                {{ form.project_name.errors }}
+                            </div>
+                        {% endif %}
+                        <div class="col-2"> 
+                            <label for="project-name-field" class="col-form-label">Project name:</label>
+                        </div>
+                        <div class="col-10">
+                            {{ form.project_name }}
+                        </div>
+                    </div>
                 </div>
-                <div class="col-md-2 col-12 mt-3">
-                    <label for="example-select-field">Load example: </label> 
-                    <select class="form-select" name="example-select-field" id="example" aria-label="Load example"> 
-                        <option selected>---</option>
-                        <option value="quick">Quick test</option> 
-                        <option value="printing">Printing</option> 
-                        <option value="mountain">Mountain</option> 
-                        <option value="wind">North Wind</option> 
-                    </select>
+                <div class="col-md-4 col-12">
+                    <div class="row justify-content-end">
+                        <div class="col mb-1">
+                            <label for="example-select-field">Load example: </label> 
+                            <select class="form-select" name="example-select-field" id="example" aria-label="Load example"> 
+                                <option selected>---</option>
+                                <option value="quick">Quick test</option> 
+                                <option value="printing">Printing</option> 
+                                <option value="mountain">Mountain</option> 
+                                <option value="wind">North Wind</option> 
+                            </select>
+                        </div>
+                        <div class="col mb-1" style="display: flex; justify-content: end;">
+                            <button type="button" id="save-project-button" class="btn btn-light btn-outline-dark btn-sm" style="margin-inline: .25rem;" onclick="saveProject()">
+                                Save project
+                            </button>
+        
+                            <button type="button" id="load-project-button" class="btn btn-light btn-outline-dark btn-sm" onclick="loadProject()">
+                                Load project
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
 
             <br>
 
-            <div class="mt-2 p-3 border border-dark">
+            <div class="p-3 border border-dark">
                 <div class="row">
                     <div class="col">
                         <h2>Input</h2>
                     </div>
                 </div>
                 <div class="row align-items-start justify-content-evenly mt-3 input-fields">
-                    <div class="col-lg-4 col-md-6 col-12 mb-3">
+                    <div class="col-lg-4 col-md-12 col-12 mb-3">
                         {{ form.text_input.errors }}
                         <label for="text-input-field" class="form-label">Text:</label>
                         {{ form.text_input }}
@@ -98,7 +119,7 @@
                             onclick="saveIpaInput()">Save</button>
                     </div>
 
-                    <div class="col-lg-4 col-md-12 col-12 mb-3">
+                    <div class="col-lg-4 col-md-6 col-12 mb-3">
                         <label for="ipa-chart" class="form-label">Insert symbol at cursor position:</label>
                         <table class="table-responsive-xl table table-sm table-borderless" id="ipa-chart" name="ipa-chart">
                             <tbody>
@@ -444,7 +465,7 @@
 
                     {% elif session_key == "_failed" %}
                     <div class="col-md-10 col-12 mt-3">
-                            <button id="synthesize-button" class="btn btn-light btn-outline-dark btn-sm" type="submit">Synthesize</button>
+                            <button id="synthesize-button" class="btn btn-light btn-outline-dark btn-sm me-3 mb-1" type="submit">Synthesize</button>
                     </div>
                     <div class="col-md-10 col-12 mt-3">
                             <p>
@@ -457,7 +478,7 @@
 
                     {% else %}
                     <div class="col-md-10 col-12 mt-3">
-                            <button id="synthesize-button" class="btn btn-light btn-outline-dark btn-sm" type="submit">Synthesize</button>
+                            <button id="synthesize-button" class="btn btn-light btn-outline-dark btn-sm mb-1" type="submit">Synthesize</button>
                     </div>
                     {% endif %}
                 </div>

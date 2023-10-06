@@ -6,19 +6,28 @@
 
 
 {% block content %}
-<div class="container-xxl mx-5 mt-3">
-    <h2>Internal Server Error: Error 500</h2>
-    
-    <p>You have reached this webpage due to an Internal Server Error. This error occurs when the server encounters an unexpected condition that prevents it from fulfilling the request made by the client.</p>
-
-    <p>Possible reasons for encountering this error include:<br><br>
-        &diams; Technical glitches or misconfigurations within the server.<br>
-        &diams; Software bugs or coding errors that impede proper request handling.<br>
-        &diams; Overloaded server resources affecting its ability to respond to requests.</p>
-    
-    <p>How can you proceed from here?<br><br>
-        &diams; Refresh the page or try accessing it again later, as the issue could be transient.<br>
-        &diams; If you were attempting to perform a specific action, consider returning to the main page and attempting it again later.<br>
-        &diams; If the problem persists and you believe it should not, we kindly request that you get in touch with the website <a href="https://github.com/ntlprzybysz/synthesis-gui">maintainer</a> or <a href="https://stefantaubert.com/">owner</a> for further assistance.</p>
+<div class="container-xxl mx-5 mt-5">
+    <div class="row">
+        <div class="col">
+            <h2>Internal Server Error: Error 500</h2>
+            <p class="text-start">
+                You have reached this webpage due to an Internal Server Error. This error occurs when the server encounters an unexpected condition that prevents it from fulfilling the request made by the client.
+            </p>
+            <p class="text-start">Possible reasons for encountering this error include:
+                <ul>
+                    <li>Technical glitches or misconfigurations within the server.</li>
+                    <li>Software bugs or coding errors that impede proper request handling.</li>
+                    <li>Overloaded server resources affecting its ability to respond to requests.</li>
+                </ul>
+            </p>
+            <p class="text-start">How can you proceed from here?
+                <ul>
+                    <li>Refresh the page or try accessing it again later, as the issue could be transient.</li>
+                    <li>If you were attempting to perform a specific action, consider returning to the main page and attempting it again later.</li>
+                    <li>If the problem persists and you believe it should not, we kindly request that you get in touch with the website <a href="https://github.com/ntlprzybysz/synthesis-gui">maintainer</a> or <a href="https://stefantaubert.com/">owner</a> for further assistance.</li>
+                </ul>
+            </p>
+        </div>
+    </div>
     </div>
 {% endblock %}

@@ -223,14 +223,14 @@ function showSuccess(audioUrl) {
     var progressDiv = document.getElementById('progress');
 
     var htmlContent = `
-                        <button id="synthesize-button" class="btn btn-light btn-outline-dark btn-sm" type="submit">Synthesize</button>
+                        <button id="synthesize-button" class="btn btn-light btn-outline-dark btn-sm me-5 mb-1" type="submit">Synthesize</button>
 
                         <audio controls>
                                 <source src="${audioUrl}" type="audio/wav">
                                 <p>Your browser does not support the audio tag.</p>
                         </audio>
 
-                        <button id="download-button" class="btn btn-light btn-outline-dark btn-sm" download>Download</button>
+                        <button id="download-button" class="btn btn-light btn-outline-dark btn-sm mb-3" download>Download</button>
                 `;
 
     progressDiv.innerHTML = htmlContent;
@@ -264,7 +264,7 @@ function showProgress(loadingImageUrl, progress) {
 function showFailed(helpUrl) {
     var progressDiv = document.getElementById('progress');
     var htmlContent = `
-                        <button id="synthesize-button" class="btn btn-light btn-outline-dark btn-sm" type="submit">Synthesize</button>
+                        <button id="synthesize-button" class="btn btn-light btn-outline-dark btn-sm me-1" type="submit">Synthesize</button>
                         <p> Synthesis failed. Please make sure you followed the <a href="${helpUrl}">guidelines</a> and try again. If the problem persists, please contact the <a href="https://github.com/ntlprzybysz/synthesis-gui">maintainer</a>.</p>
                     `;
 
