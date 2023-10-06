@@ -207,7 +207,9 @@ def mail_report(mail_body: str) -> bool:
 def analyse_log_for_problems() -> Tuple[bool, str]:
     """
     Analyses log for problems based on a time frame and key words.
-    Returns a report if problems were detected.
+    Returns True if log analysis was possible and a string with problems 
+    or a message that no problems were found. Otherwise, returns
+    False and an empty string.
     """
 
     def _find_new_entries(log: list[str]) -> list[str]:
@@ -303,5 +305,5 @@ def analyse_log_for_problems() -> Tuple[bool, str]:
         report = "\n".join(reports)
         return True, report
 
-    logger.info(f"No issues were detected in log during time frame.")
+    report = "<strong>No issues were detected in log during time frame.</strong>\n"
     return True, report
