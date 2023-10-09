@@ -23,8 +23,8 @@ class InputForm(forms.Form):
             attrs={
                 "id": "project-name-field",
                 "placeholder": "Example synthesis",
-                "class": "form-control",
-                "style": "width: 250px;",
+                "class": "form-control form-control-lg",
+                "style": "width: 250px; border-color: #6c757d; border: none; outline: 0;",
                 "aria-label": "Project name",
             }
         ),
@@ -38,8 +38,7 @@ class InputForm(forms.Form):
             attrs={
                 "id": "text-input-field",
                 "class": "form-control mb-1",
-                "style": "height: 500px; font-family: Andale Mono, monospace;",
-                "aria-label": "Text input",
+                "style": "height: 495px; font-family: Andale Mono, monospace; border-color: #6c757d; border-radius: 0px;",
             }
         ),
         label="Text:",
@@ -52,8 +51,7 @@ class InputForm(forms.Form):
             attrs={
                 "id": "ipa-input-field",
                 "class": "form-control mb-1",
-                "style": "height: 500px; font-family: Andale Mono, monospace;",
-                "aria-label": "IPA input",
+                "style": "height: 495px; font-family: Andale Mono, monospace; border-color: #6c757d; border-radius: 0px;",
             }
         ),
     )
@@ -65,8 +63,8 @@ class InputForm(forms.Form):
         widget=forms.Select(
             attrs={
                 "id": "model-select-field",
-                "class": "form-select me-3",
-                "aria-label": "Model",
+                "class": "form-select",
+                "style": "margin-right: 3rem; margin-bottom: 1rem;",
             }
         ),
     )
@@ -74,12 +72,11 @@ class InputForm(forms.Form):
     voice = forms.ChoiceField(
         choices=VOICE_OPTIONS,
         initial=VOICE_OPTIONS[0],
-        label="Voice:",
         widget=forms.Select(
             attrs={
                 "id": "voice-select-field",
                 "class": "form-select",
-                "aria-label": "Voice",
+                "style": "margin-right: 3rem; margin-bottom: 1rem;",
             }
         ),
     )
@@ -87,12 +84,11 @@ class InputForm(forms.Form):
     sentence = forms.ChoiceField(
         choices=SENTENCE_OPTIONS,
         initial=SENTENCE_OPTIONS[0],
-        label="Sentence:",
         widget=forms.Select(
             attrs={
                 "id": "sentence-select-field",
                 "class": "form-select",
-                "aria-label": "Sentence",
+                "style": "margin-right: 3rem; margin-bottom: 1rem;",
             }
         ),
     )

@@ -17,3 +17,7 @@ a:hover {
     color: #414141;
     text-decoration: underline;
 }
+
+label {
+    white-space: nowrap;
+}

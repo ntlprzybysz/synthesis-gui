@@ -35,11 +35,13 @@
             </p>
 
             <div class="row">
-                <div class="col-2">
-                    <label for="project-name" class="col-form-label">Project name:</label>
-                </div>
-                <div class="col-10">
-                    <input type="text" class="form-control" style="width: 250px;" id="project-name" value="Example synthesis">
+                <div class="col-12">
+                    <div class="input-group">
+                        <div class="input-group-text" style="background: none; border: none; padding: 0;" aria-hidden="true">
+                            <img src="/static/graphics/edit_btn.svg" width="30" height="auto">
+                        </div>
+                        <input type="text" class="form-control form-control-lg" style="width: 250px; border: none; outline: 0;" id="project-name" value="Example synthesis" aria-label="Project name">
+                    </div>
                 </div>
             </div>
         </div>
@@ -54,9 +56,9 @@
                 By saving the file, you can close the website, return later, and resume your work by loading
                 the saved project file using the "Load project" button.
             </p>
-            <button type="button" id="save-project-button" class="btn btn-light btn-outline-dark btn-sm">Save
+            <button type="button" id="save-project-button" class="btn btn-light btn-outline-dark">Save
                 project</button>
-            <button type="button" id="load-project-button" class="btn btn-light btn-outline-dark btn-sm">Load
+            <button type="button" id="load-project-button" class="btn btn-light btn-outline-dark">Load
                 project</button>
         </div>
     </div>
@@ -68,14 +70,15 @@
                 This dropdown menu allows you to populate the project name, text and IPA input fields
                 with input that works with the tools this app uses.
             </p>
-            <label for="example-select-field">Load example: </label>
-            <select class="form-select" name="example-select-test-field" id="example-test" aria-label="Load example">
-                <option selected>---</option>
-                <option value="quick">Quick test</option>
-                <option value="printing">Printing</option>
-                <option value="mountain">Mountain</option>
-                <option value="wind">North Wind</option>
-            </select>
+            <label for="example-select-field">Load example: 
+                <select class="form-select" name="example-select-test-field" id="example-test" aria-label="Load example">
+                    <option selected>---</option>
+                    <option value="quick">Quick test</option>
+                    <option value="printing">Printing</option>
+                    <option value="mountain">Mountain</option>
+                    <option value="wind">North Wind</option>
+                </select>
+            </label>
         </div>
     </div>
 
@@ -94,8 +97,8 @@
             </p>
             <label for="text-input">Text:</label>
             <textarea id="text-input" class="form-control mb-1"
-                style="width: 800px; height: 100px; font-family: Andale Mono, monospace;">Printing, in the only sense with which we are at present concerned, differs from most if not from all the arts and crafts represented in the Exhibition in being comparatively modern.</textarea>
-            <button type="button" id="save-text-input-btn" class="btn btn-light btn-outline-dark btn-sm">Save</button>
+                style="width: 350px; height: 100px; font-family: Andale Mono, monospace; border-color: #6c757d; border-radius: 0px;">Printing, in the only sense with which we are at present concerned, differs from most if not from all the arts and crafts represented in the Exhibition in being comparatively modern.</textarea>
+            <button type="button" id="save-text-input-btn" class="btn btn-light btn-outline-dark">Save</button>
         </div>
     </div>
 
@@ -114,8 +117,8 @@
             </p>
             <label for="ipa-input">IPA:</label>
             <textarea id="ipa-input" class="form-control mb-1"
-                style="width: 800px; height: 100px; font-family: Andale Mono, monospace;">p˘|r˘|ˈɪː|n˘|t|ɪː|ŋː|,|SIL2|ɪː|n|SIL0|ð|əː|SIL1|ˈoʊ|n|l˘|i|SIL0|sː|ˈɛˑ|n|s|SIL0|w˘|ˈɪ˘|ðː|SIL0|w|ˈɪ|tʃ|SIL0|w|ˈi|SIL0|ˈɑ|r|SIL0|ˈæ|t|SIL0|p˘|r˘|ˈɛ|z|ə|n˘|t|SIL0|k˘|ə˘|n|s|ˈʌrː|n|dː|,|SIL3|d|ˈɪ|f|ərˑ|zː|SIL1|f˘|r˘|ˈʌ˘|mˑ|SIL0|m˘|ˈoʊˑ|s|t˘|SIL0|ˈɪ|f|SIL0|n|ˈɑ|t|SIL0|f˘|r˘|ˈʌ˘|m|SIL0|ˈɔ|lˑ|SIL0|ðˑ|əː|SIL0|ˈɑ|r|t|s˘|SIL0|ə|n|d|SIL0|k|r˘|ˈæ|f|t˘|s|SIL0|r|ˌɛ˘|p|r˘|ɪ˘|z|ˈɛ|n˘|t|ɪ|d|SIL0|ɪː|n|SIL0|ð˘|ə|SIL0|ˌɛˑ|k|s˘|ə|b|ˈɪˑ|ʃ|əˑ|nː|SIL2|ɪ|n|SIL0|b˘|ˈi˘|ɪː|ŋ˘|SIL0|k˘|ə˘|m|p|ˈɛr|ə|t|ɪ|v|l|i|SIL0|mˑ|ˈɑː|d|ər|nː|.|SIL2</textarea>
-            <button type="button" id="save-text-input-btn" class="btn btn-light btn-outline-dark btn-sm">Save</button>
+                style="width: 350px; height: 100px; font-family: Andale Mono, monospace; border-color: #6c757d; border-radius: 0px;">p˘|r˘|ˈɪː|n˘|t|ɪː|ŋː|,|SIL2|ɪː|n|SIL0|ð|əː|SIL1|ˈoʊ|n|l˘|i|SIL0|sː|ˈɛˑ|n|s|SIL0|w˘|ˈɪ˘|ðː|SIL0|w|ˈɪ|tʃ|SIL0|w|ˈi|SIL0|ˈɑ|r|SIL0|ˈæ|t|SIL0|p˘|r˘|ˈɛ|z|ə|n˘|t|SIL0|k˘|ə˘|n|s|ˈʌrː|n|dː|,|SIL3|d|ˈɪ|f|ərˑ|zː|SIL1|f˘|r˘|ˈʌ˘|mˑ|SIL0|m˘|ˈoʊˑ|s|t˘|SIL0|ˈɪ|f|SIL0|n|ˈɑ|t|SIL0|f˘|r˘|ˈʌ˘|m|SIL0|ˈɔ|lˑ|SIL0|ðˑ|əː|SIL0|ˈɑ|r|t|s˘|SIL0|ə|n|d|SIL0|k|r˘|ˈæ|f|t˘|s|SIL0|r|ˌɛ˘|p|r˘|ɪ˘|z|ˈɛ|n˘|t|ɪ|d|SIL0|ɪː|n|SIL0|ð˘|ə|SIL0|ˌɛˑ|k|s˘|ə|b|ˈɪˑ|ʃ|əˑ|nː|SIL2|ɪ|n|SIL0|b˘|ˈi˘|ɪː|ŋ˘|SIL0|k˘|ə˘|m|p|ˈɛr|ə|t|ɪ|v|l|i|SIL0|mˑ|ˈɑː|d|ər|nː|.|SIL2</textarea>
+            <button type="button" id="save-text-input-btn" class="btn btn-light btn-outline-dark">Save</button>
             <br><br>
             <p class="text-start">
                 To successfully generate the audio file, the IPA text area must follow a specific format that
@@ -186,52 +189,35 @@
                 at the cursor's position in the IPA area field.
             </p>
             <div class="row">
-                <div class="col-md-6 col-12">
+                <div class="col">
                     <label for="ipa-chart">Insert symbol at cursor position:</label>
                     <div class="table-responsive-md">
-                        <table class="table table-sm table-borderless" id="ipa-chart" name="ipa-chart">
+                        <table class="table table-sm table-borderless" id="ipa-chart" name="ipa-chart" style="width: 350px;">
                             <tbody>
                                 <tr>
-                                    <!-- ɑɐɒæʙɓβçɕð -->
                                     <td><button type="button" class="btn btn-light"
-                                            style="background-color: white; border-color: white;"
+                                            style="background-color: white; border-color: white; font-size: large;"
                                             onclick="insertSymbol('ɑ')">ɑ</button>
                                     </td>
                                     <td><button type="button" class="btn btn-light"
-                                            style="background-color: white; border-color: white;"
+                                            style="background-color: white; border-color: white; font-size: large;"
                                             onclick="insertSymbol('ɐ')">ɐ</button>
                                     </td>
                                     <td><button type="button" class="btn btn-light"
-                                            style="background-color: white; border-color: white;"
+                                            style="background-color: white; border-color: white; font-size: large;"
                                             onclick="insertSymbol('ɒ')">ɒ</button>
                                     </td>
                                     <td><button type="button" class="btn btn-light"
-                                            style="background-color: white; border-color: white;"
+                                            style="background-color: white; border-color: white; font-size: large;"
                                             onclick="insertSymbol('æ')">æ</button>
                                     </td>
                                     <td><button type="button" class="btn btn-light"
-                                            style="background-color: white; border-color: white;"
+                                            style="background-color: white; border-color: white; font-size: large;"
                                             onclick="insertSymbol('ʙ')">ʙ</button>
                                     </td>
                                     <td><button type="button" class="btn btn-light"
-                                            style="background-color: white; border-color: white;"
+                                            style="background-color: white; border-color: white; font-size: large;"
                                             onclick="insertSymbol('ɓ')">ɓ</button>
-                                    </td>
-                                    <td><button type="button" class="btn btn-light"
-                                            style="background-color: white; border-color: white;"
-                                            onclick="insertSymbol('β')">β</button>
-                                    </td>
-                                    <td><button type="button" class="btn btn-light"
-                                            style="background-color: white; border-color: white;"
-                                            onclick="insertSymbol('ç')">ç</button>
-                                    </td>
-                                    <td><button type="button" class="btn btn-light"
-                                            style="background-color: white; border-color: white;"
-                                            onclick="insertSymbol('ɕ')">ɕ</button>
-                                    </td>
-                                    <td><button type="button" class="btn btn-light"
-                                            style="background-color: white; border-color: white;"
-                                            onclick="insertSymbol('ð')">ð</button>
                                     </td>
                                 </tr>
                             </tbody>
@@ -241,8 +227,8 @@
             </div>
             <label for="ipa-input-field">IPA:</label><br>
             <textarea id="ipa-input-field" class="form-control mb-1"
-                style="width: 800px; height: 100px; font-family: Andale Mono, monospace;"></textarea>
-            <button type="button" id="save-text-input-btn" class="btn btn-light btn-outline-dark btn-sm">Save</button>
+                style="width: 350px; height: 100px; font-family: Andale Mono, monospace; border-color: #6c757d; border-radius: 0px;"></textarea>
+            <button type="button" id="save-text-input-btn" class="btn btn-light btn-outline-dark">Save</button>
         </div>
     </div>
 
@@ -256,14 +242,16 @@
                 the desired model variant. If you're unsure which options are suitable, we recommend
                 sticking to the default values for now.
             </p>
-            <label for="model">Model:</label>
-            <select class="form-select" name="model" id="model">
-                <option selected>LJSpeech 1.1</option>
-            </select>
-            <label for="voice">Voice:</label>
-            <select class="form-select" name="voice" id="voice">
-                <option selected>Linda Johnson</option>
-            </select>
+            <label for="model">Model: 
+                <select class="form-select" name="model" id="model" style="margin-right: 3rem; margin-bottom: 1rem;">
+                    <option selected>LJSpeech 1.1</option>
+                </select>
+            </label>
+            <label for="voice">Voice: 
+                <select class="form-select" name="voice" id="voice" style="margin-right: 3rem; margin-bottom: 1rem;">
+                    <option selected>Linda Johnson</option>
+                </select>
+            </label>
         </div>
     </div>
 
@@ -275,15 +263,16 @@
                 a sentence, and sentences should be separated by a blank line. You can use the dropdown menu
                 to select the specific sentence you want to synthesize.
             </p>
-            <label for="sentence">Sentence:</label>
-            <select class="form-select mb-3" name="sentence" id="sentence">
-                <option selected>Sentence 1</option>
-            </select>
+            <label for="sentence">Sentence: 
+                <select class="form-select mb-3" name="sentence" id="sentence">
+                    <option selected>Sentence 1</option>
+                </select>
+            </label>
             <p class="text-start">
                 Once your IPA input is ready for synthesis, click the "Synthesize" button. This will initiate the
                 processing.
             </p>
-            <button type="button" id="synthesize" class="btn btn-light btn-outline-dark btn-sm mb-3">Synthesize</button>
+            <button type="button" id="synthesize" class="btn btn-light btn-outline-dark mb-3">Synthesize</button>
             <p class="text-start">
                 While the input is being processed, the button will be replaced with a message: "Synthesizing, please
                 wait. This can take a few minutes."
@@ -295,7 +284,7 @@
                 <source src="" type="audio/wav">
                 Your browser does not support the audio tag.
             </audio>
-            <button id="download-button" class="btn btn-light btn-outline-dark btn-sm mb-3">Download</button>
+            <button id="download-button" class="btn btn-light btn-outline-dark mb-3">Download</button>
         </div>
     </div>
 
