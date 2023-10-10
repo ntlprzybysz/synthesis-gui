@@ -17,15 +17,15 @@
     <div class="header">
         <nav class="navbar navbar-expand-lg bg-light">
             <div class="container-fluid mt-3 mb-3">
-                <a class="navbar-brand" style="text-decoration: none; font-size: xx-large;" 
-                href="{% url 'home' %}"><img src="{% static 'graphics/logo_transparent_500x500.png' %}" 
-                alt="Logo" width="90" height="auto" class="d-inline-block align-middle"
-                style="margin-right: 1rem;">Speech synthesis</a>
-                
+                <a class="navbar-brand" style="text-decoration: none; font-size: xx-large;" href="{% url 'home' %}"><img
+                        src="{% static 'graphics/logo_transparent_500x500.png' %}" alt="Logo" width="90" height="auto"
+                        class="d-inline-block align-middle" style="margin-right: 1rem;">Speech synthesis</a>
+
                 <ul class="navbar-nav">
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'about' %}">
-                            <img src="{% static 'graphics/info_btn.svg' %}" width="35" height="auto" aria-label="Information">
+                            <img src="{% static 'graphics/info_btn.svg' %}" width="35" height="auto"
+                                aria-label="Information">
                         </a>
                     </li>
                     <li class="nav-item">
@@ -40,30 +40,31 @@
     {% endblock %}
 
     {% block content %}
-    <div class="container-xxl mx-5">        
+    <div class="container-xxl mx-5">
         <form method="post" novalidate>
             {% csrf_token %}
 
             {% if form.non_field_errors %}
-                <div class="row p-0 align-items-end mt-3 mb-1">
-                    <div class="col-12">
-                        {{ form.non_field_errors }}                    
-                    </div>
+            <div class="row p-0 align-items-end mt-3 mb-1">
+                <div class="col-12">
+                    {{ form.non_field_errors }}
                 </div>
+            </div>
             {% endif %}
 
             <div class="row p-0 align-items-end mt-5 mb-1">
                 <div class="col-md-8 col-12 mb-1">
                     <div class="row justify-content-start">
                         {% if form.project_name.errors %}
-                            <div class="col">
-                                {{ form.project_name.errors }}
-                            </div>
+                        <div class="col">
+                            {{ form.project_name.errors }}
+                        </div>
                         {% endif %}
                         <div class="col-12">
                             <div class="input-group">
                                 <div class="input-group-text" style="background: none; border: none; padding: 0;">
-                                    <img src="{% static 'graphics/edit_btn.svg' %}" width="30" height="auto" aria-hidden="true">
+                                    <img src="{% static 'graphics/edit_btn.svg' %}" width="30" height="auto"
+                                        aria-hidden="true">
                                 </div>
                                 {{ form.project_name }}
                             </div>
@@ -73,22 +74,27 @@
                 <div class="col-md-4 col-12">
                     <div class="row justify-content-end">
                         <div class="col mb-1" style="display: flex; justify-content: end;">
-                            <label for="example" class="form-label" style="padding-top: 0.5rem; margin-right: 1rem;">Load example: 
-                                <select class="form-select" name="example-select-field" id="example"> 
+                            <label for="example" class="form-label"
+                                style="padding-top: 0.5rem; margin-right: 1rem;">Load example:
+                                <select class="form-select" name="example-select-field" id="example">
                                     <option selected>---</option>
-                                    <option value="quick">Quick test</option> 
-                                    <option value="printing">Printing</option> 
-                                    <option value="mountain">Mountain</option> 
-                                    <option value="wind">North Wind</option> 
+                                    <option value="quick">Quick test</option>
+                                    <option value="printing">Printing</option>
+                                    <option value="mountain">Mountain</option>
+                                    <option value="wind">North Wind</option>
                                 </select>
                             </label>
 
-                            <button type="button" id="save-project-button" class="btn btn-light btn-outline-dark" style="margin-inline: .5rem;" onclick="saveProject()">
-                                <img src="{% static 'graphics/download_btn.svg' %}" width="20" height="auto" aria-hidden="true"> Save project
+                            <button type="button" id="save-project-button" class="btn btn-light btn-outline-dark"
+                                style="margin-inline: .5rem;" onclick="saveProject()">
+                                <img src="{% static 'graphics/download_btn.svg' %}" width="20" height="auto"
+                                    aria-hidden="true"> Save project
                             </button>
-        
-                            <button type="button" id="load-project-button" class="btn btn-light btn-outline-dark" onclick="loadProject()">
-                                <img src="{% static 'graphics/upload_btn.svg' %}" width="20" height="auto" aria-hidden="true"> Load project
+
+                            <button type="button" id="load-project-button" class="btn btn-light btn-outline-dark"
+                                onclick="loadProject()">
+                                <img src="{% static 'graphics/upload_btn.svg' %}" width="20" height="auto"
+                                    aria-hidden="true"> Load project
                             </button>
                         </div>
                     </div>
@@ -109,299 +115,542 @@
                         <label for="text-input-field" class="form-label">Text:</label>
                         {{ form.text_input }}
                         <button type="button" id="save-text-input-button" class="btn btn-light btn-outline-dark btn-sm"
-                            onclick="saveTextInput()"> 
-                            <img src="{% static 'graphics/download_btn.svg' %}" width="20" height="auto" aria-label="Save text input">
+                            onclick="saveTextInput()">
+                            <img src="{% static 'graphics/download_btn.svg' %}" width="20" height="auto"
+                                aria-label="Save text input">
                         </button>
                     </div>
-            
+
                     <div class="col-lg-4 col-md-6 col-12 mb-3">
                         {{ form.ipa_input.errors }}
                         <label for="ipa-input-field" class="form-label">IPA:</label>
                         {{ form.ipa_input }}
                         <button type="button" id="save-ipa-input-button" class="btn btn-light btn-outline-dark btn-sm"
                             onclick="saveIpaInput()">
-                            <img src="{% static 'graphics/download_btn.svg' %}" width="20" height="auto" aria-label="Save IPA input">
+                            <img src="{% static 'graphics/download_btn.svg' %}" width="20" height="auto"
+                                aria-label="Save IPA input">
                         </button>
                     </div>
 
                     <div class="col-lg-4 col-md-6 col-12 mb-3">
                         <label for="ipa-chart" class="form-label">Insert symbol at cursor position:</label>
-                        <table class="table-responsive-xl table table-sm border border-secondary table-borderless" id="ipa-chart" name="ipa-chart">
+                        <table class="table-responsive-xl table table-sm border border-secondary table-borderless"
+                            id="ipa-chart" name="ipa-chart">
                             <tbody>
                                 <tr>
                                     <!-- ɑɐɒæʙɓβçɕð -->
-                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light" style="background-color: white; border-color: white; font-size: large;" onclick="insertSymbol('ɑ')">ɑ</button>
+                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light"
+                                            style="background-color: white; border-color: white; font-size: large;"
+                                            onclick="insertSymbol('ɑ')">ɑ</button>
                                     </td>
-                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light" style="background-color: white; border-color: white; font-size: large;" onclick="insertSymbol('ɐ')">ɐ</button>
+                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light"
+                                            style="background-color: white; border-color: white; font-size: large;"
+                                            onclick="insertSymbol('ɐ')">ɐ</button>
                                     </td>
-                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light" style="background-color: white; border-color: white; font-size: large;" onclick="insertSymbol('ɒ')">ɒ</button>
+                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light"
+                                            style="background-color: white; border-color: white; font-size: large;"
+                                            onclick="insertSymbol('ɒ')">ɒ</button>
                                     </td>
-                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light" style="background-color: white; border-color: white; font-size: large;" onclick="insertSymbol('æ')">æ</button>
+                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light"
+                                            style="background-color: white; border-color: white; font-size: large;"
+                                            onclick="insertSymbol('æ')">æ</button>
                                     </td>
-                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light" style="background-color: white; border-color: white; font-size: large;" onclick="insertSymbol('ʙ')">ʙ</button>
+                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light"
+                                            style="background-color: white; border-color: white; font-size: large;"
+                                            onclick="insertSymbol('ʙ')">ʙ</button>
                                     </td>
-                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light" style="background-color: white; border-color: white; font-size: large;" onclick="insertSymbol('ɓ')">ɓ</button>
+                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light"
+                                            style="background-color: white; border-color: white; font-size: large;"
+                                            onclick="insertSymbol('ɓ')">ɓ</button>
                                     </td>
-                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light" style="background-color: white; border-color: white; font-size: large;" onclick="insertSymbol('β')">β</button>
+                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light"
+                                            style="background-color: white; border-color: white; font-size: large;"
+                                            onclick="insertSymbol('β')">β</button>
                                     </td>
-                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light" style="background-color: white; border-color: white; font-size: large;" onclick="insertSymbol('ç')">ç</button>
+                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light"
+                                            style="background-color: white; border-color: white; font-size: large;"
+                                            onclick="insertSymbol('ç')">ç</button>
                                     </td>
-                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light" style="background-color: white; border-color: white; font-size: large;" onclick="insertSymbol('ɕ')">ɕ</button>
+                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light"
+                                            style="background-color: white; border-color: white; font-size: large;"
+                                            onclick="insertSymbol('ɕ')">ɕ</button>
                                     </td>
-                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light" style="background-color: white; border-color: white; font-size: large;" onclick="insertSymbol('ð')">ð</button>
+                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light"
+                                            style="background-color: white; border-color: white; font-size: large;"
+                                            onclick="insertSymbol('ð')">ð</button>
                                     </td>
                                 </tr>
                                 <tr>
                                     <!-- ɗɖɛɜəɢɠʛɣɤ -->
-                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light" style="background-color: white; border-color: white; font-size: large;" onclick="insertSymbol('ɗ')">ɗ</button>
+                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light"
+                                            style="background-color: white; border-color: white; font-size: large;"
+                                            onclick="insertSymbol('ɗ')">ɗ</button>
                                     </td>
-                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light" style="background-color: white; border-color: white; font-size: large;" onclick="insertSymbol('ɖ')">ɖ</button>
+                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light"
+                                            style="background-color: white; border-color: white; font-size: large;"
+                                            onclick="insertSymbol('ɖ')">ɖ</button>
                                     </td>
-                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light" style="background-color: white; border-color: white; font-size: large;" onclick="insertSymbol('ɛ')">ɛ</button>
+                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light"
+                                            style="background-color: white; border-color: white; font-size: large;"
+                                            onclick="insertSymbol('ɛ')">ɛ</button>
                                     </td>
-                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light" style="background-color: white; border-color: white; font-size: large;" onclick="insertSymbol('ɜ')">ɜ</button>
+                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light"
+                                            style="background-color: white; border-color: white; font-size: large;"
+                                            onclick="insertSymbol('ɜ')">ɜ</button>
                                     </td>
-                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light" style="background-color: white; border-color: white; font-size: large;" onclick="insertSymbol('ə')">ə</button>
+                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light"
+                                            style="background-color: white; border-color: white; font-size: large;"
+                                            onclick="insertSymbol('ə')">ə</button>
                                     </td>
-                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light" style="background-color: white; border-color: white; font-size: large;" onclick="insertSymbol('ɢ')">ɢ</button>
+                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light"
+                                            style="background-color: white; border-color: white; font-size: large;"
+                                            onclick="insertSymbol('ɢ')">ɢ</button>
                                     </td>
-                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light" style="background-color: white; border-color: white; font-size: large;" onclick="insertSymbol('ɠ')">ɠ</button>
+                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light"
+                                            style="background-color: white; border-color: white; font-size: large;"
+                                            onclick="insertSymbol('ɠ')">ɠ</button>
                                     </td>
-                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light" style="background-color: white; border-color: white; font-size: large;" onclick="insertSymbol('ʛ')">ʛ</button>
+                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light"
+                                            style="background-color: white; border-color: white; font-size: large;"
+                                            onclick="insertSymbol('ʛ')">ʛ</button>
                                     </td>
-                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light" style="background-color: white; border-color: white; font-size: large;" onclick="insertSymbol('ɣ')">ɣ</button>
+                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light"
+                                            style="background-color: white; border-color: white; font-size: large;"
+                                            onclick="insertSymbol('ɣ')">ɣ</button>
                                     </td>
-                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light" style="background-color: white; border-color: white; font-size: large;" onclick="insertSymbol('ɤ')">ɤ</button>
+                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light"
+                                            style="background-color: white; border-color: white; font-size: large;"
+                                            onclick="insertSymbol('ɤ')">ɤ</button>
                                     </td>
                                 </tr>
                                 <tr>
                                     <!-- ˠʜɦħʰɧɪɨıɟ -->
-                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light" style="background-color: white; border-color: white; font-size: large;" onclick="insertSymbol('ˠ')">ˠ</button>
+                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light"
+                                            style="background-color: white; border-color: white; font-size: large;"
+                                            onclick="insertSymbol('ˠ')">ˠ</button>
                                     </td>
-                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light" style="background-color: white; border-color: white; font-size: large;" onclick="insertSymbol('ʜ')">ʜ</button>
+                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light"
+                                            style="background-color: white; border-color: white; font-size: large;"
+                                            onclick="insertSymbol('ʜ')">ʜ</button>
                                     </td>
-                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light" style="background-color: white; border-color: white; font-size: large;" onclick="insertSymbol('ɦ')">ɦ</button>
+                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light"
+                                            style="background-color: white; border-color: white; font-size: large;"
+                                            onclick="insertSymbol('ɦ')">ɦ</button>
                                     </td>
-                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light" style="background-color: white; border-color: white; font-size: large;" onclick="insertSymbol('ħ')">ħ</button>
+                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light"
+                                            style="background-color: white; border-color: white; font-size: large;"
+                                            onclick="insertSymbol('ħ')">ħ</button>
                                     </td>
-                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light" style="background-color: white; border-color: white; font-size: large;" onclick="insertSymbol('ʰ')">ʰ</button>
+                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light"
+                                            style="background-color: white; border-color: white; font-size: large;"
+                                            onclick="insertSymbol('ʰ')">ʰ</button>
                                     </td>
-                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light" style="background-color: white; border-color: white; font-size: large;" onclick="insertSymbol('ɧ')">ɧ</button>
+                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light"
+                                            style="background-color: white; border-color: white; font-size: large;"
+                                            onclick="insertSymbol('ɧ')">ɧ</button>
                                     </td>
-                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light" style="background-color: white; border-color: white; font-size: large;" onclick="insertSymbol('ɪ')">ɪ</button>
+                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light"
+                                            style="background-color: white; border-color: white; font-size: large;"
+                                            onclick="insertSymbol('ɪ')">ɪ</button>
                                     </td>
-                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light" style="background-color: white; border-color: white; font-size: large;" onclick="insertSymbol('ɨ')">ɨ</button>
+                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light"
+                                            style="background-color: white; border-color: white; font-size: large;"
+                                            onclick="insertSymbol('ɨ')">ɨ</button>
                                     </td>
-                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light" style="background-color: white; border-color: white; font-size: large;" onclick="insertSymbol('ı')">ı</button>
+                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light"
+                                            style="background-color: white; border-color: white; font-size: large;"
+                                            onclick="insertSymbol('ı')">ı</button>
                                     </td>
-                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light" style="background-color: white; border-color: white; font-size: large;" onclick="insertSymbol('ɟ')">ɟ</button>
+                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light"
+                                            style="background-color: white; border-color: white; font-size: large;"
+                                            onclick="insertSymbol('ɟ')">ɟ</button>
                                     </td>
                                 </tr>
                                 <tr>
                                     <!-- ʝʄᴊʲʟɬɭɮɫˡ -->
-                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light" style="background-color: white; border-color: white; font-size: large;" onclick="insertSymbol('ʝ')">ʝ</button>
+                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light"
+                                            style="background-color: white; border-color: white; font-size: large;"
+                                            onclick="insertSymbol('ʝ')">ʝ</button>
                                     </td>
-                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light" style="background-color: white; border-color: white; font-size: large;" onclick="insertSymbol('ʄ')">ʄ</button>
+                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light"
+                                            style="background-color: white; border-color: white; font-size: large;"
+                                            onclick="insertSymbol('ʄ')">ʄ</button>
                                     </td>
-                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light" style="background-color: white; border-color: white; font-size: large;" onclick="insertSymbol('ᴊ')">ᴊ</button>
+                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light"
+                                            style="background-color: white; border-color: white; font-size: large;"
+                                            onclick="insertSymbol('ᴊ')">ᴊ</button>
                                     </td>
-                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light" style="background-color: white; border-color: white; font-size: large;" onclick="insertSymbol('ʲ')">ʲ</button>
+                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light"
+                                            style="background-color: white; border-color: white; font-size: large;"
+                                            onclick="insertSymbol('ʲ')">ʲ</button>
                                     </td>
-                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light" style="background-color: white; border-color: white; font-size: large;" onclick="insertSymbol('ʟ')">ʟ</button>
+                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light"
+                                            style="background-color: white; border-color: white; font-size: large;"
+                                            onclick="insertSymbol('ʟ')">ʟ</button>
                                     </td>
-                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light" style="background-color: white; border-color: white; font-size: large;" onclick="insertSymbol('ɬ')">ɬ</button>
+                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light"
+                                            style="background-color: white; border-color: white; font-size: large;"
+                                            onclick="insertSymbol('ɬ')">ɬ</button>
                                     </td>
-                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light" style="background-color: white; border-color: white; font-size: large;" onclick="insertSymbol('ɭ')">ɭ</button>
+                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light"
+                                            style="background-color: white; border-color: white; font-size: large;"
+                                            onclick="insertSymbol('ɭ')">ɭ</button>
                                     </td>
-                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light" style="background-color: white; border-color: white; font-size: large;" onclick="insertSymbol('ɮ')">ɮ</button>
+                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light"
+                                            style="background-color: white; border-color: white; font-size: large;"
+                                            onclick="insertSymbol('ɮ')">ɮ</button>
                                     </td>
-                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light" style="background-color: white; border-color: white; font-size: large;" onclick="insertSymbol('ɫ')">ɫ</button>
+                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light"
+                                            style="background-color: white; border-color: white; font-size: large;"
+                                            onclick="insertSymbol('ɫ')">ɫ</button>
                                     </td>
-                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light" style="background-color: white; border-color: white; font-size: large;" onclick="insertSymbol('ˡ')">ˡ</button>
+                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light"
+                                            style="background-color: white; border-color: white; font-size: large;"
+                                            onclick="insertSymbol('ˡ')">ˡ</button>
                                     </td>
                                 </tr>
                                 <tr>
                                     <!-- ɰɯɱɴŋɲɳⁿɔɵ -->
-                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light" style="background-color: white; border-color: white; font-size: large;" onclick="insertSymbol('ɰ')">ɰ</button>
+                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light"
+                                            style="background-color: white; border-color: white; font-size: large;"
+                                            onclick="insertSymbol('ɰ')">ɰ</button>
                                     </td>
-                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light" style="background-color: white; border-color: white; font-size: large;" onclick="insertSymbol('ɯ')">ɯ</button>
+                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light"
+                                            style="background-color: white; border-color: white; font-size: large;"
+                                            onclick="insertSymbol('ɯ')">ɯ</button>
                                     </td>
-                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light" style="background-color: white; border-color: white; font-size: large;" onclick="insertSymbol('ɱ')">ɱ</button>
+                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light"
+                                            style="background-color: white; border-color: white; font-size: large;"
+                                            onclick="insertSymbol('ɱ')">ɱ</button>
                                     </td>
-                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light" style="background-color: white; border-color: white; font-size: large;" onclick="insertSymbol('ɴ')">ɴ</button>
+                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light"
+                                            style="background-color: white; border-color: white; font-size: large;"
+                                            onclick="insertSymbol('ɴ')">ɴ</button>
                                     </td>
-                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light" style="background-color: white; border-color: white; font-size: large;" onclick="insertSymbol('ŋ')">ŋ</button>
+                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light"
+                                            style="background-color: white; border-color: white; font-size: large;"
+                                            onclick="insertSymbol('ŋ')">ŋ</button>
                                     </td>
-                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light" style="background-color: white; border-color: white; font-size: large;" onclick="insertSymbol('ɲ')">ɲ</button>
+                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light"
+                                            style="background-color: white; border-color: white; font-size: large;"
+                                            onclick="insertSymbol('ɲ')">ɲ</button>
                                     </td>
-                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light" style="background-color: white; border-color: white; font-size: large;" onclick="insertSymbol('ɳ')">ɳ</button>
+                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light"
+                                            style="background-color: white; border-color: white; font-size: large;"
+                                            onclick="insertSymbol('ɳ')">ɳ</button>
                                     </td>
-                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light" style="background-color: white; border-color: white; font-size: large;" onclick="insertSymbol('ⁿ')">ⁿ</button>
+                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light"
+                                            style="background-color: white; border-color: white; font-size: large;"
+                                            onclick="insertSymbol('ⁿ')">ⁿ</button>
                                     </td>
-                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light" style="background-color: white; border-color: white; font-size: large;" onclick="insertSymbol('ɔ')">ɔ</button>
+                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light"
+                                            style="background-color: white; border-color: white; font-size: large;"
+                                            onclick="insertSymbol('ɔ')">ɔ</button>
                                     </td>
-                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light" style="background-color: white; border-color: white; font-size: large;" onclick="insertSymbol('ɵ')">ɵ</button>
+                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light"
+                                            style="background-color: white; border-color: white; font-size: large;"
+                                            onclick="insertSymbol('ɵ')">ɵ</button>
                                     </td>
                                 </tr>
                                 <tr>
                                     <!-- øœɶɸɹʀʁɾɽɺ -->
-                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light" style="background-color: white; border-color: white; font-size: large;" onclick="insertSymbol('ø')">ø</button>
+                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light"
+                                            style="background-color: white; border-color: white; font-size: large;"
+                                            onclick="insertSymbol('ø')">ø</button>
                                     </td>
-                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light" style="background-color: white; border-color: white; font-size: large;" onclick="insertSymbol('œ')">œ</button>
+                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light"
+                                            style="background-color: white; border-color: white; font-size: large;"
+                                            onclick="insertSymbol('œ')">œ</button>
                                     </td>
-                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light" style="background-color: white; border-color: white; font-size: large;" onclick="insertSymbol('ɶ')">ɶ</button>
+                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light"
+                                            style="background-color: white; border-color: white; font-size: large;"
+                                            onclick="insertSymbol('ɶ')">ɶ</button>
                                     </td>
-                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light" style="background-color: white; border-color: white; font-size: large;" onclick="insertSymbol('ɸ')">ɸ</button>
+                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light"
+                                            style="background-color: white; border-color: white; font-size: large;"
+                                            onclick="insertSymbol('ɸ')">ɸ</button>
                                     </td>
-                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light" style="background-color: white; border-color: white; font-size: large;" onclick="insertSymbol('ɹ')">ɹ</button>
+                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light"
+                                            style="background-color: white; border-color: white; font-size: large;"
+                                            onclick="insertSymbol('ɹ')">ɹ</button>
                                     </td>
-                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light" style="background-color: white; border-color: white; font-size: large;" onclick="insertSymbol('ʀ')">ʀ</button>
+                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light"
+                                            style="background-color: white; border-color: white; font-size: large;"
+                                            onclick="insertSymbol('ʀ')">ʀ</button>
                                     </td>
-                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light" style="background-color: white; border-color: white; font-size: large;" onclick="insertSymbol('ʁ')">ʁ</button>
+                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light"
+                                            style="background-color: white; border-color: white; font-size: large;"
+                                            onclick="insertSymbol('ʁ')">ʁ</button>
                                     </td>
-                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light" style="background-color: white; border-color: white; font-size: large;" onclick="insertSymbol('ɾ')">ɾ</button>
+                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light"
+                                            style="background-color: white; border-color: white; font-size: large;"
+                                            onclick="insertSymbol('ɾ')">ɾ</button>
                                     </td>
-                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light" style="background-color: white; border-color: white; font-size: large;" onclick="insertSymbol('ɽ')">ɽ</button>
+                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light"
+                                            style="background-color: white; border-color: white; font-size: large;"
+                                            onclick="insertSymbol('ɽ')">ɽ</button>
                                     </td>
-                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light" style="background-color: white; border-color: white; font-size: large;" onclick="insertSymbol('ɺ')">ɺ</button>
+                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light"
+                                            style="background-color: white; border-color: white; font-size: large;"
+                                            onclick="insertSymbol('ɺ')">ɺ</button>
                                     </td>
                                 </tr>
                                 <tr>
                                     <!-- ɻʃʂθʈʉʊʌʋʍ -->
-                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light" style="background-color: white; border-color: white; font-size: large;" onclick="insertSymbol('ɻ')">ɻ</button>
+                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light"
+                                            style="background-color: white; border-color: white; font-size: large;"
+                                            onclick="insertSymbol('ɻ')">ɻ</button>
                                     </td>
-                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light" style="background-color: white; border-color: white; font-size: large;" onclick="insertSymbol('ʃ')">ʃ</button>
+                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light"
+                                            style="background-color: white; border-color: white; font-size: large;"
+                                            onclick="insertSymbol('ʃ')">ʃ</button>
                                     </td>
-                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light" style="background-color: white; border-color: white; font-size: large;" onclick="insertSymbol('ʂ')">ʂ</button>
+                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light"
+                                            style="background-color: white; border-color: white; font-size: large;"
+                                            onclick="insertSymbol('ʂ')">ʂ</button>
                                     </td>
-                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light" style="background-color: white; border-color: white; font-size: large;" onclick="insertSymbol('θ')">θ</button>
+                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light"
+                                            style="background-color: white; border-color: white; font-size: large;"
+                                            onclick="insertSymbol('θ')">θ</button>
                                     </td>
-                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light" style="background-color: white; border-color: white; font-size: large;" onclick="insertSymbol('ʈ')">ʈ</button>
+                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light"
+                                            style="background-color: white; border-color: white; font-size: large;"
+                                            onclick="insertSymbol('ʈ')">ʈ</button>
                                     </td>
-                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light" style="background-color: white; border-color: white; font-size: large;" onclick="insertSymbol('ʉ')">ʉ</button>
+                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light"
+                                            style="background-color: white; border-color: white; font-size: large;"
+                                            onclick="insertSymbol('ʉ')">ʉ</button>
                                     </td>
-                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light" style="background-color: white; border-color: white; font-size: large;" onclick="insertSymbol('ʊ')">ʊ</button>
+                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light"
+                                            style="background-color: white; border-color: white; font-size: large;"
+                                            onclick="insertSymbol('ʊ')">ʊ</button>
                                     </td>
-                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light" style="background-color: white; border-color: white; font-size: large;" onclick="insertSymbol('ʌ')">ʌ</button>
+                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light"
+                                            style="background-color: white; border-color: white; font-size: large;"
+                                            onclick="insertSymbol('ʌ')">ʌ</button>
                                     </td>
-                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light" style="background-color: white; border-color: white; font-size: large;" onclick="insertSymbol('ʋ')">ʋ</button>
+                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light"
+                                            style="background-color: white; border-color: white; font-size: large;"
+                                            onclick="insertSymbol('ʋ')">ʋ</button>
                                     </td>
-                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light" style="background-color: white; border-color: white; font-size: large;" onclick="insertSymbol('ʍ')">ʍ</button>
+                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light"
+                                            style="background-color: white; border-color: white; font-size: large;"
+                                            onclick="insertSymbol('ʍ')">ʍ</button>
                                     </td>
                                 </tr>
                                 <tr>
                                     <!-- ʷχʎʏɥʒʐʑˑː -->
-                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light" style="background-color: white; border-color: white; font-size: large;" onclick="insertSymbol('ʷ')">ʷ</button>
+                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light"
+                                            style="background-color: white; border-color: white; font-size: large;"
+                                            onclick="insertSymbol('ʷ')">ʷ</button>
                                     </td>
-                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light" style="background-color: white; border-color: white; font-size: large;" onclick="insertSymbol('χ')">χ</button>
+                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light"
+                                            style="background-color: white; border-color: white; font-size: large;"
+                                            onclick="insertSymbol('χ')">χ</button>
                                     </td>
-                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light" style="background-color: white; border-color: white; font-size: large;" onclick="insertSymbol('ʎ')">ʎ</button>
+                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light"
+                                            style="background-color: white; border-color: white; font-size: large;"
+                                            onclick="insertSymbol('ʎ')">ʎ</button>
                                     </td>
-                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light" style="background-color: white; border-color: white; font-size: large;" onclick="insertSymbol('ʏ')">ʏ</button>
+                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light"
+                                            style="background-color: white; border-color: white; font-size: large;"
+                                            onclick="insertSymbol('ʏ')">ʏ</button>
                                     </td>
-                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light" style="background-color: white; border-color: white; font-size: large;" onclick="insertSymbol('ɥ')">ɥ</button>
+                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light"
+                                            style="background-color: white; border-color: white; font-size: large;"
+                                            onclick="insertSymbol('ɥ')">ɥ</button>
                                     </td>
-                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light" style="background-color: white; border-color: white; font-size: large;" onclick="insertSymbol('ʒ')">ʒ</button>
+                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light"
+                                            style="background-color: white; border-color: white; font-size: large;"
+                                            onclick="insertSymbol('ʒ')">ʒ</button>
                                     </td>
-                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light" style="background-color: white; border-color: white; font-size: large;" onclick="insertSymbol('ʐ')">ʐ</button>
+                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light"
+                                            style="background-color: white; border-color: white; font-size: large;"
+                                            onclick="insertSymbol('ʐ')">ʐ</button>
                                     </td>
-                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light" style="background-color: white; border-color: white; font-size: large;" onclick="insertSymbol('ʑ')">ʑ</button>
+                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light"
+                                            style="background-color: white; border-color: white; font-size: large;"
+                                            onclick="insertSymbol('ʑ')">ʑ</button>
                                     </td>
-                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light" style="background-color: white; border-color: white; font-size: large;" onclick="insertSymbol('ˑ')">ˑ</button>
+                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light"
+                                            style="background-color: white; border-color: white; font-size: large;"
+                                            onclick="insertSymbol('ˑ')">ˑ</button>
                                     </td>
-                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light" style="background-color: white; border-color: white; font-size: large;" onclick="insertSymbol('ː')">ː</button>
+                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light"
+                                            style="background-color: white; border-color: white; font-size: large;"
+                                            onclick="insertSymbol('ː')">ː</button>
                                     </td>
                                 </tr>
                                 <tr>
                                     <!-- ʔʡʕʢˤǃʘǀǁǂ -->
-                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light" style="background-color: white; border-color: white; font-size: large;" onclick="insertSymbol('ʔ')">ʔ</button>
+                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light"
+                                            style="background-color: white; border-color: white; font-size: large;"
+                                            onclick="insertSymbol('ʔ')">ʔ</button>
                                     </td>
-                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light" style="background-color: white; border-color: white; font-size: large;" onclick="insertSymbol('ʡ')">ʡ</button>
+                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light"
+                                            style="background-color: white; border-color: white; font-size: large;"
+                                            onclick="insertSymbol('ʡ')">ʡ</button>
                                     </td>
-                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light" style="background-color: white; border-color: white; font-size: large;" onclick="insertSymbol('ʕ')">ʕ</button>
+                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light"
+                                            style="background-color: white; border-color: white; font-size: large;"
+                                            onclick="insertSymbol('ʕ')">ʕ</button>
                                     </td>
-                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light" style="background-color: white; border-color: white; font-size: large;" onclick="insertSymbol('ʢ')">ʢ</button>
+                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light"
+                                            style="background-color: white; border-color: white; font-size: large;"
+                                            onclick="insertSymbol('ʢ')">ʢ</button>
                                     </td>
-                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light" style="background-color: white; border-color: white; font-size: large;" onclick="insertSymbol('ˤ')">ˤ</button>
+                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light"
+                                            style="background-color: white; border-color: white; font-size: large;"
+                                            onclick="insertSymbol('ˤ')">ˤ</button>
                                     </td>
-                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light" style="background-color: white; border-color: white; font-size: large;" onclick="insertSymbol('ǃ')">ǃ</button>
+                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light"
+                                            style="background-color: white; border-color: white; font-size: large;"
+                                            onclick="insertSymbol('ǃ')">ǃ</button>
                                     </td>
-                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light" style="background-color: white; border-color: white; font-size: large;" onclick="insertSymbol('ʘ')">ʘ</button>
+                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light"
+                                            style="background-color: white; border-color: white; font-size: large;"
+                                            onclick="insertSymbol('ʘ')">ʘ</button>
                                     </td>
-                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light" style="background-color: white; border-color: white; font-size: large;" onclick="insertSymbol('ǀ')">ǀ</button>
+                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light"
+                                            style="background-color: white; border-color: white; font-size: large;"
+                                            onclick="insertSymbol('ǀ')">ǀ</button>
                                     </td>
-                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light" style="background-color: white; border-color: white; font-size: large;" onclick="insertSymbol('ǁ')">ǁ</button>
+                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light"
+                                            style="background-color: white; border-color: white; font-size: large;"
+                                            onclick="insertSymbol('ǁ')">ǁ</button>
                                     </td>
-                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light" style="background-color: white; border-color: white; font-size: large;" onclick="insertSymbol('ǂ')">ǂ</button>
+                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light"
+                                            style="background-color: white; border-color: white; font-size: large;"
+                                            onclick="insertSymbol('ǂ')">ǂ</button>
                                     </td>
                                 </tr>
                                 <tr>
                                     <!-- ʤɘɚɝʱˢʧɞʦʣ -->
-                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light" style="background-color: white; border-color: white; font-size: large;" onclick="insertSymbol('ʤ')">ʤ</button>
+                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light"
+                                            style="background-color: white; border-color: white; font-size: large;"
+                                            onclick="insertSymbol('ʤ')">ʤ</button>
                                     </td>
-                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light" style="background-color: white; border-color: white; font-size: large;" onclick="insertSymbol('ɘ')">ɘ</button>
+                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light"
+                                            style="background-color: white; border-color: white; font-size: large;"
+                                            onclick="insertSymbol('ɘ')">ɘ</button>
                                     </td>
-                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light" style="background-color: white; border-color: white; font-size: large;" onclick="insertSymbol('ɚ')">ɚ</button>
+                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light"
+                                            style="background-color: white; border-color: white; font-size: large;"
+                                            onclick="insertSymbol('ɚ')">ɚ</button>
                                     </td>
-                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light" style="background-color: white; border-color: white; font-size: large;" onclick="insertSymbol('ɝ')">ɝ</button>
+                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light"
+                                            style="background-color: white; border-color: white; font-size: large;"
+                                            onclick="insertSymbol('ɝ')">ɝ</button>
                                     </td>
-                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light" style="background-color: white; border-color: white; font-size: large;" onclick="insertSymbol('ʱ')">ʱ</button>
+                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light"
+                                            style="background-color: white; border-color: white; font-size: large;"
+                                            onclick="insertSymbol('ʱ')">ʱ</button>
                                     </td>
-                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light" style="background-color: white; border-color: white; font-size: large;" onclick="insertSymbol('ˢ')">ˢ</button>
+                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light"
+                                            style="background-color: white; border-color: white; font-size: large;"
+                                            onclick="insertSymbol('ˢ')">ˢ</button>
                                     </td>
-                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light" style="background-color: white; border-color: white; font-size: large;" onclick="insertSymbol('ʧ')">ʧ</button>
+                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light"
+                                            style="background-color: white; border-color: white; font-size: large;"
+                                            onclick="insertSymbol('ʧ')">ʧ</button>
                                     </td>
-                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light" style="background-color: white; border-color: white; font-size: large;" onclick="insertSymbol('ɞ')">ɞ</button>
+                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light"
+                                            style="background-color: white; border-color: white; font-size: large;"
+                                            onclick="insertSymbol('ɞ')">ɞ</button>
                                     </td>
-                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light" style="background-color: white; border-color: white; font-size: large;" onclick="insertSymbol('ʦ')">ʦ</button>
+                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light"
+                                            style="background-color: white; border-color: white; font-size: large;"
+                                            onclick="insertSymbol('ʦ')">ʦ</button>
                                     </td>
-                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light" style="background-color: white; border-color: white; font-size: large;" onclick="insertSymbol('ʣ')">ʣ</button>
+                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light"
+                                            style="background-color: white; border-color: white; font-size: large;"
+                                            onclick="insertSymbol('ʣ')">ʣ</button>
                                     </td>
                                 </tr>
                                 <tr>
                                     <!--ʨʥ ̊ ̥  ̤  ̰  ̪  ̩  ̝  ̞  -->
-                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light" style="background-color: white; border-color: white; font-size: large;" onclick="insertSymbol('ʨ')">ʨ</button>
+                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light"
+                                            style="background-color: white; border-color: white; font-size: large;"
+                                            onclick="insertSymbol('ʨ')">ʨ</button>
                                     </td>
-                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light" style="background-color: white; border-color: white; font-size: large;" onclick="insertSymbol('ʥ')">ʥ</button>
+                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light"
+                                            style="background-color: white; border-color: white; font-size: large;"
+                                            onclick="insertSymbol('ʥ')">ʥ</button>
                                     </td>
-                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light" style="background-color: white; border-color: white; font-size: large;" onclick="insertSymbol('̊')">̊</button>
+                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light"
+                                            style="background-color: white; border-color: white; font-size: large;"
+                                            onclick="insertSymbol('̊')">̊</button>
                                     </td>
-                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light" style="background-color: white; border-color: white; font-size: large;" onclick="insertSymbol('̥')">̥</button>
+                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light"
+                                            style="background-color: white; border-color: white; font-size: large;"
+                                            onclick="insertSymbol('̥')">̥</button>
                                     </td>
-                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light" style="background-color: white; border-color: white; font-size: large;" onclick="insertSymbol('̤')">̤</button>
+                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light"
+                                            style="background-color: white; border-color: white; font-size: large;"
+                                            onclick="insertSymbol('̤')">̤</button>
                                     </td>
-                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light" style="background-color: white; border-color: white; font-size: large;" onclick="insertSymbol('̰')">̰</button>
+                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light"
+                                            style="background-color: white; border-color: white; font-size: large;"
+                                            onclick="insertSymbol('̰')">̰</button>
                                     </td>
-                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light" style="background-color: white; border-color: white; font-size: large;" onclick="insertSymbol('̪')">̪</button>
+                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light"
+                                            style="background-color: white; border-color: white; font-size: large;"
+                                            onclick="insertSymbol('̪')">̪</button>
                                     </td>
-                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light" style="background-color: white; border-color: white; font-size: large;" onclick="insertSymbol('̩')">̩</button>
+                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light"
+                                            style="background-color: white; border-color: white; font-size: large;"
+                                            onclick="insertSymbol('̩')">̩</button>
                                     </td>
-                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light" style="background-color: white; border-color: white; font-size: large;" onclick="insertSymbol('̝')">̝</button>
+                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light"
+                                            style="background-color: white; border-color: white; font-size: large;"
+                                            onclick="insertSymbol('̝')">̝</button>
                                     </td>
-                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light" style="background-color: white; border-color: white; font-size: large;" onclick="insertSymbol('̞')">̞</button>
+                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light"
+                                            style="background-color: white; border-color: white; font-size: large;"
+                                            onclick="insertSymbol('̞')">̞</button>
                                     </td>
                                 </tr>
                                 <tr>
                                     <!--  ́  ̄  ̀  ̈  ̃  ̟  ̱  ̹  ̜  ̚ -->
-                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light" style="background-color: white; border-color: white; font-size: large;" onclick="insertSymbol('́')">́</button>
+                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light"
+                                            style="background-color: white; border-color: white; font-size: large;"
+                                            onclick="insertSymbol('́')">́</button>
                                     </td>
-                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light" style="background-color: white; border-color: white; font-size: large;" onclick="insertSymbol('̄')">̄</button>
+                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light"
+                                            style="background-color: white; border-color: white; font-size: large;"
+                                            onclick="insertSymbol('̄')">̄</button>
                                     </td>
-                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light" style="background-color: white; border-color: white; font-size: large;" onclick="insertSymbol('̀')">̀</button>
+                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light"
+                                            style="background-color: white; border-color: white; font-size: large;"
+                                            onclick="insertSymbol('̀')">̀</button>
                                     </td>
-                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light" style="background-color: white; border-color: white; font-size: large;" onclick="insertSymbol('̈')">̈</button>
+                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light"
+                                            style="background-color: white; border-color: white; font-size: large;"
+                                            onclick="insertSymbol('̈')">̈</button>
                                     </td>
-                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light" style="background-color: white; border-color: white; font-size: large;" onclick="insertSymbol('̃')">̃</button>
+                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light"
+                                            style="background-color: white; border-color: white; font-size: large;"
+                                            onclick="insertSymbol('̃')">̃</button>
                                     </td>
-                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light" style="background-color: white; border-color: white; font-size: large;" onclick="insertSymbol('̟')">̟</button>
+                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light"
+                                            style="background-color: white; border-color: white; font-size: large;"
+                                            onclick="insertSymbol('̟')">̟</button>
                                     </td>
-                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light" style="background-color: white; border-color: white; font-size: large;" onclick="insertSymbol('̱')">̱</button>
+                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light"
+                                            style="background-color: white; border-color: white; font-size: large;"
+                                            onclick="insertSymbol('̱')">̱</button>
                                     </td>
-                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light" style="background-color: white; border-color: white; font-size: large;" onclick="insertSymbol('̹')">̹</button>
+                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light"
+                                            style="background-color: white; border-color: white; font-size: large;"
+                                            onclick="insertSymbol('̹')">̹</button>
                                     </td>
-                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light" style="background-color: white; border-color: white; font-size: large;" onclick="insertSymbol('̜')">̜</button>
+                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light"
+                                            style="background-color: white; border-color: white; font-size: large;"
+                                            onclick="insertSymbol('̜')">̜</button>
                                     </td>
-                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light" style="background-color: white; border-color: white; font-size: large;" onclick="insertSymbol('̚')">̚</button>
+                                    <td style="padding: .0rem;"><button type="button" class="btn btn-light"
+                                            style="background-color: white; border-color: white; font-size: large;"
+                                            onclick="insertSymbol('̚')">̚</button>
                                     </td>
                                 </tr>
                             </tbody>
@@ -421,12 +670,14 @@
                 <div class="row justify-content-start align-items-end mt-3 pb-3 px-5">
                     <div class="col-12 mt-3">
                         {{ form.model.errors }}
-                        <label for="model-select-field" class="form-label" style="padding-top: 0.5rem; margin-right: 1rem;">Model: 
+                        <label for="model-select-field" class="form-label"
+                            style="padding-top: 0.5rem; margin-right: 1rem;">Model:
                             {{ form.model }}
                         </label>
 
                         {{ form.voice.errors }}
-                        <label for="voice-select-field" class="form-label" style="padding-top: 0.5rem; margin-right: 1rem;">Voice: 
+                        <label for="voice-select-field" class="form-label"
+                            style="padding-top: 0.5rem; margin-right: 1rem;">Voice:
                             {{ form.voice }}
                         </label>
                     </div>
@@ -444,49 +695,52 @@
                 <div class="row justify-content-start align-items-end mt-3 pb-3 px-5">
                     <div class="col-md-2 col-12 mt-3">
                         {{ form.sentence.errors }}
-                        <label for="sentence-select-field" class="form-label" style="padding-top: 0.5rem; margin-right: 1rem;">Sentence: 
+                        <label for="sentence-select-field" class="form-label"
+                            style="padding-top: 0.5rem; margin-right: 1rem;">Sentence:
                             {{ form.sentence }}
                         </label>
                     </div>
 
                     {% if task_queued == True %}
                     <div class="col-md-10 col-12 mt-3" id="progress">
-                            <p><img src="{% static 'graphics/loading.webp' %}" width="25"
-                                    height="25"> Synthesizing, please wait. This can take a
-                                    few minutes.</p>
+                        <p><img src="{% static 'graphics/loading.webp' %}" width="25" height="25"> Synthesizing, please
+                            wait. This can take a
+                            few minutes.</p>
                     </div>
                     <script>
-                            document.addEventListener('DOMContentLoaded', function () {
-                                    var urls = {
-                                            audioUrl: "{{ audio_url }}",
-                                            taskStatusUrl: "{% url 'task_status' %}",
-                                            helpUrl: "{% url 'help' %}",
-                                            loadingImageUrl: "{% static 'graphics/loading.webp' %}",
-                                    };
-                                    var sessionKey = "{{ session_key }}";
+                        document.addEventListener('DOMContentLoaded', function () {
+                            var urls = {
+                                audioUrl: "{{ audio_url }}",
+                                taskStatusUrl: "{% url 'task_status' %}",
+                                helpUrl: "{% url 'help' %}",
+                                loadingImageUrl: "{% static 'graphics/loading.webp' %}",
+                            };
+                            var sessionKey = "{{ session_key }}";
 
-                                    updateAndSchedule(sessionKey, urls);
-                            });
+                            updateAndSchedule(sessionKey, urls);
+                        });
                     </script>
 
 
                     {% elif session_key == "_failed" %}
                     <div class="col-md-10 col-12 mt-3">
                         <button id="synthesize-button" class="btn btn-light btn-outline-dark mb-1" type="submit">
-                            Synthesize <img src="{% static 'graphics/synthesize_btn.svg' %}" width="20" height="auto" aria-hidden="true"></button>
+                            Synthesize <img src="{% static 'graphics/synthesize_btn.svg' %}" width="20" height="auto"
+                                aria-hidden="true"></button>
                     </div>
                     <div class="col-md-10 col-12 mt-3">
-                            <p>
-                                Synthesis failed. Please make sure you followed the 
-                                <a href="{% url 'help' %}">guidelines</a> and try again. 
-                                If the problem persists, please contact the 
-                                <a href="https://github.com/ntlprzybysz/synthesis-gui">maintainer</a>.
-                            </p>
+                        <p>
+                            Synthesis failed. Please make sure you followed the
+                            <a href="{% url 'help' %}">guidelines</a> and try again.
+                            If the problem persists, please contact the
+                            <a href="https://github.com/ntlprzybysz/synthesis-gui">maintainer</a>.
+                        </p>
                     </div>
 
                     {% else %}
                     <div class="col-md-10 col-12 mt-3">
-                            <button id="synthesize-button" class="btn btn-light btn-outline-dark mb-1" type="submit">Synthesize</button>
+                        <button id="synthesize-button" class="btn btn-light btn-outline-dark mb-1"
+                            type="submit">Synthesize</button>
                     </div>
                     {% endif %}
                 </div>
@@ -498,11 +752,11 @@
     <br>
 
     <div class="footer col-12 justify-content-start">
-        <span class="mb-3 mb-md-0 text-body-secondary">© Copyright 2023, 
-            <a href="https://stefantaubert.com/">Stefan Taubert</a> and 
+        <span class="mb-3 mb-md-0 text-body-secondary">© Copyright 2023,
+            <a href="https://stefantaubert.com/">Stefan Taubert</a> and
             <a href="https://www.linkedin.com/in/ntl-przybysz/">Natalia Przybysz</a>.
         </span>
-      </div>
+    </div>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>

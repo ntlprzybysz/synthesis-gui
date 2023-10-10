@@ -37,10 +37,13 @@
             <div class="row">
                 <div class="col-12">
                     <div class="input-group">
-                        <div class="input-group-text" style="background: none; border: none; padding: 0;" aria-hidden="true">
+                        <div class="input-group-text" style="background: none; border: none; padding: 0;"
+                            aria-hidden="true">
                             <img src="/static/graphics/edit_btn.svg" width="30" height="auto">
                         </div>
-                        <input type="text" class="form-control form-control-lg" style="width: 250px; border: none; outline: 0;" id="project-name" value="Example synthesis" aria-label="Project name">
+                        <input type="text" class="form-control form-control-lg"
+                            style="width: 250px; border: none; outline: 0;" id="project-name" value="Example synthesis"
+                            aria-label="Project name">
                     </div>
                 </div>
             </div>
@@ -70,8 +73,9 @@
                 This dropdown menu allows you to populate the project name, text and IPA input fields
                 with input that works with the tools this app uses.
             </p>
-            <label for="example-select-field">Load example: 
-                <select class="form-select" name="example-select-test-field" id="example-test" aria-label="Load example">
+            <label for="example-select-field">Load example:
+                <select class="form-select" name="example-select-test-field" id="example-test"
+                    aria-label="Load example">
                     <option selected>---</option>
                     <option value="quick">Quick test</option>
                     <option value="printing">Printing</option>
@@ -128,17 +132,17 @@
                 <ul>
                     <li>
                         Each phoneme must be separated into a single interval, e.g., <span class="code">T|h|i|s| |i|s|
-                        |a| |t|e|x|t|</span>.
+                            |a| |t|e|x|t|</span>.
                     </li>
                     <li>
                         Stress marks should be placed directly on the vowel of the syllable, e.g., <span
-                        class="code">b|ˈo|d|i</span> instead of <span class="code">ˈb|o|d|i</span> (body).
+                            class="code">b|ˈo|d|i</span> instead of <span class="code">ˈb|o|d|i</span> (body).
                     </li>
                     <li>
                         Tone marks should be placed directly on the vowel of the syllable, e.g., <span
-                        class="code">ʈʂʰ|w|a˥˩|n</span> instead of <span class="code">ʈʂʰ|w|a|n˥˩</span> (串).
+                            class="code">ʈʂʰ|w|a˥˩|n</span> instead of <span class="code">ʈʂʰ|w|a|n˥˩</span> (串).
                         Use the following tone characters: <span class="code">˥ ˦ ˧ ˨ ˩</span>, e.g., <span
-                        class="code">ɑ˥˩</span>.
+                            class="code">ɑ˥˩</span>.
                     </li>
                     <li>
                         Use duration marks: <span class="code">˘ ˑ ː</span>, e.g., <span class="code">ʌː</span>.
@@ -148,11 +152,12 @@
                     </li>
                     <li>
                         Use <span class="code">SIL0</span>, <span class="code">SIL1</span>, or <span
-                        class="code">SIL2</span> to represent spaces, depending on the duration of the pause. 
+                            class="code">SIL2</span> to represent spaces, depending on the duration of the pause.
                         <span class="code">SIL0</span> indicates no pause, <span class="code">SIL1</span> indicates
-                        a short pause (e.g., after a comma <span class="code">...|v|i|ˈɛ|n|ʌ|,|SIL1|ˈɔ|s|t|ɹ|i|ʌ|...</span>),
+                        a short pause (e.g., after a comma <span
+                            class="code">...|v|i|ˈɛ|n|ʌ|,|SIL1|ˈɔ|s|t|ɹ|i|ʌ|...</span>),
                         and <span class="code">SIL2</span> indicates a longer pause (e.g., after a sentence: <span
-                        class="code">...|ˈɝ|θ|.|SIL2</span>).
+                            class="code">...|ˈɝ|θ|.|SIL2</span>).
                     </li>
                     <li>
                         Each line in the text file will be synthesized as a separate file, so it's recommended to place
@@ -160,7 +165,7 @@
                     </li>
                     <li>
                         Separate each symbol using the separator "<span class="code">|</span>", e.g., <span
-                        class="code">s|ˌɪ|ɡ|ɝ|ˈɛ|t</span>. This is useful when the model contains phonemes/symbols 
+                            class="code">s|ˌɪ|ɡ|ɝ|ˈɛ|t</span>. This is useful when the model contains phonemes/symbols
                         that consist of multiple characters, e.g., <span class="code">ˈɛ</span>.
                     </li>
                 </ul>
@@ -173,7 +178,7 @@
             </p>
             <p class="text-start">
                 Example of an invalid sentence:<br>
-                "Digestion is a vital process which involves the breakdown of food into smaller and smaller components, 
+                "Digestion is a vital process which involves the breakdown of food into smaller and smaller components,
                 until they can be absorbed and assimilated into the body."
                 => <span class="code">daɪˈʤɛsʧʌn ɪz ʌ ˈvaɪtʌl ˈpɹɑˌsɛs wɪʧ ɪnˈvɑlvz ðʌ ˈbɹeɪkˌdaʊn ʌv fud ˈɪntu ˈsmɔlɝ
                     ænd ˈsmɔlɝ kʌmˈpoʊnʌnts, ʌnˈtɪl ðeɪ kæn bi ʌbˈzɔɹbd ænd ʌˈsɪmʌˌleɪtɪd ˈɪntu ðʌ ˈbɑdi.</span>
@@ -192,7 +197,8 @@
                 <div class="col">
                     <label for="ipa-chart">Insert symbol at cursor position:</label>
                     <div class="table-responsive-md">
-                        <table class="table table-sm table-borderless" id="ipa-chart" name="ipa-chart" style="width: 350px;">
+                        <table class="table table-sm table-borderless" id="ipa-chart" name="ipa-chart"
+                            style="width: 350px;">
                             <tbody>
                                 <tr>
                                     <td><button type="button" class="btn btn-light"
@@ -222,8 +228,8 @@
                                 </tr>
                             </tbody>
                         </table>
+                    </div>
                 </div>
-            </div>
             </div>
             <label for="ipa-input-field">IPA:</label><br>
             <textarea id="ipa-input-field" class="form-control mb-1"
@@ -242,12 +248,12 @@
                 the desired model variant. If you're unsure which options are suitable, we recommend
                 sticking to the default values for now.
             </p>
-            <label for="model">Model: 
+            <label for="model">Model:
                 <select class="form-select" name="model" id="model" style="margin-right: 3rem; margin-bottom: 1rem;">
                     <option selected>LJSpeech 1.1</option>
                 </select>
             </label>
-            <label for="voice">Voice: 
+            <label for="voice">Voice:
                 <select class="form-select" name="voice" id="voice" style="margin-right: 3rem; margin-bottom: 1rem;">
                     <option selected>Linda Johnson</option>
                 </select>
@@ -263,7 +269,7 @@
                 a sentence, and sentences should be separated by a blank line. You can use the dropdown menu
                 to select the specific sentence you want to synthesize.
             </p>
-            <label for="sentence">Sentence: 
+            <label for="sentence">Sentence:
                 <select class="form-select mb-3" name="sentence" id="sentence">
                     <option selected>Sentence 1</option>
                 </select>
