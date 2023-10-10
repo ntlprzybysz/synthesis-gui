@@ -223,9 +223,10 @@ function showSuccess(audioUrl) {
     var progressDiv = document.getElementById('progress');
 
     var htmlContent = `
-                        <button id="synthesize-button" class="btn btn-light btn-outline-dark mb-1" type="submit">Synthesize</button>
+                        <button id="synthesize-button" class="btn btn-light btn-outline-dark mb-1" type="submit"
+                        style="margin-right: 3rem;">Synthesize</button>
 
-                        <audio controls>
+                        <audio controls style="margin-right: 1rem;">
                                 <source src="${audioUrl}" type="audio/wav">
                                 <p>Your browser does not support the audio tag.</p>
                         </audio>
@@ -249,7 +250,8 @@ function showSuccess(audioUrl) {
 function showProgress(loadingImageUrl, progress) {
     var progressDiv = document.getElementById('progress');
     var htmlContent = `
-                        <p><img src="${loadingImageUrl}" width="25"
+                        <p style="margin-top: 1rem;">
+                        <img src="${loadingImageUrl}" width="25"
                         height="25"> ${progress}% Synthesizing, please wait. This can take a
                         few minutes.</p>
                     `;
@@ -264,8 +266,14 @@ function showProgress(loadingImageUrl, progress) {
 function showFailed(helpUrl) {
     var progressDiv = document.getElementById('progress');
     var htmlContent = `
-                        <button id="synthesize-button" class="btn btn-light btn-outline-dark mb-1" type="submit">Synthesize</button>
-                        <p> Synthesis failed. Please make sure you followed the <a href="${helpUrl}">guidelines</a> and try again. If the problem persists, please contact the <a href="https://github.com/ntlprzybysz/synthesis-gui">maintainer</a>.</p>
+                        <button id="synthesize-button" class="btn btn-light btn-outline-dark mb-1" type="submit"
+                        style="margin-right: 3rem;">Synthesize</button>
+                        <p style="margin-top: 1rem;">
+                            Synthesis failed. Please make sure you followed the 
+                            <a href="${helpUrl}">guidelines</a> and try again. 
+                            If the problem persists, please contact the 
+                            <a href="https://github.com/ntlprzybysz/synthesis-gui">maintainer</a>.
+                        </p>
                     `;
 
     progressDiv.innerHTML = htmlContent;

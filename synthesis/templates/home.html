@@ -55,12 +55,8 @@
             <div class="row p-0 align-items-end mt-5 mb-1">
                 <div class="col-md-8 col-12 mb-1">
                     <div class="row justify-content-start">
-                        {% if form.project_name.errors %}
-                        <div class="col">
-                            {{ form.project_name.errors }}
-                        </div>
-                        {% endif %}
                         <div class="col-12">
+                            {{ form.project_name.errors }}
                             <div class="input-group">
                                 <div class="input-group-text" style="background: none; border: none; padding: 0;">
                                     <img src="{% static 'graphics/edit_btn.svg' %}" width="30" height="auto"
@@ -692,57 +688,57 @@
                         <h2>Output</h2>
                     </div>
                 </div>
-                <div class="row justify-content-start align-items-end mt-3 pb-3 px-5">
-                    <div class="col-md-2 col-12 mt-3">
+
+                <div class="row justify-content-start align-items-end mt-3 mb-1 pb-3 px-5">
+                    <div class="col-12 mt-3">
                         {{ form.sentence.errors }}
                         <label for="sentence-select-field" class="form-label"
                             style="padding-top: 0.5rem; margin-right: 1rem;">Sentence:
                             {{ form.sentence }}
                         </label>
                     </div>
+                </div>
 
-                    {% if task_queued == True %}
-                    <div class="col-md-10 col-12 mt-3" id="progress">
-                        <p><img src="{% static 'graphics/loading.webp' %}" width="25" height="25"> Synthesizing, please
-                            wait. This can take a
-                            few minutes.</p>
+                <div class="row justify-content-start align-items-end pb-3 px-5">
+                    <div class="col-12">
+                        {% if task_queued == True %}
+                        <div id="progress">
+                            <p style="margin-top: 1rem;">
+                                <img src="{% static 'graphics/loading.webp' %}" width="25" 
+                                height="25"> Synthesizing, please wait. 
+                                This can take a few minutes.
+                            </p>
+                        </div>
+                        <script>
+                            document.addEventListener('DOMContentLoaded', function () {
+                                var urls = {
+                                    audioUrl: "{{ audio_url }}",
+                                    taskStatusUrl: "{% url 'task_status' %}",
+                                    helpUrl: "{% url 'help' %}",
+                                    loadingImageUrl: "{% static 'graphics/loading.webp' %}",
+                                };
+                                var sessionKey = "{{ session_key }}";
+
+                                updateAndSchedule(sessionKey, urls);
+                            });
+                        </script>
+
+                        {% elif session_key == "_failed" %}
+                            <button id="synthesize-button" class="btn btn-light btn-outline-dark mb-1" type="submit"
+                            style="margin-right: 3rem;">Synthesize</button>
+
+                            <p style="margin-top: 1rem;">
+                                Synthesis failed. Please make sure you followed the
+                                <a href="{% url 'help' %}">guidelines</a> and try again.
+                                If the problem persists, please contact the
+                                <a href="https://github.com/ntlprzybysz/synthesis-gui">maintainer</a>.
+                            </p>
+
+                        {% else %}
+                            <button id="synthesize-button" class="btn btn-light btn-outline-dark mb-1"
+                                type="submit">Synthesize</button>
+                        {% endif %}
                     </div>
-                    <script>
-                        document.addEventListener('DOMContentLoaded', function () {
-                            var urls = {
-                                audioUrl: "{{ audio_url }}",
-                                taskStatusUrl: "{% url 'task_status' %}",
-                                helpUrl: "{% url 'help' %}",
-                                loadingImageUrl: "{% static 'graphics/loading.webp' %}",
-                            };
-                            var sessionKey = "{{ session_key }}";
-
-                            updateAndSchedule(sessionKey, urls);
-                        });
-                    </script>
-
-
-                    {% elif session_key == "_failed" %}
-                    <div class="col-md-10 col-12 mt-3">
-                        <button id="synthesize-button" class="btn btn-light btn-outline-dark mb-1" type="submit">
-                            Synthesize <img src="{% static 'graphics/synthesize_btn.svg' %}" width="20" height="auto"
-                                aria-hidden="true"></button>
-                    </div>
-                    <div class="col-md-10 col-12 mt-3">
-                        <p>
-                            Synthesis failed. Please make sure you followed the
-                            <a href="{% url 'help' %}">guidelines</a> and try again.
-                            If the problem persists, please contact the
-                            <a href="https://github.com/ntlprzybysz/synthesis-gui">maintainer</a>.
-                        </p>
-                    </div>
-
-                    {% else %}
-                    <div class="col-md-10 col-12 mt-3">
-                        <button id="synthesize-button" class="btn btn-light btn-outline-dark mb-1"
-                            type="submit">Synthesize</button>
-                    </div>
-                    {% endif %}
                 </div>
             </div>
         </form>
