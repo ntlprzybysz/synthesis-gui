@@ -195,39 +195,32 @@
             </p>
             <div class="row">
                 <div class="col">
-                    <label for="ipa-chart">Insert symbol at cursor position:</label>
-                    <div class="table-responsive-md">
-                        <table class="table table-sm table-borderless" id="ipa-chart" name="ipa-chart"
-                            style="width: 350px;">
-                            <tbody>
-                                <tr>
-                                    <td><button type="button" class="btn btn-light"
-                                            style="background-color: white; border-color: white; font-size: large;"
-                                            onclick="insertSymbol('ɑ')">ɑ</button>
-                                    </td>
-                                    <td><button type="button" class="btn btn-light"
-                                            style="background-color: white; border-color: white; font-size: large;"
-                                            onclick="insertSymbol('ɐ')">ɐ</button>
-                                    </td>
-                                    <td><button type="button" class="btn btn-light"
-                                            style="background-color: white; border-color: white; font-size: large;"
-                                            onclick="insertSymbol('ɒ')">ɒ</button>
-                                    </td>
-                                    <td><button type="button" class="btn btn-light"
-                                            style="background-color: white; border-color: white; font-size: large;"
-                                            onclick="insertSymbol('æ')">æ</button>
-                                    </td>
-                                    <td><button type="button" class="btn btn-light"
-                                            style="background-color: white; border-color: white; font-size: large;"
-                                            onclick="insertSymbol('ʙ')">ʙ</button>
-                                    </td>
-                                    <td><button type="button" class="btn btn-light"
-                                            style="background-color: white; border-color: white; font-size: large;"
-                                            onclick="insertSymbol('ɓ')">ɓ</button>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                    <label for="ipa-chart">Insert IPA symbol:</label>
+                    <div class="row" id="ipa-chart" name="ipa-chart" style="width: 350px;">
+                        <div class="col" style="padding: .0rem;">
+                            <button type="button" class="btn btn-light btn-ipa"
+                            onclick="insertSymbol('ɑ')">ɑ</button>
+                        </div>
+                        <div class="col" style="padding: .0rem;">
+                            <button type="button" class="btn btn-light btn-ipa"
+                            onclick="insertSymbol('ɐ')">ɐ</button>
+                        </div>
+                        <div class="col" style="padding: .0rem;">
+                            <button type="button" class="btn btn-light btn-ipa"
+                            onclick="insertSymbol('ɒ')">ɒ</button>
+                        </div>
+                        <div class="col" style="padding: .0rem;">
+                            <button type="button" class="btn btn-light btn-ipa"
+                            onclick="insertSymbol('æ')">æ</button>
+                        </div>
+                        <div class="col" style="padding: .0rem;">
+                            <button type="button" class="btn btn-light btn-ipa"
+                            onclick="insertSymbol('ʙ')">ʙ</button>
+                        </div>
+                        <div class="col" style="padding: .0rem;">
+                            <button type="button" class="btn btn-light btn-ipa"
+                            onclick="insertSymbol('ɓ')">ɓ</button>
+                        </div>
                     </div>
                 </div>
             </div>

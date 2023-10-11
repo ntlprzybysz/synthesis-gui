@@ -21,3 +21,15 @@ a:hover {
 label {
     white-space: nowrap;
 }
+
+.btn-ipa {
+    background-color: white;
+    border-color: white;
+    font-size: large;
+    padding: 0.75rem;
+}
+
+.btn-ipa:hover {
+    background-color: #f8f9fa;
+    border-color: #f8f9fa;
+}
