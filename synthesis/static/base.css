@@ -35,3 +35,12 @@ label {
     background-color: #f8f9fa;
     border-color: #f8f9fa;
 }
+
+legend {
+    font-size: medium;
+    white-space: nowrap;
+    padding-top: 0.5rem;
+    margin-inline-end: 1rem;
+    display: inline-block;
+    margin-bottom: 0.5rem;
+}

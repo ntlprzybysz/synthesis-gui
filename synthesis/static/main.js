@@ -228,7 +228,7 @@ function showSuccess(audioUrl) {
 
                         <audio controls style="margin-right: 1rem;">
                                 <source src="${audioUrl}" type="audio/wav">
-                                <p>Your browser does not support the audio tag.</p>
+                                <p>A video player should have appeared here, but your browser does not support the audio tag.</p>
                         </audio>
 
                         <button id="download-button" class="btn btn-light btn-outline-dark mb-3" download>Download</button>

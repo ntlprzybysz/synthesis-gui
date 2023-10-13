@@ -1,6 +1,6 @@
 {% load static %}
 <!doctype html>
-<html lang="eng">
+<html lang="en">
 
 <head>
         {% block title %}
@@ -18,8 +18,10 @@
                 <nav class="navbar navbar-expand-lg" style="background-color: #f8f9fa;">
                 <div class="container-fluid mt-3 mb-3">
                         <a class="navbar-brand" style="text-decoration: none; font-size: xx-large;" href="{% url 'home' %}">
-                                <img src="{% static 'graphics/logo_transparent_500x500.png' %}" alt="Logo" width="90" height="auto"
-                                class="d-inline-block align-middle" style="margin-right: 1rem;">Speech synthesis</a>
+                                <img src="{% static 'graphics/logo_transparent_500x500.png' %}" alt="Logo of the website" width="90" height="auto"
+                                class="d-inline-block align-middle" style="margin-right: 1rem;">
+                                <h1 style="font-size: xx-large; display: inline;">Speech synthesis</h1>
+                        </a>
 
                         <ul class="navbar-nav">
                                 <li class="nav-item">
@@ -64,7 +66,7 @@
                                                 <div class="input-group">
                                                         <div class="input-group-text" style="background: none; border: none; padding: 0;">
                                                         <img src="{% static 'graphics/edit_btn.svg' %}" width="30" height="auto"
-                                                                aria-hidden="true">
+                                                                alt="">
                                                         </div>
                                                         {{ form.project_name }}
                                                 </div>
@@ -92,12 +94,12 @@
                                                         <button type="button" id="save-project-button" class="btn btn-light btn-outline-dark"
                                                                 style="margin-inline: .5rem;" onclick="saveProject()">
                                                                 <img src="{% static 'graphics/download_btn.svg' %}" width="20" height="auto"
-                                                                aria-hidden="true"> Save project
+                                                                alt=""> Save project
                                                         </button>
                                                         <button type="button" id="load-project-button" class="btn btn-light btn-outline-dark"
                                                                 onclick="loadProject()">
                                                                 <img src="{% static 'graphics/upload_btn.svg' %}" width="20" height="auto"
-                                                                aria-hidden="true"> Load project
+                                                                alt=""> Load project
                                                         </button>
                                                 </div>
                                         </div>
@@ -136,7 +138,7 @@
                                         </div>
 
                                         <div class="col-lg-4 col-md-6 col-12 mb-3">
-                                                <label for="ipa-chart" class="form-label">Insert IPA symbol:</label>
+                                                <legend>Insert IPA symbol:</legend>
                                                 <div class="border border-secondary px-4 py-4" id="ipa-chart" name="ipa-chart">
                                                         <div class="row">
                                                                 <!-- ɑɐɒæʙɓβçɕð -->
