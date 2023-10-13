@@ -251,9 +251,9 @@ function showProgress(loadingImageUrl, progress) {
     var progressDiv = document.getElementById('progress');
     var htmlContent = `
                         <p style="margin-top: 1rem;">
-                        <img src="${loadingImageUrl}" width="25"
-                        height="25"> ${progress}% Synthesizing, please wait. This can take a
-                        few minutes.</p>
+                        <img src="${loadingImageUrl}" width="25" height="25"
+                        alt=""> ${progress}% Synthesizing, please wait. 
+                        This can take a few minutes.</p>
                     `;
 
     progressDiv.innerHTML = htmlContent;
