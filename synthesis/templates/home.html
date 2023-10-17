@@ -45,7 +45,7 @@
         {% endblock %}
 
         {% block content %}
-        <div class="container-xxl" style="margin-left: 5rem; margin-right: 5rem;">
+        <div class="container-fluid px-5">
                 <form method="post" novalidate>
                         {% csrf_token %}
 
@@ -81,15 +81,15 @@
                                         <div class="row justify-content-end">
 
                                                 <div class="col mb-1" style="display: flex; justify-content: end;">
-                                                        <label for="example" class="form-label">Load example:
-                                                                <select class="form-select" name="example-select-field" id="example">
-                                                                        <option selected>---</option>
-                                                                        <option value="quick">Quick test</option>
-                                                                        <option value="printing">Printing</option>
-                                                                        <option value="mountain">Mountain</option>
-                                                                        <option value="wind">North Wind</option>
-                                                                </select>
-                                                        </label>
+                                                        <label for="example" class="form-label">Load example:</label>
+                                                        <select class="form-select" name="example-select-field" id="example"
+                                                                style="border-color: #212529;">
+                                                                <option selected>---</option>
+                                                                <option value="quick">Quick test</option>
+                                                                <option value="printing">Printing</option>
+                                                                <option value="mountain">Mountain</option>
+                                                                <option value="wind">North Wind</option>
+                                                        </select>
                                                 </div>
 
                                                 <div class="col mb-1" style="display: flex; justify-content: end;">
