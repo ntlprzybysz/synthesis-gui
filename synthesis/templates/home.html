@@ -4,7 +4,8 @@
 
 <head>
         <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">    
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
         {% block title %}
         <title>Speech synthesis</title>
         {% endblock %}
@@ -67,8 +68,8 @@
                                                 {{ form.project_name.errors }}
                                                 <div class="input-group">
                                                         <div class="input-group-text" style="background: none; border: none; padding: 0;">
-                                                        <img src="{% static 'graphics/edit_btn.svg' %}" width="30" height="auto"
-                                                                alt="">
+                                                                <img src="{% static 'graphics/edit_btn.svg' %}" width="30" height="auto"
+                                                                        alt="">
                                                         </div>
                                                         {{ form.project_name }}
                                                 </div>

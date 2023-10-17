@@ -231,7 +231,7 @@ function showSuccess(audioUrl) {
                                 <p>A video player should have appeared here, but your browser does not support the audio tag.</p>
                         </audio>
 
-                        <button id="download-button" class="btn btn-light btn-outline-dark mb-3" download>Download</button>
+                        <button type="button" id="download-button" class="btn btn-light btn-outline-dark mb-3" download>Download</button>
                 `;
 
     progressDiv.innerHTML = htmlContent;
