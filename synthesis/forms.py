@@ -64,7 +64,7 @@ class InputForm(forms.Form):
             attrs={
                 "id": "model-select-field",
                 "class": "form-select",
-                "style": "margin-right: 3rem; margin-bottom: 1rem; border-color: #212529;",
+                "style": "margin-right: 3rem; margin-bottom: 1rem; border-color: #212529; border-radius: 0px;",
             }
         ),
     )
@@ -76,7 +76,7 @@ class InputForm(forms.Form):
             attrs={
                 "id": "voice-select-field",
                 "class": "form-select",
-                "style": "margin-right: 3rem; margin-bottom: 1rem; border-color: #212529;",
+                "style": "margin-right: 3rem; margin-bottom: 1rem; border-color: #212529; border-radius: 0px;",
             }
         ),
     )
@@ -88,7 +88,7 @@ class InputForm(forms.Form):
             attrs={
                 "id": "sentence-select-field",
                 "class": "form-select",
-                "style": "margin-right: 3rem; margin-bottom: 1rem; border-color: #212529;",
+                "style": "margin-right: 3rem; margin-bottom: 1rem; border-color: #212529; border-radius: 0px;",
             }
         ),
     )
