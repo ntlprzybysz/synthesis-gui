@@ -191,10 +191,13 @@ function loadExample(chosenExample) {
 };
 
 document.addEventListener("DOMContentLoaded", function () {
-    document.getElementById("example").addEventListener("change", function () {
+    const element = document.getElementById("example");
+    if (element) {
+        element.addEventListener("change", function () {
         var selectedValue = document.getElementById("example").value;
         loadExample(selectedValue);
-    });
+        });
+    };
 });
 
 
