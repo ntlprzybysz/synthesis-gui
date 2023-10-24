@@ -276,7 +276,7 @@ def analyse_log_for_problems() -> Tuple[bool, str]:
             warnings.append(_format_entry(entry))
 
     if fatalities or errors or warnings:
-        logger.info(f"Issues detected in logs, preparing mail report...")
+        logger.info(f"Preparing mail report...")
         reports = list()
 
         if fatalities:

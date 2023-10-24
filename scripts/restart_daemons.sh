@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Restarts all daemon services used for the GUI Speech Synthesis. 
-# Please run with: 'sudo sh restart_daemons.sh'
+# Please run with: 'sudo sh ~/synthesis-gui/scripts/restart_daemons.sh'
 
 # Checks status of a service
 check_status () {
