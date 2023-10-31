@@ -200,35 +200,79 @@ document.addEventListener("DOMContentLoaded", function () {
     };
 });
 
+
 /**
  * Changes voice options and the symbol set based on the selected model.
  */
 function changeModelOptions(selectedModel) {
+    var voiceDropdown = document.getElementById("voice-select-field");
+    var symbolSet = document.getElementById("ipa-symbol-set");
+
+    // Clears existing options in the voice dropdown and the IPA table
+    while (voiceDropdown.firstChild) {
+        voiceDropdown.removeChild(voiceDropdown.firstChild);
+    };
+
+    while (symbolSet.firstChild) {
+        symbolSet.removeChild(symbolSet.firstChild);
+    };
+
+    var data;
+
+    // Loads model information
     switch(selectedModel) {
         case "testModel":
-            /* something happens */
+            data = {
+                'voices': [['Test Voice', 1]],
+                'symbols': [['t1', 1], ['t2', 2], ['t3', 3]],
+            };
             break;
+            
+        default: /* LJSPEECH11 */
+            data = {
+                "voices": [['Linda Johnson', "LINDAJOHNSON"]],
+                "symbols": [['!', 1], ['"', 2], ["'", 3], ['(', 4], [')', 5], [',', 6], ['-', 7], ['.', 8], [':', 9], [';', 10], ['?', 11], ['SIL0', 12], ['SIL1', 13], ['SIL2', 14], ['SIL3', 15], ['[', 16], [']', 17], ['aɪ', 18], ['aʊ', 19], ['b', 20], ['d', 21], ['dʒ', 22], ['eɪ', 23], ['f', 24], ['h', 25], ['i', 26], ['j', 27], ['k', 28], ['l', 29], ['m', 30], ['n', 31], ['oʊ', 32], ['p', 33], ['r', 34], ['s', 35], ['t', 36], ['tʃ', 37], ['u', 38], ['v', 39], ['w', 40], ['z', 41], ['æ', 42], ['ð', 43], ['ŋ', 44], ['ɑ', 45], ['ɔ', 46], ['ɔr', 47], ['ɔɪ', 48], ['ə', 49], ['ər', 50], ['ɛ', 51], ['ɛr', 52], ['ɡ', 53], ['ɪ', 54], ['ɪr', 55], ['ʃ', 56], ['ʊ', 57], ['ʊr', 58], ['ʌ', 59], ['ʌr', 60], ['ʒ', 61], ['θ', 62], ['—', 63],
+                            ['-', 64], ['0', 65], ['1', 66], ['2', 67],
+                            ['-', 68], ['ː', 69], ['ˑ', 70], ['˘', 71]],
+            };
+        };
 
-        /* min. LJSPEECH11 */
-        default:
-            document.getElementById("project-name-field").value = "Example synthesis";
-            document.getElementById("text-input-field").value = "";
-            document.getElementById("ipa-input-field").value = "";
-            document.getElementById("model-select-field").value = "LJSPEECH11";
-            document.getElementById("voice-select-field").value = "LINDAJOHNSON";
-            document.getElementById("sentence-select-field").value = 1;
+    data.voices.forEach(function (voice) {
+        var option = document.createElement("option");
+        option.value = voice[1];
+        option.text = voice[0];
+        voiceDropdown.appendChild(option);
+    });
+
+    data.symbols.forEach(function (symbol) {
+        var div = document.createElement('div');
+        div.className = 'col';
+        div.style.padding = '0rem';
+    
+        var button = document.createElement('button');
+        button.type = 'button';
+        button.className = 'btn btn-light btn-ipa';
+        button.textContent = symbol[0];
+        button.addEventListener('click', function () {
+            insertSymbol(symbol[0]);
+        });
+    
+        div.appendChild(button);
+        symbolSet.appendChild(div);
+    });
+    
+    // Preselects options
+    voiceDropdown.value = data.voices[0][1];
     };
-};
 
 document.addEventListener("DOMContentLoaded", function () {
     const element = document.getElementById("model-select-field");
     if (element) {
-        element.addEventListener("change", function () {
         var selectedModel = document.getElementById("model-select-field").value;
         changeModelOptions(selectedModel);
-        });
     };
 });
+
 
 /**
  * Allows the user to select and load a project file from their local system.
