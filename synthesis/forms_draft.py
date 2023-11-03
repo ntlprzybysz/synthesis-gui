@@ -52,15 +52,6 @@ class InputFormLJSpeech11(forms.Form):
         ),
     )
 
-    model = forms.ChoiceField(
-        choices=[("LJSPEECH11", "LJSpeech 1.1")],
-        widget=forms.Select(
-            attrs={
-                "id": "model-select-field",
-            }
-        ),
-    )
-
     voice = forms.ChoiceField(
         choices=VOICE_OPTIONS,
         initial=VOICE_OPTIONS[0],
