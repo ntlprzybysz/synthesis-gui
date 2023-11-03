@@ -9,7 +9,7 @@ class InputForm(forms.Form):
     ]
 
     VOICE_OPTIONS = [
-        ("LINDAJOHNSON", "Linda Johnson"),
+        ("Linda Johnson", "Linda Johnson"),
     ]
 
     SENTENCE_OPTIONS = [

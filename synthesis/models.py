@@ -76,9 +76,9 @@ class Project:
             """
             tacotron_cli_path = os.environ.get("TACOTRON_CLI_PATH")
             if tacotron_cli_path:
-                cmd_synthesize_tacotron = f"{tacotron_cli_path} synthesize '{self.tacotron_checkpoint_file_path}' '{self.input_file_path}' --custom-seed 1111 --sep '|' -out '{self.project_dir_path}'"
+                cmd_synthesize_tacotron = f"{tacotron_cli_path} synthesize '{self.tacotron_checkpoint_file_path}' '{self.input_file_path}' --custom-speaker '{self.voice}' --custom-seed 1111 --sep '|' -out '{self.project_dir_path}'"
             else:
-                cmd_synthesize_tacotron = f"tacotron-cli synthesize '{self.tacotron_checkpoint_file_path}' '{self.input_file_path}' --custom-seed 1111 --sep '|' -out '{self.project_dir_path}'"
+                cmd_synthesize_tacotron = f"tacotron-cli synthesize '{self.tacotron_checkpoint_file_path}' '{self.input_file_path}' --custom-speaker '{self.voice}' --custom-seed 1111 --sep '|' -out '{self.project_dir_path}'"
 
             try:
                 subprocess.run(
