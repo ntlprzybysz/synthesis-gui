@@ -2,7 +2,7 @@ from django.conf import settings
 from django.shortcuts import render
 import logging
 
-from .forms import InputFormLJSpeech11
+from .forms import InputFormLJSpeech11, InputFormTestModel
 from .tasks import synthesize_with_celery
 
 from django.http import JsonResponse
@@ -45,7 +45,7 @@ def task_status(request) -> JsonResponse:
 
 def show_home(request):
     """
-    Renders the home page with a form for submitting synthesis requests if the request method is GET.
+    Renders a home page for submitting synthesis requests if the request method is GET.
     If the request method is POST, it validates the form data and queues it for processing.
     """
     logger = logging.getLogger("django")
