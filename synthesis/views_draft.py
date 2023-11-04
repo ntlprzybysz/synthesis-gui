@@ -9,6 +9,16 @@ from django.http import JsonResponse
 from .tasks_utils import check_task_status
 
 
+def check_maintenance_status(request):
+    """
+    Renders maintenance page if MAINTENANCE_MODE in settings.py is set to True.
+    """
+    if settings.MAINTENANCE_MODE:
+        logger = logging.getLogger("django")
+        logger.info(f"Returned maintenance.html for path: {request.path}")
+        return render(request, "maintenance.html")
+
+
 def task_status(request) -> JsonResponse:
     """
     Checks the status of the submitted synthesis with its session key and an audio URL.
@@ -35,15 +45,12 @@ def task_status(request) -> JsonResponse:
 
 def show_home(request):
     """
-    Renders the maintenance page if the MAINTENANCE_MODE is on in settings.py.
-    Otherwise, renders the home page with a form for submitting synthesis requests if the request method is GET.
+    Renders the home page with a form for submitting synthesis requests if the request method is GET.
     If the request method is POST, it validates the form data and queues it for processing.
     """
     logger = logging.getLogger("django")
 
-    if settings.MAINTENANCE_MODE:
-        logger.info(f"Returned maintenance.html for path: {request.path}")
-        return render(request, "maintenance.html")
+    check_maintenance_status(request)
 
     if request.method == "POST":
         form = InputFormLJSpeech11(request.POST)
@@ -113,29 +120,17 @@ def show_home(request):
 
 def show_about(request):
     """
-    Renders the maintenance page if the MAINTENANCE_MODE is on in settings.py.
-    Otherwise, renders the about page.
+    Renders the about page.
     """
-    logger = logging.getLogger("django")
-
-    if settings.MAINTENANCE_MODE:
-        logger.info(f"Returned maintenance.html for path: {request.path}")
-        return render(request, "maintenance.html")
-    
+    check_maintenance_status(request)
     return render(request, "about.html")
 
 
 def show_help(request):
     """
-    Renders the maintenance page if the MAINTENANCE_MODE is on in settings.py.
-    Otherwise, renders the help page.
+    Renders the help page.
     """
-    logger = logging.getLogger("django")
-
-    if settings.MAINTENANCE_MODE:
-        logger.info(f"Returned maintenance.html for path: {request.path}")
-        return render(request, "maintenance.html")
-    
+    check_maintenance_status(request)
     return render(request, "help.html")
 
 
