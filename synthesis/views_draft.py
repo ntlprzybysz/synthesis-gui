@@ -45,77 +45,51 @@ def task_status(request) -> JsonResponse:
 
 def show_home(request):
     """
-    Renders a home page for submitting synthesis requests if the request method is GET.
+    Renders the home page with a form for submitting synthesis requests if the request method is GET.
     If the request method is POST, it validates the form data and queues it for processing.
     """
-    logger = logging.getLogger("django")
-
-    check_maintenance_status(request)
-
-    if request.method == "POST":
-        form = InputFormLJSpeech11(request.POST)
-        logger.info(f"Received form.")
-
+    def _handle_form(request, form):
         if form.is_valid():
-            logger.info(f"Form validated, submitting data for processing.")
-
+            logger.info("Form validated, submitting data for processing.")
+            
             if request.session.session_key is None:
                 request.session.save()
             session_key = request.session.session_key
 
             task = synthesize_with_celery.delay(form.cleaned_data, session_key)
 
-            if task.status == "PENDING" or task.status == "STARTED":
-                logger.info(f"Data submitted for processing.")
+            if task.status in ["PENDING", "STARTED"]:
+                logger.info("Data submitted for processing.")
                 audio_url = settings.MEDIA_URL + session_key + "/1-1.npy.wav"
-                return render(
-                    request,
-                    "home.html",
-                    {
-                        "form": form,
-                        "task_queued": True,
-                        "session_key": session_key,
-                        "audio_url": audio_url,
-                    },
-                )
-
-            logger.error(f"Data couldn't be submitted for processing.")
-            return render(
-                request,
-                "home.html",
-                {
-                    "form": form,
-                    "task_queued": False,
-                    "session_key": "_failed",
-                    "audio_url": "_null",
-                },
-            )
-
+                return True, session_key, audio_url
+            else:
+                logger.error("Data couldn't be submitted for processing.")
         else:
-            logger.error(f"Failed validation of form.")
-            return render(
-                request,
-                "home.html",
-                {
-                    "form": form,
-                    "task_queued": False,
-                    "session_key": "_failed",
-                    "audio_url": "_null",
-                },
-            )
+            logger.error("Failed validation of form.")
+        return False, "_failed", "_null"
 
+    logger = logging.getLogger("django")
+
+    check_maintenance_status(request)
+
+    if request.method == "POST":
+        form = InputFormLJSpeech11(request.POST)
+        logger.info("Received form.")
+        form_valid, session_key, audio_url = _handle_form(request, form)
     else:
         form = InputFormLJSpeech11()
-        return render(
-            request,
-            "home.html",
-            {
-                "form": form,
-                "task_queued": False,
-                "session_key": "_null",
-                "audio_url": "_null",
-            },
-        )
+        form_valid, session_key, audio_url = False, "_null", "_null"
+
+    return render(
+        request,
+        "home.html",
+        {
+            "form": form,
+            "task_queued": form_valid,
+            "session_key": session_key,
+            "audio_url": audio_url,
+        },
+    )
 
 
 def show_about(request):
