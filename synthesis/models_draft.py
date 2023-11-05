@@ -13,12 +13,11 @@ class Project:
     """
     Saves all data user provided about the project and synthesizes it.
     """
-
-    def __init__(self, cleaned_form_input: dict, session_key: str) -> None:
+    def __init__(self, cleaned_form_input: dict, model: str, session_key: str) -> None:
+        self.model: str = model
         self.session_key = session_key
         self.name: str = cleaned_form_input["project_name"]
         self.ipa_input: str = cleaned_form_input["ipa_input"]
-        #self.model: str = cleaned_form_input["model"]
         self.voice: str = cleaned_form_input["voice"]
         self.sentence: int = int(cleaned_form_input["sentence"])
 
@@ -26,11 +25,12 @@ class Project:
         self.project_dir_path: Path = Path(settings.MEDIA_ROOT) / self.session_key
         self.input_file_path: Path = self.project_dir_path / "ipa_input.txt"
 
-        self.tacotron_checkpoint_file_path: Path = self.tools_dir_path / "tacotron.pt"
-        self.waveglow_checkpoint_file_path: Path = self.tools_dir_path / "waveglow.pt"
-        #if self.model == "LJSPEECH11":
-        #    self.tacotron_checkpoint_file_path: Path = self.tools_dir_path / "tacotron.pt"
-        #    self.waveglow_checkpoint_file_path: Path = self.tools_dir_path / "waveglow.pt"
+        if self.model == "testmodel":
+            self.tacotron_checkpoint_file_path: Path = self.tools_dir_path / "tacotron.pt"
+            self.waveglow_checkpoint_file_path: Path = self.tools_dir_path / "waveglow.pt"
+        else:
+            self.tacotron_checkpoint_file_path: Path = self.tools_dir_path / "tacotron.pt"
+            self.waveglow_checkpoint_file_path: Path = self.tools_dir_path / "waveglow.pt"
 
 
     def synthesize(self) -> bool:

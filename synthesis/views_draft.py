@@ -48,7 +48,7 @@ def show_home(request):
     Renders the home page with a form for submitting synthesis requests if the request method is GET.
     If the request method is POST, it validates the form data and queues it for processing.
     """
-    def _handle_form(request, form):
+    def _handle_form(request, model, form):
         if form.is_valid():
             logger.info("Form validated, submitting data for processing.")
             
@@ -56,7 +56,7 @@ def show_home(request):
                 request.session.save()
             session_key = request.session.session_key
 
-            task = synthesize_with_celery.delay(form.cleaned_data, session_key)
+            task = synthesize_with_celery.delay(form.cleaned_data, model, session_key)
 
             if task.status in ["PENDING", "STARTED"]:
                 logger.info("Data submitted for processing.")
@@ -73,9 +73,13 @@ def show_home(request):
     check_maintenance_status(request)
 
     if request.method == "POST":
-        form = InputFormLJSpeech11(request.POST)
+        model = "ljspeech11"
+        form = InputFormTestModel(request.POST)
+        if "submit-test-model" in request.POST:
+            model = "testmodel"
+            form = InputFormTestModel(request.POST)
         logger.info("Received form.")
-        form_valid, session_key, audio_url = _handle_form(request, form)
+        form_valid, session_key, audio_url = _handle_form(request, model, form)
     else:
         form = InputFormLJSpeech11()
         form_valid, session_key, audio_url = False, "_null", "_null"

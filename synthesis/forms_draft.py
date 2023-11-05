@@ -93,7 +93,7 @@ class InputFormLJSpeech11(forms.Form):
 
 class InputFormTestModel(forms.Form):
     VOICE_OPTIONS = [
-        ("Test Voice", "Test Voice"),
+        ("Linda Johnson", "Test Linda"),
     ]
 
     SENTENCE_OPTIONS = [
