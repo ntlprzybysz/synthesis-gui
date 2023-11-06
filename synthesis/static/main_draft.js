@@ -227,9 +227,6 @@ function changeModelOptions(selectedModel) {
                 'voices': [['Linda Test', "Linda Johnson"]],
                 'symbols': [['t1', 1], ['t2', 2], ['t3', 3]],
             };
-            if (synthesizeButton) {
-                synthesizeButton.setAttribute("model", "testmodel");
-            }
             break;
             
         default:
@@ -239,9 +236,6 @@ function changeModelOptions(selectedModel) {
                             ['-', 64], ['0', 65], ['1', 66], ['2', 67],
                             ['-', 68], ['ː', 69], ['ˑ', 70], ['˘', 71]],
             };
-            if (synthesizeButton) {
-                synthesizeButton.setAttribute("model", "ljspeech11");
-            }
         };
 
     data.voices.forEach(function (voice) {
@@ -271,14 +265,6 @@ function changeModelOptions(selectedModel) {
     // Preselects options
     voiceDropdown.value = data.voices[0][1];
     };
-
-document.addEventListener("DOMContentLoaded", function () {
-    const element = document.getElementById("model-select-field");
-    if (element) {
-        var selectedModel = element.value;
-        changeModelOptions(selectedModel);
-    };
-});
 
 document.addEventListener("change", function () {
     const element = document.getElementById("model-select-field");
