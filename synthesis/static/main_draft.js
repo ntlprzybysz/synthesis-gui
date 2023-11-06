@@ -194,7 +194,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const element = document.getElementById("example");
     if (element) {
         element.addEventListener("change", function () {
-        var selectedValue = document.getElementById("example").value;
+        var selectedValue = element.value;
         loadExample(selectedValue);
         });
     };
@@ -275,7 +275,7 @@ function changeModelOptions(selectedModel) {
 document.addEventListener("DOMContentLoaded", function () {
     const element = document.getElementById("model-select-field");
     if (element) {
-        var selectedModel = document.getElementById("model-select-field").value;
+        var selectedModel = element.value;
         changeModelOptions(selectedModel);
     };
 });
@@ -283,7 +283,7 @@ document.addEventListener("DOMContentLoaded", function () {
 document.addEventListener("change", function () {
     const element = document.getElementById("model-select-field");
     if (element) {
-        var selectedModel = document.getElementById("model-select-field").value;
+        var selectedModel = element.value;
         changeModelOptions(selectedModel);
     };
 });

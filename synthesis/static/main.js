@@ -194,7 +194,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const element = document.getElementById("example");
     if (element) {
         element.addEventListener("change", function () {
-        var selectedValue = document.getElementById("example").value;
+        var selectedValue = element.value;
         loadExample(selectedValue);
         });
     };
