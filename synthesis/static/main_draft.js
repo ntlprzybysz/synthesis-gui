@@ -190,16 +190,6 @@ function loadExample(chosenExample) {
     };
 };
 
-document.addEventListener("DOMContentLoaded", function () {
-    const element = document.getElementById("example");
-    if (element) {
-        element.addEventListener("change", function () {
-        var selectedValue = element.value;
-        loadExample(selectedValue);
-        });
-    };
-});
-
 
 /**
  * Changes voice options and the symbol set based on the selected model.
@@ -208,7 +198,6 @@ document.addEventListener("DOMContentLoaded", function () {
 function changeModelOptions(selectedModel) {
     var voiceDropdown = document.getElementById("voice-select-field");
     var symbolSet = document.getElementById("ipa-symbol-set");
-    var synthesizeButton = document.getElementById("synthesize-button");
 
     // Clears existing options in the voice dropdown and the IPA table
     while (voiceDropdown.firstChild) {
@@ -266,16 +255,6 @@ function changeModelOptions(selectedModel) {
     voiceDropdown.value = data.voices[0][1];
     };
 
-document.addEventListener("DOMContentLoaded", function () {
-    const modelSelectField = document.getElementById("model-select-field");
-    if (modelSelectField) {
-        changeModelOptions(modelSelectField.value);
-
-        modelSelectField.addEventListener("change", function () {
-            changeModelOptions(modelSelectField.value);
-        });
-    }
-});
 
 /**
  * Allows the user to select and load a project file from their local system.
@@ -404,3 +383,27 @@ function updateAndSchedule(sessionKey, urls) {
         }, 1000);
     }
 }
+
+
+/**
+ * Listeners for triggers.
+ */
+document.addEventListener("DOMContentLoaded", function () {
+    // Triggers an update of fields when an example is selected
+    const exampleSelectField = document.getElementById("example");
+    if (exampleSelectField) {
+        exampleSelectField.addEventListener("change", function () {
+        var selectedValue = exampleSelectField.value;
+        loadExample(selectedValue);
+        });
+    };
+
+    // Triggers an update of speaker and symbol options when a model is changed
+    const modelSelectField = document.getElementById("model-select-field");
+    if (modelSelectField) {       
+        changeModelOptions(modelSelectField.value);
+        modelSelectField.addEventListener("change", function () {
+            changeModelOptions(modelSelectField.value);
+        });
+    };
+});

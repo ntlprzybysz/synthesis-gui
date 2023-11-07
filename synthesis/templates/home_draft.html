@@ -343,17 +343,17 @@
                                                         </p>
                                                 </div>
                                                 <script>
-                                                document.addEventListener('DOMContentLoaded', function () {
-                                                        var urls = {
-                                                        audioUrl: "{{ audio_url }}",
-                                                        taskStatusUrl: "{% url 'task_status' %}",
-                                                        helpUrl: "{% url 'help' %}",
-                                                        loadingImageUrl: "{% static 'graphics/loading.webp' %}",
-                                                        };
-                                                        var sessionKey = "{{ session_key }}";
+                                                        document.addEventListener('DOMContentLoaded', function () {
+                                                                var urls = {
+                                                                        audioUrl: "{{ audio_url }}",
+                                                                        taskStatusUrl: "{% url 'task_status' %}",
+                                                                        helpUrl: "{% url 'help' %}",
+                                                                        loadingImageUrl: "{% static 'graphics/loading.webp' %}",
+                                                                };
+                                                                var sessionKey = "{{ session_key }}";
 
-                                                        updateAndSchedule(sessionKey, urls);
-                                                });
+                                                                updateAndSchedule(sessionKey, urls);
+                                                        });
                                                 </script>
 
                                                 {% elif session_key == "_failed" %}
