@@ -73,10 +73,11 @@ def show_home(request):
     check_maintenance_status(request)
 
     if request.method == "POST":
-        form = InputFormLJSpeech11(request.POST)
         model = request.POST.get("model-select-field")
         if model == "testmodel":
             form = InputFormTestModel(request.POST)
+        else:
+            form = InputFormLJSpeech11(request.POST)
         logger.info("Received form.")
         form_valid, session_key, audio_url = _handle_form(request, model, form)
     else:

@@ -266,12 +266,15 @@ function changeModelOptions(selectedModel) {
     voiceDropdown.value = data.voices[0][1];
     };
 
-document.addEventListener("change", function () {
-    const element = document.getElementById("model-select-field");
-    if (element) {
-        var selectedModel = element.value;
-        changeModelOptions(selectedModel);
-    };
+document.addEventListener("DOMContentLoaded", function () {
+    const modelSelectField = document.getElementById("model-select-field");
+    if (modelSelectField) {
+        changeModelOptions(modelSelectField.value);
+
+        modelSelectField.addEventListener("change", function () {
+            changeModelOptions(modelSelectField.value);
+        });
+    }
 });
 
 /**
