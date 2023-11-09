@@ -27,10 +27,10 @@ def read_log_from_file() -> list[str]:
 
 def check_task_status(session_key: str) -> int:
     """
-    Checks the progress of the synthesis task using log messages and the project's session key.
-    Returns a positive value that represents the current state of the task, negative in case of errors.
+    Checks progress of a synthesis task using log messages and the project's session key.
+    Returns a positive value that represents the current progress of the task in %, 
+    negative in case of errors.
     """
-
     def _get_project_entries(log: list[str]) -> list[str]:
         """
         Returns log entries from the last project started by the user (every user
@@ -56,9 +56,10 @@ def check_task_status(session_key: str) -> int:
 
         return project_entries
 
+
     def _get_last_relevant_entry(log: list[str]) -> str:
         """
-        Returns the last relevant log entry from a list of logs. For an entry to be relavant,
+        Returns the last relevant log entry from a list of logs. For an entry to be relevant,
         it must contain key words associated with task status description.
         """
         last_relevant_entry = ""
@@ -68,50 +69,36 @@ def check_task_status(session_key: str) -> int:
                     last_relevant_entry = entry
         return last_relevant_entry
 
-    def _get_current_task_status(entry: str) -> int:
+
+    def _timed_out(elapsed_time: int, max_time: int) -> bool:
         """
-        Returns the current task status as an integer code based on the given entry from the log.
+        Returns True if the time spend in the given state is larger than the given max_time.
         """
-        if "tasks" in entry and "Created new project. Sending for processing" in entry:
-            return 15
+        if elapsed_time < 0:
+            logger.error(
+                f"session key {session_key} Invalid elapsed_time. Must be bigger than 0, got: {max_time}."
+            )
+            return True
+        
+        if max_time < 0:
+            logger.error(
+                f"session key {session_key} Invalid max_time. Must be bigger than 0, got: {max_time}."
+            )
+            return True
 
-        elif "models" in entry and "Created a project directory" in entry:
-            return 30
+        if elapsed_time >= max_time:
+            logger.error(f"session key {session_key} Timed out with {max_time}s.")
+            return True
 
-        elif "models" in entry and "Created input file for synthesis" in entry:
-            return 45
+        return False
 
-        elif "models" in entry and "Finished processing project with Tacotron" in entry:
-            return 50
 
-        elif "models" in entry and "Finished processing project with Waveglow" in entry:
-            return 75
-
-        elif "models" in entry and "Synthesis done" in entry:
-            return 95
-
-        elif "trace" in entry and "True" in entry:
-            output_file_path = settings.MEDIA_ROOT / session_key / "1-1.npy.wav"
-            file_exists = exists(output_file_path)
-            if file_exists:
-                return 100
-            else:
-                return -1
-
-        else:
-            return -1
-
-    def _get_time_in_state(log, state: int) -> int:
+    def _get_time_at_stage(entry: str) -> int:
         """
-        Returns how many seconds have elapsed since the state was visited
-        for the first time in this project.
+        Returns how many seconds have elapsed since a major processing stage was entered.
         """
-        first_entry = log[0]
-        if len(first_entry) == 0:
-            return -1
-
-        first_entry = first_entry.split()
-        start_time = first_entry[0] + " " + first_entry[1]
+        split_entry = entry.split()
+        start_time = split_entry[0] + " " + split_entry[1]
         entry_format = "%Y-%m-%d %H:%M:%S,%f"
         start_time = datetime.strptime(start_time, entry_format)
 
@@ -121,14 +108,111 @@ def check_task_status(session_key: str) -> int:
         elapsed_time = int(elapsed_time.total_seconds())
 
         return elapsed_time
+    
+
+    def _check_progress(entry: str) -> int:
+        """
+        Returns the current task progress in % based on an entry from the project log.
+        Every "if" represents a major processing stage of a project.
+        """
+        elapsed_time = 0
+
+        if "tasks" in entry and "Created new project. Sending for processing" in entry:
+            progress = 1
+            elapsed_time = _get_time_at_stage(entry)
+            if _timed_out(elapsed_time, 30):
+                return -1
+            return progress
+
+        elif "models" in entry and "Created a project directory" in entry:
+            progress = 3
+            elapsed_time = _get_time_at_stage(entry)
+            if _timed_out(elapsed_time, 30):
+                return -1
+            return progress
+
+        elif "models" in entry and "Created input file for synthesis" in entry:
+            elapsed_time = _get_time_at_stage(entry)
+            if _timed_out(elapsed_time, 300):
+                return -1
+            
+            if elapsed_time >= 0 and elapsed_time < 5:
+                progress = 5
+            elif elapsed_time >= 5 and elapsed_time < 10:
+                progress = 8
+            elif elapsed_time >= 10 and elapsed_time < 15:
+                progress = 13
+            elif elapsed_time >= 15 and elapsed_time < 20:
+                progress = 15
+            elif elapsed_time >= 20 and elapsed_time < 25:
+                progress = 19
+            elif elapsed_time >= 25 and elapsed_time < 50:
+                progress = 21
+            else:
+                progress = 26
+
+        elif "models" in entry and "Finished processing project with Tacotron" in entry:
+            elapsed_time = _get_time_at_stage(entry)
+            if _timed_out(elapsed_time, 300):
+                return -1
+            
+            if elapsed_time >= 0 and elapsed_time < 5:
+                progress = 30
+            elif elapsed_time >= 5 and elapsed_time < 15:
+                progress = 47
+            elif elapsed_time >= 15 and elapsed_time < 30:
+                progress = 51
+            elif elapsed_time >= 30 and elapsed_time < 45:
+                progress = 55
+            elif elapsed_time >= 45 and elapsed_time < 60:
+                progress = 59
+            elif elapsed_time >= 60 and elapsed_time < 85:
+                progress = 66
+            elif elapsed_time >= 85 and elapsed_time < 100:
+                progress = 71
+            elif elapsed_time >= 100 and elapsed_time < 125:
+                progress = 78
+            elif elapsed_time >= 125 and elapsed_time < 150:
+                progress = 83
+            elif elapsed_time >= 150 and elapsed_time < 200:
+                progress = 90
+            else:
+                progress = 94
+
+        elif "models" in entry and "Finished processing project with Waveglow" in entry:
+            elapsed_time = _get_time_at_stage(entry)
+            if _timed_out(elapsed_time, 30):
+                return -1
+            progress = 95
+
+        elif "models" in entry and "Synthesis done" in entry:
+            elapsed_time = _get_time_at_stage(entry)
+            if _timed_out(elapsed_time, 30):
+                return -1
+            progress = 97
+
+        elif "trace" in entry and "True" in entry:
+            output_file_path = settings.MEDIA_ROOT / session_key / "1-1.npy.wav"
+            file_exists = exists(output_file_path)
+            if file_exists:
+                progress = 100
+            else:
+                return -1
+
+        else:
+            return -1
+
+        logger.debug(
+            f"session key {session_key} At {progress}% for {elapsed_time}s."
+        )
+        return progress
 
     logger = logging.getLogger("django")
 
-    state = 0
-    state_changed = False
-    time_in_state = 0
+    progress = 0
+    progressed = False
 
-    while (time_in_state < 300) and (state_changed == False):
+    while (progressed == False):
         log = read_log_from_file()
         if not log:
             logger.error(f"session key {session_key} No logs found.")
@@ -146,38 +230,22 @@ def check_task_status(session_key: str) -> int:
             )
             return -1
 
-        current_state = _get_current_task_status(last_entry)
-        if current_state < 0:
+        current_progress = _check_progress(last_entry)
+        if current_progress < 0:
             logger.error(
                 f"session key {session_key} Couldn't determine current task state or output file doesn't exist."
             )
             return -1
 
-        elapsed_time = _get_time_in_state(log, current_state)
-        if elapsed_time < 0:
-            logger.error(
-                f"session key {session_key} Couldn't calculate elapsed time at {current_state}%."
-            )
-            return -1
-
-        if elapsed_time > 300:
-            logger.error(f"session key {session_key} Timed out at {current_state}%.")
-            return -1
-
-        if current_state < state or current_state > state:
-            state = current_state
-            state_changed = True
+        if progress < current_progress:
+            progress = current_progress
+            progressed = True
         else:
-            state_changed = False
-
-        if current_state >= 0:
-            logger.info(
-                f"session key {session_key} State: {current_state}%, time in state: {elapsed_time}s/300s."
-            )
+            progressed = False
 
         time.sleep(1)
 
-    return state
+    return progress
 
 
 def mail_report(mail_body: str) -> bool:
@@ -191,7 +259,7 @@ def mail_report(mail_body: str) -> bool:
     )
 
     if settings.SENDGRID_API_KEY is None:
-        logger.info(f"SENDGRID_API_KEY is None")
+        logger.error(f"SENDGRID_API_KEY is None")
 
     try:
         sg = SendGridAPIClient(settings.SENDGRID_API_KEY)
@@ -211,7 +279,6 @@ def analyse_log_for_problems() -> Tuple[bool, str]:
     or a message that no problems were found. Otherwise, returns
     False and an empty string.
     """
-
     def _find_new_entries(log: list[str]) -> list[str]:
         """
         Returns a list of entries from the last day that begin with a date.

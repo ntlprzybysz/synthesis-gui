@@ -31,7 +31,7 @@ def task_status(request) -> JsonResponse:
 
     session_key = request.POST.get("session_key")
     if session_key:
-        logger.info(f"session key {session_key} Sending data to check task status.")
+        logger.debug(f"session key {session_key} Sending data to check task status.")
         progress = check_task_status(session_key)
         return JsonResponse({"progress": progress})
 
