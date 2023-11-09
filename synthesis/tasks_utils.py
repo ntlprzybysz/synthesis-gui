@@ -281,7 +281,8 @@ def analyse_log_for_problems() -> Tuple[bool, str]:
     """
     def _find_new_entries(log: list[str]) -> list[str]:
         """
-        Returns a list of entries from the last day that begin with a date.
+        Returns a list of dated entries from the last day or 
+        since the last restart of daemonized services.
         """
         new_entries = list()
 
@@ -315,6 +316,30 @@ def analyse_log_for_problems() -> Tuple[bool, str]:
 
         return formatted_entry
 
+    def _restarted(log: list[str]) -> bool:
+        """
+        Returns True if the services have been restarted within the given log.
+        """
+        for entry in log:
+            if "INFO connection: Connected to" in entry:
+                return True
+        return False
+    
+    def _keep_entries_since_restart(log: list[str]) -> list[str]:
+        """
+        Returns a list of entries since last registered restart of services.
+        """
+        filtered_entries = list()
+        index_restart = 0
+        for index, entry in enumerate(log):
+            if "INFO connection: Connected to" in entry:
+                index_restart = index
+        
+        for entry in log[index_restart + 2:]:
+            filtered_entries.append(entry)
+        
+        return filtered_entries
+
     logger = logging.getLogger("django")
 
     report = ""
@@ -331,6 +356,16 @@ def analyse_log_for_problems() -> Tuple[bool, str]:
     if not log:
         logger.info(f"No new entries found.")
         return True, report
+    
+    if _restarted(log):
+        log = _keep_entries_since_restart(log)
+        if not log:
+            logger.info(f"No new entries found since the services were restarted.")
+            return True, report
+        else:
+            report = f"There have been problems since the services were restarted.<br>"
+    else:
+        report = f"There have been problems in the last day.<br>"
 
     for entry in log:
         if "FATAL" in entry:
@@ -369,7 +404,7 @@ def analyse_log_for_problems() -> Tuple[bool, str]:
             for warning in warnings:
                 reports.append(warning)
 
-        report = "\n".join(reports)
+        report = report + "\n".join(reports)
         return True, report
 
     report = "<strong>No issues were detected in log during time frame.</strong>\n"
