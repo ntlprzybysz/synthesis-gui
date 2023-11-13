@@ -200,7 +200,21 @@ function changeModelOptions(selectedModel) {
     // Loads model information
     var data;
     switch(selectedModel) {
-        case "testmodel":
+        case "6208-IPA-3500":
+            data = {
+                'voices': [['Linda Test', "Linda Johnson"]],
+                'symbols': [['t1', 1], ['t2', 2], ['t3', 3]],
+            };
+            break;
+
+        case "MagK-IPA-6400":
+            data = {
+                'voices': [['Linda Test', "Linda Johnson"]],
+                'symbols': [['t1', 1], ['t2', 2], ['t3', 3]],
+            };
+            break;
+
+        case "TZ-IPA-6000":
             data = {
                 'voices': [['Linda Test', "Linda Johnson"]],
                 'symbols': [['t1', 1], ['t2', 2], ['t3', 3]],
