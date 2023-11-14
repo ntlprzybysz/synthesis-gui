@@ -2,7 +2,7 @@ from django.conf import settings
 from django.shortcuts import render
 import logging
 
-from .forms import InputFormLJSpeech11, InputFormTestModel
+from .forms import InputFormLJSpeech11, InputForm6208, InputFormMagK, InputFormTZ
 from .tasks import synthesize_with_celery
 
 from django.http import JsonResponse
@@ -74,8 +74,12 @@ def show_home(request):
 
     if request.method == "POST":
         model = request.POST.get("model-select-field")
-        if model == "testmodel":
-            form = InputFormTestModel(request.POST)
+        if model == "6208-IPA-3500":
+            form = InputForm6208(request.POST)
+        elif model == "MagK-IPA-6400":
+            form = InputFormMagK(request.POST)
+        elif model == "TZ-IPA-6000":
+            form = InputFormTZ(request.POST)
         else:
             form = InputFormLJSpeech11(request.POST)
         logger.info("Received form.")
