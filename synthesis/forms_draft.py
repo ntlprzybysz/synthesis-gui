@@ -73,6 +73,10 @@ class InputForm(forms.Form):
         """
         return "" 
 
+    def clean(self):
+        cleaned_data = super().clean()
+        return cleaned_data
+
 
 class InputFormLJSpeech11(InputForm):
     VOICE_OPTIONS = [
@@ -89,7 +93,12 @@ class InputFormLJSpeech11(InputForm):
                 "style": "margin-right: 3rem; margin-bottom: 1rem; border-color: #212529; border-radius: 0px;",
             }
         ),
+        required=False,
     )
+
+    def clean_voice(self):
+        # No validation for this field
+        return self.cleaned_data['voice']
 
 
 class InputForm6208(InputForm):
@@ -107,8 +116,13 @@ class InputForm6208(InputForm):
                 "style": "margin-right: 3rem; margin-bottom: 1rem; border-color: #212529; border-radius: 0px;",
             }
         ),
+        required=False,
     )
 
+    def clean_voice(self):
+        # No validation for this field
+        return self.cleaned_data['voice']
+    
 
 class InputFormMagK(forms.Form):
     VOICE_OPTIONS = [
@@ -125,8 +139,12 @@ class InputFormMagK(forms.Form):
                 "style": "margin-right: 3rem; margin-bottom: 1rem; border-color: #212529; border-radius: 0px;",
             }
         ),
+        required=False,
     )
 
+    def clean_voice(self):
+        # No validation for this field
+        return self.cleaned_data['voice']
 
 class InputFormTZ(InputForm):
     VOICE_OPTIONS = [
@@ -143,4 +161,9 @@ class InputFormTZ(InputForm):
                 "style": "margin-right: 3rem; margin-bottom: 1rem; border-color: #212529; border-radius: 0px;",
             }
         ),
+        required=False,
     )
+
+    def clean_voice(self):
+        # No validation for this field
+        return self.cleaned_data['voice']
