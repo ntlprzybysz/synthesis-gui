@@ -31,7 +31,7 @@ def task_status(request) -> JsonResponse:
 
     session_key = request.POST.get("session_key")
     if session_key:
-        logger.info(f"session key {session_key} Sending data to check task status.")
+        logger.debug(f"session key {session_key} Sending data to check task status.")
         progress = check_task_status(session_key)
         return JsonResponse({"progress": progress})
 
@@ -50,7 +50,7 @@ def show_home(request):
     """
     def _handle_form(request, model, form):
         if form.is_valid():
-            logger.info("Form validated, submitting data for processing.")
+            logger.info(f"Form validated, submitting data for processing.")
             
             if request.session.session_key is None:
                 request.session.save()
@@ -59,13 +59,13 @@ def show_home(request):
             task = synthesize_with_celery.delay(form.cleaned_data, model, session_key)
 
             if task.status in ["PENDING", "STARTED"]:
-                logger.info("Data submitted for processing.")
+                logger.info(f"Data submitted for processing.")
                 audio_url = settings.MEDIA_URL + session_key + "/1-1.npy.wav"
                 return True, session_key, audio_url
             else:
-                logger.error("Data couldn't be submitted for processing.")
+                logger.error(f"Data couldn't be submitted for processing.")
         else:
-            logger.error("Failed validation of form.")
+            logger.error(f"Failed validation of form.")
         return False, "_failed", "_null"
 
     logger = logging.getLogger("django")
@@ -82,7 +82,7 @@ def show_home(request):
             form = InputFormTZ(request.POST)
         else:
             form = InputFormLJSpeech11(request.POST)
-        logger.info("Received form.")
+        logger.info(f"Received form.")
         form_valid, session_key, audio_url = _handle_form(request, model, form)
     else:
         form = InputFormLJSpeech11()
