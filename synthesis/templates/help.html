@@ -16,11 +16,10 @@
                 you specify using the International Phonetic Alphabet (IPA).
             </p>
             <p class="text-start">
-                You can listen to a sample audio of the following text: "The North Wind and the Sun were disputing which
+                You can <a href="https://tuc.cloud/index.php/s/gzaYDNKinHw6GCz"
+                    class="link-dark link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">listen 
+                    to a sample audio (headphones recommended)</a> of the following text: "The North Wind and the Sun were disputing which
                 wasthe stronger, when a traveler came along wrapped in a warm cloak."
-                <a href="https://tuc.cloud/index.php/s/gzaYDNKinHw6GCz"
-                    class="link-dark link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">Listen 
-                    (headphones recommended)</a>.
             </p>
         </div>
     </div>
@@ -69,14 +68,14 @@
         <div class="col">
             <h3>Load Example Menu</h3>
             <p class="text-start">
-                This dropdown menu allows you to populate the project name, text and IPA input fields
-                with input that works with the tools this app uses.
+                A dropdown menu labeled "Load Example" allows you to input predefined samples into 
+                the project name, text, and IPA input fields. These examples serve as references, 
+                providing a clearer understanding of accepted input formats and the application's functionality.
             </p>
             <label for="example-select-field">Load example:
                 <select class="form-select" name="example-select-test-field" id="example-test"
                     aria-label="Load example" style="border-radius: 0px; border-color: #212529;">
                     <option selected>---</option>
-                    <option value="quick">Quick test</option>
                     <option value="printing">Printing</option>
                     <option value="mountain">Mountain</option>
                     <option value="wind">North Wind</option>
@@ -236,20 +235,26 @@
             <p class="text-start">
                 The input processing occurs in two stages: synthesizing the text into a mel-spectrogram
                 and converting it into audio files. Each stage requires a specific model, which has a name,
-                symbol range, supported speakers, languages, and accents. This section allows you to select
-                the desired model variant. If you're unsure which options are suitable, we recommend
-                sticking to the default values for now.
+                symbol range, supported speakers, languages, and accents.
+            </p>
+            <p class="text-start">
+                This section enables you to choose the preferred model variant. Upon selecting the model, 
+                the list of available voices and symbols for that particular model will automatically adjust.
+                If you're unsure which options are suitable, we recommend sticking to the default values.
             </p>
             <label for="model">Model:
-                <select class="form-select" name="model" id="model" 
+                <select class="form-select" name="model-select-field" id="model-select-field" 
                     style="border-radius: 0px; border-color: #212529;">
-                    <option selected>LJSpeech 1.1</option>
+                    <option value="ljspeech11" selected="">LJSpeech 1.1</option>
+                    <option value="6208-IPA-3500">6208 IPA 3500</option>
+                    <option value="TZ-IPA-6000">TZ IPA 6000</option>
+                    <option value="MagK-IPA-6400">MagK IPA 6400</option>
                 </select>
             </label>
             <label for="voice">Voice:
-                <select class="form-select" name="voice" id="voice" 
+                <select class="form-select" name="voice" id="voice-select-field" 
                     style="border-radius: 0px; border-color: #212529;">
-                    <option selected>Linda Johnson</option>
+                    <option value="Linda Johnson" selected="">Linda Johnson</option>
                 </select>
             </label>
         </div>

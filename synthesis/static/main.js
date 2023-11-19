@@ -175,7 +175,7 @@ function loadExample(chosenExample) {
         };
 
         document.getElementById("model-select-field").value = "ljspeech11";
-        document.getElementById("voice-select-field").value = "Linda Johnson";
+        changeModelOptions("ljspeech11");
         document.getElementById("sentence-select-field").value = 1;
 };
 
@@ -189,12 +189,16 @@ function changeModelOptions(selectedModel) {
     var symbolSet = document.getElementById("ipa-symbol-set");
 
     // Clears existing options in the voice dropdown and the IPA table
-    while (voiceDropdown.firstChild) {
-        voiceDropdown.removeChild(voiceDropdown.firstChild);
+    if (voiceDropdown) {
+        while (voiceDropdown.firstChild) {
+            voiceDropdown.removeChild(voiceDropdown.firstChild);
+        };
     };
 
-    while (symbolSet.firstChild) {
-        symbolSet.removeChild(symbolSet.firstChild);
+    if (symbolSet) {
+        while (symbolSet.firstChild) {
+            symbolSet.removeChild(symbolSet.firstChild);
+        };
     };
 
     // Loads model information
@@ -233,29 +237,33 @@ function changeModelOptions(selectedModel) {
             };
         };
 
-    data.voices.forEach(function (voice) {
-        var option = document.createElement("option");
-        option.value = voice[1];
-        option.text = voice[0];
-        voiceDropdown.appendChild(option);
-    });
-
-    data.symbols.forEach(function (symbol) {
-        var div = document.createElement("div");
-        div.className = "col";
-        div.style.padding = "0rem";
-    
-        var button = document.createElement("button");
-        button.type = "button";
-        button.className = "btn btn-light btn-ipa";
-        button.textContent = symbol[0];
-        button.addEventListener("click", function () {
-            insertSymbol(symbol[0]);
+    if (voiceDropdown) {
+        data.voices.forEach(function (voice) {
+            var option = document.createElement("option");
+            option.value = voice[1];
+            option.text = voice[0];
+            voiceDropdown.appendChild(option);
         });
-    
-        div.appendChild(button);
-        symbolSet.appendChild(div);
-    });
+    };
+
+    if (symbolSet) {
+        data.symbols.forEach(function (symbol) {
+            var div = document.createElement("div");
+            div.className = "col";
+            div.style.padding = "0rem";
+        
+            var button = document.createElement("button");
+            button.type = "button";
+            button.className = "btn btn-light btn-ipa";
+            button.textContent = symbol[0];
+            button.addEventListener("click", function () {
+                insertSymbol(symbol[0]);
+            });
+        
+            div.appendChild(button);
+            symbolSet.appendChild(div);
+        });
+    };
     
     // Preselects options
     voiceDropdown.value = data.voices[0][1];
