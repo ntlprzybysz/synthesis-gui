@@ -175,7 +175,7 @@ function loadExample(chosenExample) {
         };
 
         document.getElementById("model-select-field").value = "ljspeech11";
-        document.getElementById("voice-select-field").value = "Linda Johnson";
+        changeModelOptions("ljspeech11");
         document.getElementById("sentence-select-field").value = 1;
 };
 
