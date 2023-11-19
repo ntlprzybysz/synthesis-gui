@@ -174,92 +174,21 @@ function loadExample(chosenExample) {
             document.getElementById("ipa-input-field").value = "";
         };
 
-        document.getElementById("model-select-field").value = "ljspeech11";
+        document.getElementById("model-select-field").value = "LJSPEECH11";
         document.getElementById("voice-select-field").value = "Linda Johnson";
         document.getElementById("sentence-select-field").value = 1;
 };
 
-
-/**
- * Changes voice options and the symbol set based on the selected model.
- * LJ Speech 1.1. is always the default option.
- */
-function changeModelOptions(selectedModel) {
-    var voiceDropdown = document.getElementById("voice-select-field");
-    var symbolSet = document.getElementById("ipa-symbol-set");
-
-    // Clears existing options in the voice dropdown and the IPA table
-    while (voiceDropdown.firstChild) {
-        voiceDropdown.removeChild(voiceDropdown.firstChild);
-    };
-
-    while (symbolSet.firstChild) {
-        symbolSet.removeChild(symbolSet.firstChild);
-    };
-
-    // Loads model information
-    var data;
-    switch(selectedModel) {
-        case "6208-IPA-3500":
-            data = {
-                "voices": [["6208 (sdp)", "6208-sdp"]],
-                "symbols": [["!", 0], ["'", 1], [",", 2], ["-", 3], [".", 4], ["?", 5], ["SIL0", 6], ["SIL1", 7], ["SIL2", 8], ["aɪ", 9], ["aʊ", 10], ["b", 11], ["d", 12], ["d͡ʒ", 13], ["eɪ", 14], ["f", 15], ["h", 16], ["i", 17], ["j", 18], ["k", 19], ["l", 20], ["m", 21], ["n", 22], ["oʊ", 23], ["p", 24], ["s", 25], ["t", 26], ["t͡ʃ", 27], ["u", 28], ["v", 29], ["w", 30], ["z", 31], ["æ", 32], ["ð", 33], ["ŋ", 34], ["ɑ", 35], ["ɔ", 36], ["ɔɪ", 37], ["ɛ", 38], ["ɝ", 39], ["ɡ", 40], ["ɪ", 41], ["ɹ", 42], ["ʃ", 43], ["ʊ", 44], ["ʌ", 45], ["ʒ", 46], ["θ", 47], ["\"", 48], ["(", 49], [")", 50], [":", 51], [";", 52], ["[", 53], ["]", 54],
-                            ['-', 55], ['0', 56], ['1', 57], ['2', 58]],
-            };
-            break;
-
-        case "MagK-IPA-6400":
-            data = {
-                "voices": [["6446-MagK (sdp)", "6446-MagK-sdp"]],
-                "symbols": [["!", 0], [",", 1], ["-", 2], [".", 3], [";", 4], ["?", 5], ["SIL0", 6], ["SIL1", 7], ["SIL2", 8], ["SIL3", 9], ["a", 10], ["aɪ", 11], ["aʊ", 12], ["b", 13], ["d", 14], ["e", 15], ["eɪ", 16], ["f", 17], ["h", 18], ["i", 19], ["j", 20], ["k", 21], ["l", 22], ["m", 23], ["n", 24], ["o", 25], ["oʊ", 26], ["p", 27], ["r", 28], ["s", 29], ["t", 30], ["u", 31], ["v", 32], ["w", 33], ["z", 34], ["æ", 35], ["ð", 36], ["ŋ", 37], ["ɑ", 38], ["ɔ", 39], ["ɔɪ", 40], ["ə", 41], ["ɛ", 42], ["ɛɪ", 43], ["ɝ", 44], ["ɡ", 45], ["ɪ", 46], ["ɹ", 47], ["ʃ", 48], ["ʊ", 49], ["ʌ", 50], ["ʒ", 51], ["ʤ", 52], ["ʧ", 53], ["θ", 54], ["\"", 55], ["'", 56], ["(", 57], [")", 58], [":", 59], ["[", 60], ["]", 61], ["d͡ʒ", 62], ["t͡ʃ", 63],
-                            ['-', 64], ['0', 65], ['1', 66], ['2', 67]],
-            };
-            break;
-
-        case "TZ-IPA-6000":
-            data = {
-                "voices": [["6450 (sdp)", "6450-sdp"]],
-                "symbols": [["!", 0], ["'", 1], [",", 2], ["-", 3], [".", 4], [";", 5], ["?", 6], ["SIL0", 7], ["SIL1", 8], ["SIL2", 9], ["SIL3", 10], ["aɪ", 11], ["aʊ", 12], ["b", 13], ["d", 14], ["eɪ", 15], ["f", 16], ["h", 17], ["i", 18], ["j", 19], ["k", 20], ["l", 21], ["m", 22], ["n", 23], ["oʊ", 24], ["p", 25], ["s", 26], ["t", 27], ["u", 28], ["v", 29], ["w", 30], ["z", 31], ["æ", 32], ["ð", 33], ["ŋ", 34], ["ɑ", 35], ["ɔ", 36], ["ɔɪ", 37], ["ɛ", 38], ["ɝ", 39], ["ɡ", 40], ["ɪ", 41], ["ɹ", 42], ["ʃ", 43], ["ʊ", 44], ["ʌ", 45], ["ʒ", 46], ["ʤ", 47], ["ʧ", 48], ["θ", 49], ["\"", 50], ["(", 51], [")", 52], [":", 53], ["[", 54], ["]", 55], ["d͡ʒ", 56], ["t͡ʃ", 57],
-                            ['-', 58], ['0', 59], ['1', 60], ['2', 61]],
-            };
-            break;
-            
-        default:
-            data = {
-                "voices": [["Linda Johnson", "Linda Johnson"],],
-                "symbols": [["!", 1], ["\"", 2], ["'", 3], ["(", 4], [")", 5], [",", 6], ["-", 7], [".", 8], [":", 9], [";", 10], ["?", 11], ["SIL0", 12], ["SIL1", 13], ["SIL2", 14], ["SIL3", 15], ["[", 16], ["]", 17], ["aɪ", 18], ["aʊ", 19], ["b", 20], ["d", 21], ["dʒ", 22], ["eɪ", 23], ["f", 24], ["h", 25], ["i", 26], ["j", 27], ["k", 28], ["l", 29], ["m", 30], ["n", 31], ["oʊ", 32], ["p", 33], ["r", 34], ["s", 35], ["t", 36], ["tʃ", 37], ["u", 38], ["v", 39], ["w", 40], ["z", 41], ["æ", 42], ["ð", 43], ["ŋ", 44], ["ɑ", 45], ["ɔ", 46], ["ɔr", 47], ["ɔɪ", 48], ["ə", 49], ["ər", 50], ["ɛ", 51], ["ɛr", 52], ["ɡ", 53], ["ɪ", 54], ["ɪr", 55], ["ʃ", 56], ["ʊ", 57], ["ʊr", 58], ["ʌ", 59], ["ʌr", 60], ["ʒ", 61], ["θ", 62], ["—", 63],
-                            ["-", 64], ["0", 65], ["1", 66], ["2", 67],
-                            ["-", 68], ["ː", 69], ["ˑ", 70], ["˘", 71]],
-            };
-        };
-
-    data.voices.forEach(function (voice) {
-        var option = document.createElement("option");
-        option.value = voice[1];
-        option.text = voice[0];
-        voiceDropdown.appendChild(option);
-    });
-
-    data.symbols.forEach(function (symbol) {
-        var div = document.createElement("div");
-        div.className = "col";
-        div.style.padding = "0rem";
-    
-        var button = document.createElement("button");
-        button.type = "button";
-        button.className = "btn btn-light btn-ipa";
-        button.textContent = symbol[0];
-        button.addEventListener("click", function () {
-            insertSymbol(symbol[0]);
+document.addEventListener("DOMContentLoaded", function () {
+    const exampleSelectField = document.getElementById("example");
+    if (exampleSelectField) {
+        exampleSelectField.addEventListener("change", function () {
+        var selectedValue = exampleSelectField.value;
+        loadExample(selectedValue);
         });
-    
-        div.appendChild(button);
-        symbolSet.appendChild(div);
-    });
-    
-    // Preselects options
-    voiceDropdown.value = data.voices[0][1];
     };
+});
+
 
 
 /**
@@ -283,7 +212,7 @@ function loadProject() {
  * Displays the audio playback and download in the output part of the website.
  */
 function showSuccess(audioUrl) {
-    var progressDiv = document.getElementById("progress");
+    var progressDiv = document.getElementById('progress');
 
     var htmlContent = `
                         <button id="synthesize-button" class="btn btn-light btn-outline-dark mb-1" type="submit"
@@ -299,10 +228,10 @@ function showSuccess(audioUrl) {
 
     progressDiv.innerHTML = htmlContent;
 
-    var downloadBtn = document.getElementById("download-button");
-    downloadBtn.addEventListener("click", function () {
+    var downloadBtn = document.getElementById('download-button');
+    downloadBtn.addEventListener('click', function () {
         event.preventDefault();
-        window.open(audioUrl, "_blank");
+        window.open(audioUrl, '_blank');
     });
 }
 
@@ -311,7 +240,7 @@ function showSuccess(audioUrl) {
  * Updates the progress in the output part of the website.
  */
 function showProgress(loadingImageUrl, progress) {
-    var progressDiv = document.getElementById("progress");
+    var progressDiv = document.getElementById('progress');
     var htmlContent = `
                         <p style="margin-top: 1rem;">
                         <img src="${loadingImageUrl}" width="25" height="25"
@@ -327,7 +256,7 @@ function showProgress(loadingImageUrl, progress) {
  * Displays an error message in the output part of the website.
  */
 function showFailed(helpUrl) {
-    var progressDiv = document.getElementById("progress");
+    var progressDiv = document.getElementById('progress');
     var htmlContent = `
                         <button id="synthesize-button" class="btn btn-light btn-outline-dark mb-1" type="submit"
                         style="margin-right: 3rem;">Synthesize</button>
@@ -351,7 +280,7 @@ function showFailed(helpUrl) {
  */
 function updateProgress(sessionKey, urls) {
     var xhr = new XMLHttpRequest();
-    const csrftoken = document.querySelector("[name=csrfmiddlewaretoken]").value;
+    const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
     xhr.onreadystatechange = function () {
         if (xhr.readyState === 4 && xhr.status === 200) {
             var response = JSON.parse(xhr.responseText);
@@ -366,10 +295,10 @@ function updateProgress(sessionKey, urls) {
             }
         }
     };
-    xhr.open("POST", urls.taskStatusUrl, true);
+    xhr.open('POST', urls.taskStatusUrl, true);
     xhr.setRequestHeader("X-CSRFToken", csrftoken);
-    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-    xhr.send("session_key=" + sessionKey);
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhr.send('session_key=' + sessionKey);
 }
 
 
@@ -382,34 +311,10 @@ function updateProgress(sessionKey, urls) {
 function updateAndSchedule(sessionKey, urls) {
     updateProgress(sessionKey, urls);
 
-    var currentStatus = document.getElementById("progress").innerHTML;
+    var currentStatus = document.getElementById('progress').innerHTML;
     if (currentStatus.includes("Synthesizing, please wait.")) {
         setTimeout(function () {
             updateAndSchedule(sessionKey, urls);
         }, 1000);
     }
 }
-
-
-/**
- * Listeners for triggers.
- */
-document.addEventListener("DOMContentLoaded", function () {
-    // Triggers an update of fields when an example is selected
-    const exampleSelectField = document.getElementById("example");
-    if (exampleSelectField) {
-        exampleSelectField.addEventListener("change", function () {
-        var selectedValue = exampleSelectField.value;
-        loadExample(selectedValue);
-        });
-    };
-
-    // Triggers an update of speaker and symbol options when a model is changed
-    const modelSelectField = document.getElementById("model-select-field");
-    if (modelSelectField) {       
-        changeModelOptions(modelSelectField.value);
-        modelSelectField.addEventListener("change", function () {
-            changeModelOptions(modelSelectField.value);
-        });
-    };
-});

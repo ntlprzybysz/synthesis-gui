@@ -11,9 +11,9 @@ from .tasks_utils import analyse_log_for_problems, mail_report
 
 
 @shared_task
-def synthesize_with_celery(cleaned_form_input: dict, session_key: str) -> bool:
+def synthesize_with_celery(cleaned_form_input: dict, model: str, session_key: str) -> bool:
     logger = logging.getLogger("django")
-    project = Project(cleaned_form_input, session_key)
+    project = Project(cleaned_form_input, model, session_key)
 
     if project:
         logger.info(

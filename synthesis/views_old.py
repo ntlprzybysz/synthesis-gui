@@ -17,7 +17,7 @@ def check_maintenance_status(request):
         logger = logging.getLogger("django")
         logger.info(f"Returned maintenance.html for path: {request.path}")
         return render(request, "maintenance.html")
-
+    
 
 def task_status(request) -> JsonResponse:
     """
@@ -48,24 +48,24 @@ def show_home(request):
     Renders the home page with a form for submitting synthesis requests if the request method is GET.
     If the request method is POST, it validates the form data and queues it for processing.
     """
-    def _handle_form(request, model, form):
+    def _handle_form(request, form):
         if form.is_valid():
-            logger.info(f"Form validated, submitting data for processing.")
+            logger.info("Form validated, submitting data for processing.")
             
             if request.session.session_key is None:
                 request.session.save()
             session_key = request.session.session_key
 
-            task = synthesize_with_celery.delay(form.cleaned_data, model, session_key)
+            task = synthesize_with_celery.delay(form.cleaned_data, session_key)
 
             if task.status in ["PENDING", "STARTED"]:
-                logger.info(f"Data submitted for processing.")
+                logger.info("Data submitted for processing.")
                 audio_url = settings.MEDIA_URL + session_key + "/1-1.npy.wav"
                 return True, session_key, audio_url
             else:
-                logger.error(f"Data couldn't be submitted for processing.")
+                logger.error("Data couldn't be submitted for processing.")
         else:
-            logger.error(f"Failed validation of form.")
+            logger.error("Failed validation of form.")
         return False, "_failed", "_null"
 
     logger = logging.getLogger("django")
@@ -74,9 +74,8 @@ def show_home(request):
 
     if request.method == "POST":
         form = InputForm(request.POST)
-        logger.info(f"Received form.")
-        model = request.POST.get("model-select-field")
-        form_valid, session_key, audio_url = _handle_form(request, model, form)
+        logger.info("Received form.")
+        form_valid, session_key, audio_url = _handle_form(request, form)
     else:
         form = InputForm()
         form_valid, session_key, audio_url = False, "_null", "_null"

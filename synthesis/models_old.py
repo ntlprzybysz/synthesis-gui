@@ -13,28 +13,19 @@ class Project:
     """
     Saves all data user provided about the project and synthesizes it.
     """
-    def __init__(self, cleaned_form_input: dict, model: str, session_key: str) -> None:
-        self.model: str = model
+
+    def __init__(self, cleaned_form_input: dict, session_key: str) -> None:
         self.session_key = session_key
         self.name: str = cleaned_form_input["project_name"]
         self.ipa_input: str = cleaned_form_input["ipa_input"]
+        self.model: str = cleaned_form_input["model"]
         self.voice: str = cleaned_form_input["voice"]
         self.sentence: int = int(cleaned_form_input["sentence"])
 
-        ## Paths
         self.tools_dir_path: Path = Path(settings.STATIC_ROOT) / "tools"
         self.project_dir_path: Path = Path(settings.MEDIA_ROOT) / self.session_key
         self.input_file_path: Path = self.project_dir_path / "ipa_input.txt"
-
-        # Checkpoints
-        if self.model == "6208-IPA-3500":
-            self.tacotron_checkpoint_file_path: Path = self.tools_dir_path / "tacotron" / "6208-IPA-3500.pt"
-        elif self.model == "MagK-IPA-6400":
-            self.tacotron_checkpoint_file_path: Path = self.tools_dir_path / "tacotron" / "MagK-IPA-6400.pt"
-        elif self.model == "TZ-IPA-6000":
-            self.tacotron_checkpoint_file_path: Path = self.tools_dir_path / "tacotron" / "TZ-IPA-6000.pt"
-        else:
-            self.tacotron_checkpoint_file_path: Path = self.tools_dir_path / "tacotron" / "101000.pt"
+        self.tacotron_checkpoint_file_path: Path = self.tools_dir_path / "tacotron" / "101000.pt"
         self.waveglow_checkpoint_file_path: Path = self.tools_dir_path / "waveglow" / "LJS-v3-580000.pt"
 
 
@@ -42,6 +33,7 @@ class Project:
         """
         Uses user's IPA input and settings to generate an audio file with synthesised speech.
         """
+
         def _get_project_directory() -> Tuple[bool, Optional[str]]:
             """
             Prepares a new directory for the project.
