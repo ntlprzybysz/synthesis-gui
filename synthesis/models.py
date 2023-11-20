@@ -6,7 +6,6 @@ from pathlib import Path
 from typing import Optional, Tuple
 
 from django.conf import settings
-from django.db import models
 
 
 class Project:
@@ -37,7 +36,9 @@ class Project:
         elif self.model == "TZ-IPA-6000":
             self.voice = "6450 (sdp)"
         else:
-            raise ValueError(f"Got unallowed combination of model {self.model} and voice {voice}.")
+            logger = logging.getLogger("django")
+            logger.error(f"Got unallowed combination of model {self.model} and voice {voice}.")
+            raise ValueError(f"Stopped project initialization, please see log for details.")
 
     def _set_paths(self) -> None:
         """
@@ -61,7 +62,10 @@ class Project:
         elif self.model == "TZ-IPA-6000":
             self.tacotron_checkpoint_file_path: Path = self.tools_dir_path / "tacotron" / "TZ-IPA-6000.pt"
         else:
-            raise ValueError(f"Got unknown model {self.model}.")
+            logger = logging.getLogger("django")
+            logger.error(f"Got unknown model {self.model}.")
+            raise ValueError(f"Stopped project initialization, please see log for details.")
+        
         self.waveglow_checkpoint_file_path: Path = self.tools_dir_path / "waveglow" / "LJS-v3-580000.pt"
 
     def synthesize(self) -> bool:
@@ -80,7 +84,6 @@ class Project:
                 return False, str(e)
             return True, None
 
-
         def _create_file_for_synthesis() -> Tuple[bool, Optional[str]]:
             """
             Creates a file with the user's IPA input that is necessary for the synthesis.
@@ -93,7 +96,6 @@ class Project:
             except Exception as e:
                 return False, str(e)
             return True, None
-
 
         def _create_mel_spectrogram() -> Tuple[bool, Optional[str]]:
             """
@@ -125,7 +127,6 @@ class Project:
             except Exception as e:
                 return False, str(e)
             return True, None
-
 
         def _create_audio_files() -> Tuple[bool, Optional[str]]:
             """
