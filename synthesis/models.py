@@ -18,25 +18,51 @@ class Project:
         self.session_key = session_key
         self.name: str = cleaned_form_input["project_name"]
         self.ipa_input: str = cleaned_form_input["ipa_input"]
-        self.voice: str = cleaned_form_input["voice"]
+        self._set_voice(cleaned_form_input["voice"])
         self.sentence: int = int(cleaned_form_input["sentence"])
+        self._set_paths()
+        self._set_checkpoints()
+    
+    def _set_voice(self, voice: str) -> None:
+        """
+        Sets voice according to the given model. If the given model and the voice don't match,
+        raises ValueError.
+        """
+        if self.model == "ljspeech11" and voice == "Linda Johnson":
+            self.voice = "Linda Johnson"
+        elif self.model == "6208-IPA-3500" and voice == "6208 (sdp)":
+            self.voice = "6208 (sdp)"
+        elif self.model == "MagK-IPA-6400" and voice == "6446-MagK (sdp)":
+            self.voice = "6446-MagK (sdp)"
+        elif self.model == "TZ-IPA-6000":
+            self.voice = "6450 (sdp)"
+        else:
+            raise ValueError(f"Got unallowed combination of model {self.model} and voice {voice}.")
 
-        ## Paths
+    def _set_paths(self) -> None:
+        """
+        Sets paths needed for synthesis.
+        """
         self.tools_dir_path: Path = Path(settings.STATIC_ROOT) / "tools"
         self.project_dir_path: Path = Path(settings.MEDIA_ROOT) / self.session_key
         self.input_file_path: Path = self.project_dir_path / "ipa_input.txt"
 
-        # Checkpoints
-        if self.model == "6208-IPA-3500":
+    def _set_checkpoints(self) -> None:
+        """
+        Sets checkpoints according to the given model. If the given model doesn't match the known
+        models, raises ValueError.
+        """
+        if self.model == "ljspeech11":
+            self.tacotron_checkpoint_file_path: Path = self.tools_dir_path / "tacotron" / "101000.pt"
+        elif self.model == "6208-IPA-3500":
             self.tacotron_checkpoint_file_path: Path = self.tools_dir_path / "tacotron" / "6208-IPA-3500.pt"
         elif self.model == "MagK-IPA-6400":
             self.tacotron_checkpoint_file_path: Path = self.tools_dir_path / "tacotron" / "MagK-IPA-6400.pt"
         elif self.model == "TZ-IPA-6000":
             self.tacotron_checkpoint_file_path: Path = self.tools_dir_path / "tacotron" / "TZ-IPA-6000.pt"
         else:
-            self.tacotron_checkpoint_file_path: Path = self.tools_dir_path / "tacotron" / "101000.pt"
+            raise ValueError(f"Got unknown model {self.model}.")
         self.waveglow_checkpoint_file_path: Path = self.tools_dir_path / "waveglow" / "LJS-v3-580000.pt"
-
 
     def synthesize(self) -> bool:
         """
