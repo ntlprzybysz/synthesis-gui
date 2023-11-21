@@ -65,7 +65,7 @@ def show_home(request):
             else:
                 logger.error(f"Data couldn't be submitted for processing.")
         else:
-            logger.error(f"Failed validation of form.")
+            logger.error(f"Failed validation of form: {form.errors}.")
         return False, "_failed", "_null"
 
     logger = logging.getLogger("django")
