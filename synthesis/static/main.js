@@ -1,18 +1,19 @@
 /**
- * Inserts the given symbol into the text field at the current cursor position.
+ * Inserts a separator "|" and the given symbol into the text field at the current cursor position.
  *
  * @param {string} symbol - The symbol to be inserted.
  */
 function insertSymbol(symbol) {
     var textFieldValue = document.getElementById("ipa-input-field");
     var cursorPosition = textFieldValue.selectionStart;
+    var toInsert = "|" + symbol;
 
     var currentValue = textFieldValue.value;
-    var updatedValue = currentValue.substring(0, cursorPosition) + symbol + currentValue.substring(cursorPosition);
+    var updatedValue = currentValue.substring(0, cursorPosition) + toInsert + currentValue.substring(cursorPosition);
     textFieldValue.value = updatedValue;
 
-    textFieldValue.selectionStart = cursorPosition + symbol.length;
-    textFieldValue.selectionEnd = cursorPosition + symbol.length;
+    textFieldValue.selectionStart = cursorPosition + toInsert.length;
+    textFieldValue.selectionEnd = cursorPosition + toInsert.length;
     textFieldValue.focus();
 }
 
