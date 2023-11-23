@@ -208,30 +208,45 @@ function changeModelOptions(selectedModel) {
         case "6208-IPA-3500":
             data = {
                 "voices": [["6208 (sdp)", "6208 (sdp)"]],
-                "symbols": [["aɪ"], ["aʊ"], ["eɪ"], ["i"], ["oʊ"], ["u"], ["æ"], ["ɑ"], ["ɔ"], ["ɔɪ"], ["ɛ"], ["ɝ"], ["b"], ["d"], ["d͡ʒ"], ["f"], ["h"], ["j"], ["k"], ["l"], ["m"], ["n"], ["p"], ["s"], ["t"], ["t͡ʃ"], ["v"], ["w"], ["z"], ["ð"], ["ŋ"], ["ɡ"], ["ɪ"], ["ɹ"], ["ʃ"], ["ʊ"], ["ʌ"], ["ʒ"], ["θ"], ["SIL0"], ["SIL1"], ["SIL2"], ["!"], ["'"], [","], ["-"], ["."], ["?"], ["\""], ["("], [")"], [":"], [";"], ["["], ["]"]],
+                "vowels": [["aɪ"], ["aʊ"], ["eɪ"], ["i"], ["oʊ"], ["u"], ["æ"], ["ɑ"], ["ɔ"], ["ɔɪ"], ["ɛ"], ["ɝ"], ["ɪ"], ["ʊ"], ["ʌ"]],
+                "consonants": [["b"], ["d"], ["d͡ʒ"], ["f"], ["h"], ["j"], ["k"], ["l"], ["m"], ["n"], ["p"], ["s"], ["t"], ["t͡ʃ"], ["v"], ["w"], ["z"], ["ð"], ["ŋ"], ["ɡ"], ["ɹ"], ["ʃ"], ["ʒ"], ["θ"]],
+                "silence_symbols": [["SIL0"], ["SIL1"], ["SIL2"]],
+                "special_symbols": [["!"], ["'"], [","], ["-"], ["."], ["?"], ["\""], ["("], [")"], [":"], [";"], ["["], ["]"]],
             };
             break;
 
         case "MagK-IPA-6400":
             data = {
                 "voices": [["6446-MagK (sdp)", "6446-MagK (sdp)"]],
-                "symbols": [["a"], ["aɪ"], ["aʊ"], ["e"], ["eɪ"], ["i"], ["o"], ["oʊ"], ["u"], ["ə"], ["ɛ"], ["ɛɪ"], ["ɑ"], ["ɔ"], ["ɔɪ"], ["ɝ"], ["b"], ["d"], ["f"], ["h"], ["j"], ["k"], ["l"], ["m"], ["n"], ["p"], ["r"], ["s"], ["t"], ["v"], ["w"], ["z"], ["æ"], ["ð"], ["ŋ"], ["ɡ"], ["ɪ"], ["ɹ"], ["ʃ"], ["ʊ"], ["ʌ"], ["ʒ"], ["ʤ"], ["ʧ"], ["θ"], ["d͡ʒ"], ["t͡ʃ"], ["SIL0"], ["SIL1"], ["SIL2"], ["SIL3"], ["!"], [","], ["-"], ["."], [";"], ["?"], ["\""], ["'"], ["("], [")"], [":"], ["["], ["]"]],
+                "vowels": [["a"], ["aɪ"], ["aʊ"], ["e"], ["eɪ"], ["i"], ["o"], ["oʊ"], ["u"], ["ə"], ["ɛ"], ["ɛɪ"], ["ɑ"], ["ɔ"], ["ɔɪ"], ["ɝ"], ["ʊ"], ["ʌ"], ["ɪ"], ["æ"]],
+                "consonants": [["b"], ["d"], ["f"], ["h"], ["j"], ["k"], ["l"], ["m"], ["n"], ["p"], ["r"], ["s"], ["t"], ["v"], ["w"], ["z"], ["ð"], ["ŋ"], ["ɡ"], ["ɹ"], ["ʃ"], ["ʒ"], ["ʤ"], ["ʧ"], ["θ"], ["d͡ʒ"], ["t͡ʃ"]],
+                "silence_symbols": [["SIL0"], ["SIL1"], ["SIL2"], ["SIL3"]],
+                "special_symbols": [["!"], [","], ["-"], ["."], [";"], ["?"], ["\""], ["'"], ["("], [")"], [":"], ["["], ["]"]],
             };
             break;
 
         case "TZ-IPA-6000":
             data = {
                 "voices": [["6450 (sdp)", "6450 (sdp)"]],
-                "symbols": [["aɪ"], ["aʊ"], ["eɪ"], ["i"], ["oʊ"], ["u"], ["æ"], ["ɑ"], ["ɔ"], ["ɔɪ"], ["ɛ"], ["ɝ"], ["b"], ["d"], ["f"], ["h"], ["j"], ["k"], ["l"], ["m"], ["n"], ["p"], ["s"], ["t"], ["v"], ["w"], ["z"], ["ð"], ["ŋ"], ["ɡ"], ["ɪ"], ["ɹ"], ["ʃ"], ["ʊ"], ["ʌ"], ["ʒ"], ["ʤ"], ["ʧ"], ["θ"], ["d͡ʒ"], ["t͡ʃ"], ["SIL0"], ["SIL1"], ["SIL2"], ["SIL3"], ["!"], ["'"], [","], ["-"], ["."], [";"], ["?"], ["\""], ["("], [")"], [":"], ["["], ["]"]],
+                "vowels": [["aɪ"], ["aʊ"], ["eɪ"], ["i"], ["oʊ"], ["u"], ["æ"], ["ɑ"], ["ɔ"], ["ɔɪ"], ["ɛ"], ["ɝ"], ["ɪ"], ["ʊ"], ["ʌ"]],
+                "consonants": [["b"], ["d"], ["f"], ["h"], ["j"], ["k"], ["l"], ["m"], ["n"], ["p"], ["s"], ["t"], ["v"], ["w"], ["z"], ["ð"], ["ŋ"], ["ɡ"], ["ɹ"], ["ʃ"], ["ʒ"], ["ʤ"], ["ʧ"], ["θ"], ["d͡ʒ"], ["t͡ʃ"]],
+                "silence_symbols": [["SIL0"], ["SIL1"], ["SIL2"], ["SIL3"]],
+                "special_symbols": [["!"], ["'"], [","], ["-"], ["."], [";"], ["?"], ["\""], ["("], [")"], [":"], ["["], ["]"]],
             };
             break;
             
         default:
             data = {
                 "voices": [["Linda Johnson", "Linda Johnson"],],
-                "symbols": [["aɪ"], ["aʊ"], ["eɪ"], ["i"], ["oʊ"], ["u"], ["æ"], ["ɑ"], ["ɔ"], ["ɔr"], ["ɔɪ"], ["ə"], ["ər"], ["ɛ"], ["ɛr"], ["ɪ"], ["ɪr"], ["ʊ"], ["ʊr"], ["ʌ"], ["ʌr"], ["b"], ["d"], ["dʒ"], ["f"], ["h"], ["j"], ["k"], ["l"], ["m"], ["n"], ["p"], ["r"], ["s"], ["t"], ["tʃ"], ["v"], ["w"], ["z"], ["ð"], ["ŋ"], ["ɡ"], ["ʃ"], ["ʒ"], ["θ"], ["SIL0"], ["SIL1"], ["SIL2"], ["SIL3"], ["!"], ["\""], ["'"], ["("], [")"], [","], ["-"], ["."], [":"], [";"], ["?"], ["["], ["]"], ["—"]],
+                "vowels": [["aɪ"], ["aʊ"], ["eɪ"], ["i"], ["oʊ"], ["u"], ["æ"], ["ɑ"], ["ɔ"], ["ɔr"], ["ɔɪ"], ["ə"], ["ər"], ["ɛ"], ["ɛr"], ["ɪ"], ["ɪr"], ["ʊ"], ["ʊr"], ["ʌ"], ["ʌr"]],
+                "consonants": [["b"], ["d"], ["dʒ"], ["f"], ["h"], ["j"], ["k"], ["l"], ["m"], ["n"], ["p"], ["r"], ["s"], ["t"], ["tʃ"], ["v"], ["w"], ["z"], ["ð"], ["ŋ"], ["ɡ"], ["ʃ"], ["ʒ"], ["θ"]],
+                "silence_symbols": [["SIL0"], ["SIL1"], ["SIL2"], ["SIL3"]],
+                "special_symbols": [["!"], ["\""], ["'"], ["("], [")"], [","], ["-"], ["."], [":"], [";"], ["?"], ["["], ["]"], ["—"]],
             };
-        };
+    };
+    
+    data["stress_symbols"] = [["'"]];
+    data["duaration_symbols"] = [["ː"], ["ˑ"], ["˘"]];
 
     if (voiceDropdown) {
         data.voices.forEach(function (voice) {
@@ -243,7 +258,56 @@ function changeModelOptions(selectedModel) {
     };
 
     if (symbolSet) {
-        data.symbols.forEach(function (symbol) {
+        var headingVowels = document.createElement("p");
+        headingVowels.className = "p";
+        headingVowels.textContent = "Vowels:";
+        symbolSet.appendChild(headingVowels);
+
+        data.vowels.forEach(function (vowel) {
+            var div = document.createElement("div");
+            div.className = "col";
+            div.style.padding = "0rem";
+        
+            var button = document.createElement("button");
+            button.type = "button";
+            button.className = "btn btn-light btn-ipa";
+            button.textContent = vowel;
+            button.addEventListener("click", function () {
+                insertSymbol(vowel);
+            });
+        
+            div.appendChild(button);
+            symbolSet.appendChild(div);
+        });
+
+        var headingConsonants = document.createElement("p");
+        headingConsonants.className = "p";
+        headingConsonants.textContent = "Consonants:";
+        symbolSet.appendChild(headingConsonants);
+
+        data.consonants.forEach(function (consonant) {
+            var div = document.createElement("div");
+            div.className = "col";
+            div.style.padding = "0rem";
+        
+            var button = document.createElement("button");
+            button.type = "button";
+            button.className = "btn btn-light btn-ipa";
+            button.textContent = consonant;
+            button.addEventListener("click", function () {
+                insertSymbol(consonant);
+            });
+        
+            div.appendChild(button);
+            symbolSet.appendChild(div);
+        });
+
+        var headingSilenceSymbols = document.createElement("p");
+        headingSilenceSymbols.className = "p";
+        headingSilenceSymbols.textContent = "Silence symbols:";
+        symbolSet.appendChild(headingSilenceSymbols);
+
+        data.silence_symbols.forEach(function (symbol) {
             var div = document.createElement("div");
             div.className = "col";
             div.style.padding = "0rem";
@@ -259,12 +323,33 @@ function changeModelOptions(selectedModel) {
             div.appendChild(button);
             symbolSet.appendChild(div);
         });
-    };
+
+        var headingSpecialSymbols = document.createElement("p");
+        headingSpecialSymbols.className = "p";
+        headingSpecialSymbols.textContent = "Special symbols:";
+        symbolSet.appendChild(headingSpecialSymbols);
+
+        data.special_symbols.forEach(function (symbol) {
+            var div = document.createElement("div");
+            div.className = "col";
+            div.style.padding = "0rem";
+        
+            var button = document.createElement("button");
+            button.type = "button";
+            button.className = "btn btn-light btn-ipa";
+            button.textContent = symbol;
+            button.addEventListener("click", function () {
+                insertSymbol(symbol);
+            });
+        
+            div.appendChild(button);
+            symbolSet.appendChild(div);
+        });
     
     // Preselects options
     voiceDropdown.value = data.voices[0][1];
     };
-
+};
 
 /**
  * Allows the user to select and load a project file from their local system.
