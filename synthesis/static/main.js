@@ -245,8 +245,8 @@ function changeModelOptions(selectedModel) {
             };
     };
     
-    data["stress_symbols"] = [["'"]];
-    data["duaration_symbols"] = [["ː"], ["ˑ"], ["˘"]];
+    data["stress_symbols"] = [[""], ["'"], ["ˌ"]];
+    data["duration_symbols"] = [["˘"], [""], ["ˑ"], ["ː"]];
 
     if (voiceDropdown) {
         data.voices.forEach(function (voice) {
