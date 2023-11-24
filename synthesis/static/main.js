@@ -210,8 +210,8 @@ function changeModelOptions(selectedModel) {
                 "voices": [["6208 (sdp)", "6208 (sdp)"]],
                 "vowels": [["aɪ"], ["aʊ"], ["eɪ"], ["i"], ["oʊ"], ["u"], ["æ"], ["ɑ"], ["ɔ"], ["ɔɪ"], ["ɛ"], ["ɝ"], ["ɪ"], ["ʊ"], ["ʌ"]],
                 "consonants": [["b"], ["d"], ["d͡ʒ"], ["f"], ["h"], ["j"], ["k"], ["l"], ["m"], ["n"], ["p"], ["s"], ["t"], ["t͡ʃ"], ["v"], ["w"], ["z"], ["ð"], ["ŋ"], ["ɡ"], ["ɹ"], ["ʃ"], ["ʒ"], ["θ"]],
-                "silence_symbols": [["SIL0"], ["SIL1"], ["SIL2"]],
-                "special_symbols": [["!"], ["'"], [","], ["-"], ["."], ["?"], ["\""], ["("], [")"], [":"], [";"], ["["], ["]"]],
+                "silenceSymbols": [["SIL0"], ["SIL1"], ["SIL2"]],
+                "specialSymbols": [["!"], ["'"], [","], ["-"], ["."], ["?"], ["\""], ["("], [")"], [":"], [";"], ["["], ["]"]],
             };
             break;
 
@@ -220,8 +220,8 @@ function changeModelOptions(selectedModel) {
                 "voices": [["6446-MagK (sdp)", "6446-MagK (sdp)"]],
                 "vowels": [["a"], ["aɪ"], ["aʊ"], ["e"], ["eɪ"], ["i"], ["o"], ["oʊ"], ["u"], ["ə"], ["ɛ"], ["ɛɪ"], ["ɑ"], ["ɔ"], ["ɔɪ"], ["ɝ"], ["ʊ"], ["ʌ"], ["ɪ"], ["æ"]],
                 "consonants": [["b"], ["d"], ["f"], ["h"], ["j"], ["k"], ["l"], ["m"], ["n"], ["p"], ["r"], ["s"], ["t"], ["v"], ["w"], ["z"], ["ð"], ["ŋ"], ["ɡ"], ["ɹ"], ["ʃ"], ["ʒ"], ["ʤ"], ["ʧ"], ["θ"], ["d͡ʒ"], ["t͡ʃ"]],
-                "silence_symbols": [["SIL0"], ["SIL1"], ["SIL2"], ["SIL3"]],
-                "special_symbols": [["!"], [","], ["-"], ["."], [";"], ["?"], ["\""], ["'"], ["("], [")"], [":"], ["["], ["]"]],
+                "silenceSymbols": [["SIL0"], ["SIL1"], ["SIL2"], ["SIL3"]],
+                "specialSymbols": [["!"], [","], ["-"], ["."], [";"], ["?"], ["\""], ["'"], ["("], [")"], [":"], ["["], ["]"]],
             };
             break;
 
@@ -230,8 +230,8 @@ function changeModelOptions(selectedModel) {
                 "voices": [["6450 (sdp)", "6450 (sdp)"]],
                 "vowels": [["aɪ"], ["aʊ"], ["eɪ"], ["i"], ["oʊ"], ["u"], ["æ"], ["ɑ"], ["ɔ"], ["ɔɪ"], ["ɛ"], ["ɝ"], ["ɪ"], ["ʊ"], ["ʌ"]],
                 "consonants": [["b"], ["d"], ["f"], ["h"], ["j"], ["k"], ["l"], ["m"], ["n"], ["p"], ["s"], ["t"], ["v"], ["w"], ["z"], ["ð"], ["ŋ"], ["ɡ"], ["ɹ"], ["ʃ"], ["ʒ"], ["ʤ"], ["ʧ"], ["θ"], ["d͡ʒ"], ["t͡ʃ"]],
-                "silence_symbols": [["SIL0"], ["SIL1"], ["SIL2"], ["SIL3"]],
-                "special_symbols": [["!"], ["'"], [","], ["-"], ["."], [";"], ["?"], ["\""], ["("], [")"], [":"], ["["], ["]"]],
+                "silenceSymbols": [["SIL0"], ["SIL1"], ["SIL2"], ["SIL3"]],
+                "specialSymbols": [["!"], ["'"], [","], ["-"], ["."], [";"], ["?"], ["\""], ["("], [")"], [":"], ["["], ["]"]],
             };
             break;
             
@@ -240,13 +240,13 @@ function changeModelOptions(selectedModel) {
                 "voices": [["Linda Johnson", "Linda Johnson"],],
                 "vowels": [["aɪ"], ["aʊ"], ["eɪ"], ["i"], ["oʊ"], ["u"], ["æ"], ["ɑ"], ["ɔ"], ["ɔr"], ["ɔɪ"], ["ə"], ["ər"], ["ɛ"], ["ɛr"], ["ɪ"], ["ɪr"], ["ʊ"], ["ʊr"], ["ʌ"], ["ʌr"]],
                 "consonants": [["b"], ["d"], ["dʒ"], ["f"], ["h"], ["j"], ["k"], ["l"], ["m"], ["n"], ["p"], ["r"], ["s"], ["t"], ["tʃ"], ["v"], ["w"], ["z"], ["ð"], ["ŋ"], ["ɡ"], ["ʃ"], ["ʒ"], ["θ"]],
-                "silence_symbols": [["SIL0"], ["SIL1"], ["SIL2"], ["SIL3"]],
-                "special_symbols": [["!"], ["\""], ["'"], ["("], [")"], [","], ["-"], ["."], [":"], [";"], ["?"], ["["], ["]"], ["—"]],
+                "silenceSymbols": [["SIL0"], ["SIL1"], ["SIL2"], ["SIL3"]],
+                "specialSymbols": [["!"], ["\""], ["'"], ["("], [")"], [","], ["-"], ["."], [":"], [";"], ["?"], ["["], ["]"], ["—"]],
             };
     };
     
-    data["stress_symbols"] = [[""], ["'"], ["ˌ"]];
-    data["duration_symbols"] = [["˘"], [""], ["ˑ"], ["ː"]];
+    data["stressSymbols"] = [[""], ["'"], ["ˌ"]];
+    data["durationSymbols"] = [["˘"], [""], ["ˑ"], ["ː"]];
 
     if (voiceDropdown) {
         data.voices.forEach(function (voice) {
@@ -264,50 +264,58 @@ function changeModelOptions(selectedModel) {
         symbolSet.appendChild(headingVowels);
 
         data.vowels.forEach(function (vowel) {
-            var div = document.createElement("div");
-            div.className = "col";
-            div.style.padding = "0rem";
-        
-            var button = document.createElement("button");
-            button.type = "button";
-            button.className = "btn btn-light btn-ipa";
-            button.textContent = vowel;
-            button.addEventListener("click", function () {
-                insertSymbol(vowel);
+            data.stressSymbols.forEach(function (stress) {
+                data.durationSymbols.forEach(function (duration) {
+                    var div = document.createElement("div");
+                    div.className = "col";
+                    div.style.padding = "0rem";
+                
+                    var button = document.createElement("button");
+                    button.type = "button";
+                    button.className = "btn btn-light btn-ipa";
+                    button.textContent = stress + vowel + duration;
+                    button.addEventListener("click", function () {
+                        insertSymbol(stress + vowel + duration);
+                    });
+                
+                    div.appendChild(button);
+                    symbolSet.appendChild(div);
+                });
             });
-        
-            div.appendChild(button);
-            symbolSet.appendChild(div);
         });
 
         var headingConsonants = document.createElement("p");
         headingConsonants.className = "p";
+        headingConsonants.style.paddingTop = "1rem";
         headingConsonants.textContent = "Consonants:";
         symbolSet.appendChild(headingConsonants);
 
         data.consonants.forEach(function (consonant) {
-            var div = document.createElement("div");
-            div.className = "col";
-            div.style.padding = "0rem";
-        
-            var button = document.createElement("button");
-            button.type = "button";
-            button.className = "btn btn-light btn-ipa";
-            button.textContent = consonant;
-            button.addEventListener("click", function () {
-                insertSymbol(consonant);
+            data.durationSymbols.forEach(function (duration) {
+                var div = document.createElement("div");
+                div.className = "col";
+                div.style.padding = "0rem";
+            
+                var button = document.createElement("button");
+                button.type = "button";
+                button.className = "btn btn-light btn-ipa";
+                button.textContent = consonant + duration;
+                button.addEventListener("click", function () {
+                    insertSymbol(consonant + duration);
+                });
+            
+                div.appendChild(button);
+                symbolSet.appendChild(div);
             });
-        
-            div.appendChild(button);
-            symbolSet.appendChild(div);
         });
 
         var headingSilenceSymbols = document.createElement("p");
         headingSilenceSymbols.className = "p";
+        headingSilenceSymbols.style.paddingTop = "1rem";
         headingSilenceSymbols.textContent = "Silence symbols:";
         symbolSet.appendChild(headingSilenceSymbols);
 
-        data.silence_symbols.forEach(function (symbol) {
+        data.silenceSymbols.forEach(function (symbol) {
             var div = document.createElement("div");
             div.className = "col";
             div.style.padding = "0rem";
@@ -326,10 +334,11 @@ function changeModelOptions(selectedModel) {
 
         var headingSpecialSymbols = document.createElement("p");
         headingSpecialSymbols.className = "p";
+        headingSpecialSymbols.style.paddingTop = "1rem";
         headingSpecialSymbols.textContent = "Special symbols:";
         symbolSet.appendChild(headingSpecialSymbols);
 
-        data.special_symbols.forEach(function (symbol) {
+        data.specialSymbols.forEach(function (symbol) {
             var div = document.createElement("div");
             div.className = "col";
             div.style.padding = "0rem";
