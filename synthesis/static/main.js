@@ -6,9 +6,12 @@
 function insertSymbol(symbol) {
     var textFieldValue = document.getElementById("ipa-input-field");
     var cursorPosition = textFieldValue.selectionStart;
-    var toInsert = "|" + symbol;
-
+    
     var currentValue = textFieldValue.value;
+    var toInsert = "|" + symbol;
+    if (currentValue === "") {
+        toInsert = symbol;
+    }
     var updatedValue = currentValue.substring(0, cursorPosition) + toInsert + currentValue.substring(cursorPosition);
     textFieldValue.value = updatedValue;
 
