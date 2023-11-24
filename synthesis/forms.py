@@ -35,7 +35,7 @@ class InputForm(forms.Form):
             attrs={
                 "id": "text-input-field",
                 "class": "form-control mb-1",
-                "style": "height: 527px; font-family: Andale Mono, monospace; border-color: #212529; border-radius: 0px;",
+                "style": "height: 550px; font-family: Andale Mono, monospace; border-color: #212529; border-radius: 0px;",
             }
         ),
         label="Text:",
@@ -48,7 +48,7 @@ class InputForm(forms.Form):
             attrs={
                 "id": "ipa-input-field",
                 "class": "form-control mb-1",
-                "style": "height: 527px; font-family: Andale Mono, monospace; border-color: #212529; border-radius: 0px;",
+                "style": "height: 550px; font-family: Andale Mono, monospace; border-color: #212529; border-radius: 0px;",
             }
         ),
     )
