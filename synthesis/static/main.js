@@ -185,31 +185,31 @@ function loadExample(chosenExample) {
 
 
 /**
- * Changes voice options and the symbol set based on the selected model.
- * LJ Speech 1.1. is always the default option.
+ * Clears existing elements in the given element. 
+ * Needed for changeModelOptions().
+ * @param {*} element - The element to be emptied.
  */
-function changeModelOptions(selectedModel) {
-    var voiceDropdown = document.getElementById("voice-select-field");
-    var symbolSet = document.getElementById("ipa-symbol-set");
-
-    // Clears existing options in the voice dropdown and the IPA table
-    if (voiceDropdown) {
-        while (voiceDropdown.firstChild) {
-            voiceDropdown.removeChild(voiceDropdown.firstChild);
+function _emptyElement (element) {
+    if (element) {
+        while (element.firstChild) {
+            element.removeChild(element.firstChild);
         };
     };
+};
 
-    if (symbolSet) {
-        while (symbolSet.firstChild) {
-            symbolSet.removeChild(symbolSet.firstChild);
-        };
-    };
 
-    // Loads model information
-    var data;
+/**
+ * Returns object with data of a model of choice. 
+ * Needed for changeModelOptions().
+ *
+ * @param {string} selectedModel - The model for which data should be returned.
+ * @returns {object} - An object containing data for the specified model, including voices, vowels, consonants, etc.
+ */
+function _getModelsData (selectedModel) {
+    var modelData;
     switch(selectedModel) {
         case "6208-IPA-3500":
-            data = {
+            modelData = {
                 "voices": [["6208 (sdp)", "6208 (sdp)"]],
                 "vowels": [["aɪ"], ["aʊ"], ["eɪ"], ["i"], ["oʊ"], ["u"], ["æ"], ["ɑ"], ["ɔ"], ["ɔɪ"], ["ɛ"], ["ɝ"], ["ɪ"], ["ʊ"], ["ʌ"]],
                 "consonants": [["b"], ["d"], ["d͡ʒ"], ["f"], ["h"], ["j"], ["k"], ["l"], ["m"], ["n"], ["p"], ["s"], ["t"], ["t͡ʃ"], ["v"], ["w"], ["z"], ["ð"], ["ŋ"], ["ɡ"], ["ɹ"], ["ʃ"], ["ʒ"], ["θ"]],
@@ -219,7 +219,7 @@ function changeModelOptions(selectedModel) {
             break;
 
         case "MagK-IPA-6400":
-            data = {
+            modelData = {
                 "voices": [["6446-MagK (sdp)", "6446-MagK (sdp)"]],
                 "vowels": [["a"], ["aɪ"], ["aʊ"], ["e"], ["eɪ"], ["i"], ["o"], ["oʊ"], ["u"], ["ə"], ["ɛ"], ["ɛɪ"], ["ɑ"], ["ɔ"], ["ɔɪ"], ["ɝ"], ["ʊ"], ["ʌ"], ["ɪ"], ["æ"]],
                 "consonants": [["b"], ["d"], ["f"], ["h"], ["j"], ["k"], ["l"], ["m"], ["n"], ["p"], ["r"], ["s"], ["t"], ["v"], ["w"], ["z"], ["ð"], ["ŋ"], ["ɡ"], ["ɹ"], ["ʃ"], ["ʒ"], ["ʤ"], ["ʧ"], ["θ"], ["d͡ʒ"], ["t͡ʃ"]],
@@ -229,7 +229,7 @@ function changeModelOptions(selectedModel) {
             break;
 
         case "TZ-IPA-6000":
-            data = {
+            modelData = {
                 "voices": [["6450 (sdp)", "6450 (sdp)"]],
                 "vowels": [["aɪ"], ["aʊ"], ["eɪ"], ["i"], ["oʊ"], ["u"], ["æ"], ["ɑ"], ["ɔ"], ["ɔɪ"], ["ɛ"], ["ɝ"], ["ɪ"], ["ʊ"], ["ʌ"]],
                 "consonants": [["b"], ["d"], ["f"], ["h"], ["j"], ["k"], ["l"], ["m"], ["n"], ["p"], ["s"], ["t"], ["v"], ["w"], ["z"], ["ð"], ["ŋ"], ["ɡ"], ["ɹ"], ["ʃ"], ["ʒ"], ["ʤ"], ["ʧ"], ["θ"], ["d͡ʒ"], ["t͡ʃ"]],
@@ -239,7 +239,7 @@ function changeModelOptions(selectedModel) {
             break;
             
         default:
-            data = {
+            modelData = {
                 "voices": [["Linda Johnson", "Linda Johnson"],],
                 "vowels": [["aɪ"], ["aʊ"], ["eɪ"], ["i"], ["oʊ"], ["u"], ["æ"], ["ɑ"], ["ɔ"], ["ɔr"], ["ɔɪ"], ["ə"], ["ər"], ["ɛ"], ["ɛr"], ["ɪ"], ["ɪr"], ["ʊ"], ["ʊr"], ["ʌ"], ["ʌr"]],
                 "consonants": [["b"], ["d"], ["dʒ"], ["f"], ["h"], ["j"], ["k"], ["l"], ["m"], ["n"], ["p"], ["r"], ["s"], ["t"], ["tʃ"], ["v"], ["w"], ["z"], ["ð"], ["ŋ"], ["ɡ"], ["ʃ"], ["ʒ"], ["θ"]],
@@ -248,27 +248,73 @@ function changeModelOptions(selectedModel) {
             };
     };
     
-    data["stressSymbols"] = [[""], ["'"], ["ˌ"]];
-    data["durationSymbols"] = [["˘"], [""], ["ˑ"], ["ː"]];
+    modelData["stressSymbols"] = [[""], ["'"], ["ˌ"]];
+    modelData["durationSymbols"] = [["˘"], [""], ["ˑ"], ["ː"]];
 
+    return modelData;
+};
+
+
+/**
+ * Adds voice options from the model data to the voice dropdown menu.
+ * Needed for changeModelOptions().
+ *
+ * @param {HTMLElement} voiceDropdown - The voice dropdown element to add voice options to.
+ * @param {Array} voices - The array with available voice options.
+ *                        Each element should be a pair [displayText, optionValue].
+ * @returns {void} - This function does not return a value directly, but it modifies the DOM.
+ */
+function _addVoiceOptions (voiceDropdown, voices) {
     if (voiceDropdown) {
-        data.voices.forEach(function (voice) {
+        voices.forEach(function (voice) {
             var option = document.createElement("option");
             option.value = voice[1];
             option.text = voice[0];
             voiceDropdown.appendChild(option);
         });
     };
+}
+
+/**
+ * Creates a subheading element for an IPA table.
+ * Needed for changeModelOptions().
+ *
+ * @param {string} classValue - The CSS class for styling the subheading element.
+ * @param {string} paddingTopValue - The value for the top padding of the subheading element.
+ * @param {string} textContentValue - The text content to be displayed within the subheading element.
+ * @returns {HTMLElement} - The created subheading element.
+ */
+function _createSubheadingIPATable(classValue, paddingTopValue, textContentValue) {
+    var subheading = document.createElement(classValue);
+    subheading.className = classValue;
+    subheading.style.paddingTop = paddingTopValue;
+    subheading.textContent = textContentValue;
+    return subheading;
+};
+
+/**
+ * Changes voice options and the symbol set based on the selected model.
+ * LJ Speech 1.1. is always the default option.
+ */
+function changeModelOptions(selectedModel) {
+    var voiceDropdown = document.getElementById("voice-select-field");
+    var symbolSet = document.getElementById("ipa-symbol-set");
+
+    _emptyElement(voiceDropdown);
+    _emptyElement(symbolSet);
+
+    var modelData = _getModelsData(selectedModel);
+
+    _addVoiceOptions(voiceDropdown, modelData.voices);
 
     if (symbolSet) {
-        var headingVowels = document.createElement("p");
-        headingVowels.className = "p";
-        headingVowels.textContent = "Vowels:";
+
+        var headingVowels = _createSubheadingIPATable("p", "0rem", "Vowels:");
         symbolSet.appendChild(headingVowels);
 
-        data.vowels.forEach(function (vowel) {
-            data.stressSymbols.forEach(function (stress) {
-                data.durationSymbols.forEach(function (duration) {
+        modelData.vowels.forEach(function (vowel) {
+            modelData.stressSymbols.forEach(function (stress) {
+                modelData.durationSymbols.forEach(function (duration) {
                     var div = document.createElement("div");
                     div.className = "col";
                     div.style.padding = "0rem";
@@ -287,14 +333,11 @@ function changeModelOptions(selectedModel) {
             });
         });
 
-        var headingConsonants = document.createElement("p");
-        headingConsonants.className = "p";
-        headingConsonants.style.paddingTop = "1rem";
-        headingConsonants.textContent = "Consonants:";
+        var headingConsonants = _createSubheadingIPATable("p", "1rem", "Consonants:");
         symbolSet.appendChild(headingConsonants);
 
-        data.consonants.forEach(function (consonant) {
-            data.durationSymbols.forEach(function (duration) {
+        modelData.consonants.forEach(function (consonant) {
+            modelData.durationSymbols.forEach(function (duration) {
                 var div = document.createElement("div");
                 div.className = "col";
                 div.style.padding = "0rem";
@@ -312,13 +355,10 @@ function changeModelOptions(selectedModel) {
             });
         });
 
-        var headingSilenceSymbols = document.createElement("p");
-        headingSilenceSymbols.className = "p";
-        headingSilenceSymbols.style.paddingTop = "1rem";
-        headingSilenceSymbols.textContent = "Silence symbols:";
+        var headingSilenceSymbols = _createSubheadingIPATable("p", "1rem", "Silence symbols:");
         symbolSet.appendChild(headingSilenceSymbols);
 
-        data.silenceSymbols.forEach(function (symbol) {
+        modelData.silenceSymbols.forEach(function (symbol) {
             var div = document.createElement("div");
             div.className = "col";
             div.style.padding = "0rem";
@@ -335,13 +375,10 @@ function changeModelOptions(selectedModel) {
             symbolSet.appendChild(div);
         });
 
-        var headingSpecialSymbols = document.createElement("p");
-        headingSpecialSymbols.className = "p";
-        headingSpecialSymbols.style.paddingTop = "1rem";
-        headingSpecialSymbols.textContent = "Special symbols:";
+        var headingSpecialSymbols = _createSubheadingIPATable("p", "1rem", "Special symbols:");
         symbolSet.appendChild(headingSpecialSymbols);
 
-        data.specialSymbols.forEach(function (symbol) {
+        modelData.specialSymbols.forEach(function (symbol) {
             var div = document.createElement("div");
             div.className = "col";
             div.style.padding = "0rem";
@@ -358,8 +395,8 @@ function changeModelOptions(selectedModel) {
             symbolSet.appendChild(div);
         });
     
-    // Preselects options
-    voiceDropdown.value = data.voices[0][1];
+    // Preselects options to avoid empty dropdown
+    voiceDropdown.value = modelData.voices[0][1];
     };
 };
 
