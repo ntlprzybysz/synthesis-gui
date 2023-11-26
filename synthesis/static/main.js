@@ -150,42 +150,86 @@ function saveProject() {
 
 
 /**
+ * Parses the content of the file into a project information object.
+ * This function is intended for use within the loadInput function.
+ *
+ * @param {string} fileContent - The content of the file.
+ * @returns {object} - The project information object.
+ */
+function _parseFileContent(fileContent) {
+    const lines = fileContent.split("\n");
+    const projectInformation = {};
+
+    lines.forEach(function (line) {
+        const [key, value] = line.split(": ");
+        projectInformation[key] = value;
+    });
+
+    return projectInformation;
+};
+
+
+/**
+ * Updates a specific input field with a given value.
+*
+* @param {string} fieldId - The ID of the input field.
+* @param {string} fieldValue - The value to set in the input field.
+* @returns {void} - This function does not return a value.
+*/
+function updateField(fieldId, fieldValue) {
+    const fieldElement = document.getElementById(fieldId);
+    if (fieldElement) {
+        if (fieldId === "model-select-field") {
+            changeModelOptions(fieldValue);
+        };
+        fieldElement.value = fieldValue;
+    };
+};
+
+
+/**
+ * Updates input fields based on project information.
+ *
+ * @param {object} projectInformation - The project information object.
+ * @returns {void} - This function does not return a value.
+ */
+function updateInputFields(projectInformation) {
+    const fieldMapping = {
+        projectName: "project-name-field",
+        textInput: "text-input-field",
+        ipaInput: "ipa-input-field",
+        modelInput: "model-select-field",
+        voiceInput: "voice-select-field",
+        sentenceInput: "sentence-select-field"
+    };
+
+    for (var key in projectInformation) {
+        const fieldId = fieldMapping[key];
+        if (fieldId) {
+            const fieldValue = projectInformation[key];
+            updateField(fieldId, fieldValue);
+        };
+    };
+};
+
+
+/**
  * Loads project information from a text file and populates corresponding input fields.
  *
  * @param {File} file - The file containing project information.
+ * @returns {void} - This function does not return a value.
  */
 function loadInput(file) {
     const reader = new FileReader();
 
     reader.onload = function (event) {
         const fileContent = event.target.result;
-        const lines = fileContent.split("\n");
-
-        const projectInformation = {};
-        lines.forEach(function (line) {
-            const [key, value] = line.split(": ");
-            projectInformation[key] = value;
-        });
-
-        const fieldMapping = {
-            projectName: "project-name-field",
-            textInput: "text-input-field",
-            ipaInput: "ipa-input-field",
-            modelInput: "model-select-field",
-            voiceInput: "voice-select-field",
-            sentenceInput: "sentence-select-field"
-        };
-
-        for (var key in projectInformation) {
-            const fieldId = fieldMapping[key];
-            if (fieldId) {
-                document.getElementById(fieldId).value = projectInformation[key];
-            };
-        };
+        const projectInformation = _parseFileContent(fileContent);
+        updateInputFields(projectInformation);
     };
 
     reader.readAsText(file);
-}
+};
 
 
 /**
