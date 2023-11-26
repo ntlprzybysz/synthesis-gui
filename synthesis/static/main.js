@@ -2,8 +2,9 @@
  * Inserts a separator "|" and the given symbol into the text field at the current cursor position.
  *
  * @param {string} symbol - The symbol to be inserted.
+ * @returns {void} - This function does not return a value.
  */
-function insertSymbol(symbol) {
+function insertSymbol (symbol) {
     var textFieldValue = document.getElementById("ipa-input-field");
     var cursorPosition = textFieldValue.selectionStart;
     
@@ -12,6 +13,7 @@ function insertSymbol(symbol) {
     if (currentValue === "") {
         toInsert = symbol;
     }
+
     var updatedValue = currentValue.substring(0, cursorPosition) + toInsert + currentValue.substring(cursorPosition);
     textFieldValue.value = updatedValue;
 
@@ -22,32 +24,72 @@ function insertSymbol(symbol) {
 
 
 /**
- * Saves project information to a text file with a sanitized filename and initiates the download.
+ * Creates a sanitized filename for a text file based on the project name.
+ * This function is intended for use within the saveFile function.
  *
- * @param {Object} projectInformation - An object containing project-related information.
+ * @param {string} originalFilename - The original project name used to generate the filename.
+ * @returns {string} - The sanitized filename for the text file.
  */
-function saveFile(projectInformation) {
-    var fileName = "synthesis_" + projectInformation["projectName"];
+function _createFilename (originalFilename) {
+    var fileName = "synthesis_" + originalFilename;
     var pattern = /[^a-z]/gi;
     fileName = fileName.replace(pattern, "_");
     fileName += ".txt";
+    return fileName;
+};
 
+
+/**
+ * Generates a formatted string of project information for a text file.
+ * This function is intended for use within the saveFile function.
+ *
+ * @param {Object} projectInformation - An object containing project-related information.
+ * @returns {string} - The formatted string of project information for the file content.
+ */
+function _getFileContent (projectInformation) {
     var fileContent = "";
     for (var key in projectInformation) {
         fileContent += key + ": " + projectInformation[key] + "\n";
     };
+    return fileContent;
+};
 
+
+/**
+ * Initiates a download of a file with the specified content and name.
+ * This function is intended for use within the saveFile function.
+ *
+ * @param {string} fileContent - The content of the file to be downloaded.
+ * @param {string} fileName - The name to be given to the downloaded file.
+ * @returns {void} - This function does not return a value.
+ */
+function _startDownload (fileContent, fileName) {
     const link = document.createElement("a");
     const file = new Blob([fileContent], { type: "text/plain" });
     link.href = URL.createObjectURL(file);
     link.download = fileName;
     link.click();
     URL.revokeObjectURL(link.href);
-}
+};
+
+
+/**
+ * Saves project information to a text file.
+ *
+ * @param {Object} projectInformation - An object containing project-related information.
+ * @returns {void} - This function does not return a value.
+ */
+function saveFile(projectInformation) {
+    var fileName = _createFilename(projectInformation["projectName"]);
+    var fileContent = _getFileContent(projectInformation);
+    _startDownload(fileContent, fileName);
+};
 
 
 /**
  * Saves user input from the project name and text input fields to a text file.
+ *
+ * @returns {void} - This function does not return a value.
  */
 function saveTextInput() {
     var projectNameFieldValue = document.getElementById("project-name-field").value;
@@ -64,6 +106,8 @@ function saveTextInput() {
 
 /**
  * Saves user input from the project name and IPA input fields to a text file.
+ *
+ * @returns {void} - This function does not return a value.
  */
 function saveIpaInput() {
     var projectNameFieldValue = document.getElementById("project-name-field").value;
@@ -79,7 +123,10 @@ function saveIpaInput() {
 
 
 /**
- * Saves project information to a text file.
+ * Saves project information, including project name, text input, IPA input,
+ * selected model, voice, and sentence to a text file.
+ *
+ * @returns {void} - This function does not return a value.
  */
 function saveProject() {
     var projectNameFieldValue = document.getElementById("project-name-field").value;
@@ -99,7 +146,7 @@ function saveProject() {
     };
 
     saveFile(projectInformation);
-}
+};
 
 
 /**
