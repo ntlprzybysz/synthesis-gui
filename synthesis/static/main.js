@@ -283,6 +283,7 @@ function loadExample(chosenExample) {
                 "voiceInput": "Linda Johnson",
                 "sentenceInput": 1,
             };
+            break;
 
         default:
             projectInformation = {
@@ -409,6 +410,49 @@ function _createSubheadingIPATable(classValue, paddingTopValue, textContentValue
 
 
 /**
+ * Adds a button with the specified IPA symbol, stress, and duration to the symbol set.
+ * The button triggers the insertSymbol function when clicked.
+ * This function is intended for use within the changeModelOptions function.
+ *
+ * @param {string} stress - The stress component of the IPA symbol.
+ * @param {string} symbol - The main IPA symbol to be displayed on the button.
+ * @param {string} duration - The duration component of the IPA symbol.
+ * @returns {HTMLElement | null} - The created button element, or null if no symbol is provided.
+ */
+function _getSymbolButton (stress, symbol, duration) {
+    var div;
+    if (symbol) {    
+        div = document.createElement("div");
+        div.className = "col";
+        div.style.padding = "0rem";
+        
+        var button = document.createElement("button");
+        button.type = "button";
+        button.className = "btn btn-light btn-ipa";
+
+        if (duration && stress) {
+            button.textContent = stress + symbol + duration;
+            button.addEventListener("click", function () {
+                insertSymbol(stress + symbol + duration);
+            });
+        } else if (duration) {
+            button.textContent = symbol + duration;
+            button.addEventListener("click", function () {
+                insertSymbol(symbol + duration);
+            });
+        } else {
+            button.textContent = symbol;
+            button.addEventListener("click", function () {
+                insertSymbol(symbol);
+            });
+        };
+        div.appendChild(button);
+    };
+    return div;
+};
+
+
+/**
  * Changes voice options and the symbol set based on the selected model.
  * LJ Speech 1.1 is always the default option.
  *
@@ -427,27 +471,16 @@ function changeModelOptions(selectedModel) {
     _addVoiceOptions(voiceDropdown, modelData.voices);
 
     if (symbolSet) {
-
         var headingVowels = _createSubheadingIPATable("p", "0rem", "Vowels:");
         symbolSet.appendChild(headingVowels);
 
         modelData.vowels.forEach(function (vowel) {
             modelData.stressSymbols.forEach(function (stress) {
                 modelData.durationSymbols.forEach(function (duration) {
-                    var div = document.createElement("div");
-                    div.className = "col";
-                    div.style.padding = "0rem";
-                
-                    var button = document.createElement("button");
-                    button.type = "button";
-                    button.className = "btn btn-light btn-ipa";
-                    button.textContent = stress + vowel + duration;
-                    button.addEventListener("click", function () {
-                        insertSymbol(stress + vowel + duration);
-                    });
-                
-                    div.appendChild(button);
-                    symbolSet.appendChild(div);
+                    var symbolButton = _getSymbolButton(stress, vowel, duration);
+                    if (symbolButton) {
+                        symbolSet.appendChild(symbolButton);
+                    };
                 });
             });
         });
@@ -457,20 +490,10 @@ function changeModelOptions(selectedModel) {
 
         modelData.consonants.forEach(function (consonant) {
             modelData.durationSymbols.forEach(function (duration) {
-                var div = document.createElement("div");
-                div.className = "col";
-                div.style.padding = "0rem";
-            
-                var button = document.createElement("button");
-                button.type = "button";
-                button.className = "btn btn-light btn-ipa";
-                button.textContent = consonant + duration;
-                button.addEventListener("click", function () {
-                    insertSymbol(consonant + duration);
-                });
-            
-                div.appendChild(button);
-                symbolSet.appendChild(div);
+                var symbolButton = _getSymbolButton("", consonant, duration);
+                if (symbolButton) {
+                    symbolSet.appendChild(symbolButton);
+                };
             });
         });
 
@@ -478,40 +501,20 @@ function changeModelOptions(selectedModel) {
         symbolSet.appendChild(headingSilenceSymbols);
 
         modelData.silenceSymbols.forEach(function (symbol) {
-            var div = document.createElement("div");
-            div.className = "col";
-            div.style.padding = "0rem";
-        
-            var button = document.createElement("button");
-            button.type = "button";
-            button.className = "btn btn-light btn-ipa";
-            button.textContent = symbol;
-            button.addEventListener("click", function () {
-                insertSymbol(symbol);
-            });
-        
-            div.appendChild(button);
-            symbolSet.appendChild(div);
+            var symbolButton = _getSymbolButton("", symbol, "");
+            if (symbolButton) {
+                symbolSet.appendChild(symbolButton);
+            };
         });
 
         var headingSpecialSymbols = _createSubheadingIPATable("p", "1rem", "Special symbols:");
         symbolSet.appendChild(headingSpecialSymbols);
 
         modelData.specialSymbols.forEach(function (symbol) {
-            var div = document.createElement("div");
-            div.className = "col";
-            div.style.padding = "0rem";
-        
-            var button = document.createElement("button");
-            button.type = "button";
-            button.className = "btn btn-light btn-ipa";
-            button.textContent = symbol;
-            button.addEventListener("click", function () {
-                insertSymbol(symbol);
-            });
-        
-            div.appendChild(button);
-            symbolSet.appendChild(div);
+            var symbolButton = _getSymbolButton("", symbol, "");
+            if (symbolButton) {
+                symbolSet.appendChild(symbolButton);
+            };
         });
     
     // Preselects options to avoid empty dropdown
