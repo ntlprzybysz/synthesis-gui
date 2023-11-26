@@ -236,48 +236,71 @@ function loadInput(file) {
  * Populates input fields with the chosen example.
  *
  * @param {string} chosenExample - The selected example keyword.
+ * @returns {void} - This function does not return a value.
  */
 function loadExample(chosenExample) {
+    var projectInformation;
     switch(chosenExample) {
         case "quick":
-            document.getElementById("project-name-field").value = "Quick test";
-            document.getElementById("text-input-field").value = "printing";
-            document.getElementById("ipa-input-field").value = "p˘|r˘|ɪː|n˘|t|ɪː|ŋː";
+            projectInformation = {
+                "projectName": "Quick test",
+                "textInput": "printing",
+                "ipaInput": "p˘|r˘|ɪː|n˘|t|ɪː|ŋː",
+                "modelInput": "ljspeech11",
+                "voiceInput": "Linda Johnson",
+                "sentenceInput": 1,
+            };
             break;
             
         case "printing":
-            document.getElementById("project-name-field").value = "Example printing";
-            document.getElementById("text-input-field").value = "Printing, in the only sense with which we are at present concerned, differs from most if not from all the arts and crafts represented in the Exhibition in being comparatively modern.";
-            document.getElementById("ipa-input-field").value = "p˘|r˘|ɪː|n˘|t|ɪː|ŋː|,|SIL2|ɪː|n|SIL0|ð|əː|SIL1|ˈoʊ|n|l˘|i|SIL0|sː|ˈɛˑ|n|s|SIL0|w˘|ˈɪ˘|ðː|SIL0|w|ˈɪ|tʃ|SIL0|w|ˈi|SIL0|ˈɑ|r|SIL0|ˈæ|t|SIL0|p˘|r˘|ˈɛ|z|ə|n˘|t|SIL0|k˘|ə˘|n|s|ˈʌrː|n|dː|,|SIL3|d|ˈɪ|f|ərˑ|zː|SIL1|f˘|r˘|ˈʌ˘|mˑ|SIL0|m˘|ˈoʊˑ|s|t˘|SIL0|ˈɪ|f|SIL0|n|ˈɑ|t|SIL0|f˘|r˘|ˈʌ˘|m|SIL0|ˈɔ|lˑ|SIL0|ðˑ|əː|SIL0|ˈɑ|r|t|s˘|SIL0|ə|n|d|SIL0|k|r˘|ˈæ|f|t˘|s|SIL0|r|ˌɛ˘|p|r˘|ɪ˘|z|ˈɛ|n˘|t|ɪ|d|SIL0|ɪː|n|SIL0|ð˘|ə|SIL0|ˌɛˑ|k|s˘|ə|b|ˈɪˑ|ʃ|əˑ|nː|SIL2|ɪ|n|SIL0|b˘|ˈi˘|ɪː|ŋ˘|SIL0|k˘|ə˘|m|p|ˈɛr|ə|t|ɪ|v|l|i|SIL0|mˑ|ˈɑː|d|";
+            projectInformation = {
+                "projectName": "Example printing",
+                "textInput": "Printing, in the only sense with which we are at present concerned, differs from most if not from all the arts and crafts represented in the Exhibition in being comparatively modern.",
+                "ipaInput": "p˘|r˘|ɪː|n˘|t|ɪː|ŋː|,|SIL2|ɪː|n|SIL0|ð|əː|SIL1|ˈoʊ|n|l˘|i|SIL0|sː|ˈɛˑ|n|s|SIL0|w˘|ˈɪ˘|ðː|SIL0|w|ˈɪ|tʃ|SIL0|w|ˈi|SIL0|ˈɑ|r|SIL0|ˈæ|t|SIL0|p˘|r˘|ˈɛ|z|ə|n˘|t|SIL0|k˘|ə˘|n|s|ˈʌrː|n|dː|,|SIL3|d|ˈɪ|f|ərˑ|zː|SIL1|f˘|r˘|ˈʌ˘|mˑ|SIL0|m˘|ˈoʊˑ|s|t˘|SIL0|ˈɪ|f|SIL0|n|ˈɑ|t|SIL0|f˘|r˘|ˈʌ˘|m|SIL0|ˈɔ|lˑ|SIL0|ðˑ|əː|SIL0|ˈɑ|r|t|s˘|SIL0|ə|n|d|SIL0|k|r˘|ˈæ|f|t˘|s|SIL0|r|ˌɛ˘|p|r˘|ɪ˘|z|ˈɛ|n˘|t|ɪ|d|SIL0|ɪː|n|SIL0|ð˘|ə|SIL0|ˌɛˑ|k|s˘|ə|b|ˈɪˑ|ʃ|əˑ|nː|SIL2|ɪ|n|SIL0|b˘|ˈi˘|ɪː|ŋ˘|SIL0|k˘|ə˘|m|p|ˈɛr|ə|t|ɪ|v|l|i|SIL0|mˑ|ˈɑː|d|",
+                "modelInput": "ljspeech11",
+                "voiceInput": "Linda Johnson",
+                "sentenceInput": 1,
+            };
             break;
         
         case "mountain":
-            document.getElementById("project-name-field").value = "Example mountain";
-            document.getElementById("text-input-field").value = "As the overlying plate lifts up, it also forms mountain ranges.";
-            document.getElementById("ipa-input-field").value = "ˈæ|z|SIL0|ð|ʌ|SIL0|ˌoʊ|v|ɝ|l|ˈaɪ|ɪ|ŋ|SIL0|p|l|ˈeɪ|t|SIL0|l|ˈɪ|f|t|s|SIL0|ˈʌ|p|,|SIL1|ɪ|t|SIL0|ˈɔ|l|s|oʊ|SIL0|f|ˈɔ|r|m|z|SIL0|m|ˈaʊ|n|t|ʌ|n|SIL0|r|ˈeɪ|n|dʒ|ʌ|z|.|SIL2";
+            projectInformation = {
+                "projectName": "Example mountain",
+                "textInput": "As the overlying plate lifts up, it also forms mountain ranges.",
+                "ipaInput": "ˈæ|z|SIL0|ð|ʌ|SIL0|ˌoʊ|v|ɝ|l|ˈaɪ|ɪ|ŋ|SIL0|p|l|ˈeɪ|t|SIL0|l|ˈɪ|f|t|s|SIL0|ˈʌ|p|,|SIL1|ɪ|t|SIL0|ˈɔ|l|s|oʊ|SIL0|f|ˈɔ|r|m|z|SIL0|m|ˈaʊ|n|t|ʌ|n|SIL0|r|ˈeɪ|n|dʒ|ʌ|z|.|SIL2",
+                "modelInput": "ljspeech11",
+                "voiceInput": "Linda Johnson",
+                "sentenceInput": 1,
+            };
             break;
             
         case "wind":
-            document.getElementById("project-name-field").value = "Example north wind";
-            document.getElementById("text-input-field").value = "The North Wind and the Sun were disputing which was the stronger, when a traveler came along wrapped in a warm cloak.";
-            document.getElementById("ipa-input-field").value = "ð|ʌ|SIL0|n|ˈɔ|r|θ|SIL0|w|ˈɪ|n|d|SIL0|ˈæ|n|d|SIL0|ð|ʌ|SIL0|s|ˈʌ|n|SIL0|w|ɝ|SIL0|d|ɪ|s|p|j|ˈu|t|ɪ|ŋ|SIL0|h|w|ˈɪ|t͡ʃ|SIL0|w|ˈɑ|z|SIL0|ð|ʌ|SIL0|s|t|r|ˈɔ|ŋ|ɝ|,|SIL1|h|w|ˈɛ|n|SIL0|ʌ|SIL0|t|r|ˈæ|v|ʌ|l|ɝ|SIL0|k|ˈeɪ|m|SIL0|ʌ|l|ˈɔ|ŋ|SIL0|r|ˈæ|p|t|SIL0|ɪ|n|SIL0|ʌ|SIL0|w|ˈɔ|r|m|SIL0|k|l|ˈoʊ|k|.|SIL2";
-            break;
+            projectInformation = {
+                "projectName": "Example north wind",
+                "textInput": "The North Wind and the Sun were disputing which was the stronger, when a traveler came along wrapped in a warm cloak.",
+                "ipaInput": "ð|ʌ|SIL0|n|ˈɔ|r|θ|SIL0|w|ˈɪ|n|d|SIL0|ˈæ|n|d|SIL0|ð|ʌ|SIL0|s|ˈʌ|n|SIL0|w|ɝ|SIL0|d|ɪ|s|p|j|ˈu|t|ɪ|ŋ|SIL0|h|w|ˈɪ|t͡ʃ|SIL0|w|ˈɑ|z|SIL0|ð|ʌ|SIL0|s|t|r|ˈɔ|ŋ|ɝ|,|SIL1|h|w|ˈɛ|n|SIL0|ʌ|SIL0|t|r|ˈæ|v|ʌ|l|ɝ|SIL0|k|ˈeɪ|m|SIL0|ʌ|l|ˈɔ|ŋ|SIL0|r|ˈæ|p|t|SIL0|ɪ|n|SIL0|ʌ|SIL0|w|ˈɔ|r|m|SIL0|k|l|ˈoʊ|k|.|SIL2",
+                "modelInput": "ljspeech11",
+                "voiceInput": "Linda Johnson",
+                "sentenceInput": 1,
+            };
 
         default:
-            document.getElementById("project-name-field").value = "Example synthesis";
-            document.getElementById("text-input-field").value = "";
-            document.getElementById("ipa-input-field").value = "";
-        };
-
-        document.getElementById("model-select-field").value = "ljspeech11";
-        changeModelOptions("ljspeech11");
-        document.getElementById("sentence-select-field").value = 1;
+            projectInformation = {
+                "projectName": "Example synthesis",
+                "textInput": "",
+                "ipaInput": "",
+                "modelInput": "ljspeech11",
+                "voiceInput": "Linda Johnson",
+                "sentenceInput": 1,
+            };
+    };
+    updateInputFields(projectInformation);
 };
 
 
 /**
  * Clears existing elements in the given element. 
- * Needed for changeModelOptions().
+ * This function is intended for use within the changeModelOptions function.
  * @param {*} element - The element to be emptied.
  */
 function _emptyElement (element) {
@@ -291,7 +314,7 @@ function _emptyElement (element) {
 
 /**
  * Returns object with data of a model of choice. 
- * Needed for changeModelOptions().
+ * This function is intended for use within the changeModelOptions function.
  *
  * @param {string} selectedModel - The model for which data should be returned.
  * @returns {object} - An object containing data for the specified model, including voices, vowels, consonants, etc.
@@ -348,7 +371,7 @@ function _getModelsData (selectedModel) {
 
 /**
  * Adds voice options from the model data to the voice dropdown menu.
- * Needed for changeModelOptions().
+ * This function is intended for use within the changeModelOptions function.
  *
  * @param {HTMLElement} voiceDropdown - The voice dropdown element to add voice options to.
  * @param {Array} voices - The array with available voice options.
@@ -364,11 +387,12 @@ function _addVoiceOptions (voiceDropdown, voices) {
             voiceDropdown.appendChild(option);
         });
     };
-}
+};
+
 
 /**
- * Creates a subheading element for an IPA table.
- * Needed for changeModelOptions().
+ * Creates a subheading element for the IPA table.
+ * This function is intended for use within the changeModelOptions function.
  *
  * @param {string} classValue - The CSS class for styling the subheading element.
  * @param {string} paddingTopValue - The value for the top padding of the subheading element.
@@ -383,9 +407,13 @@ function _createSubheadingIPATable(classValue, paddingTopValue, textContentValue
     return subheading;
 };
 
+
 /**
  * Changes voice options and the symbol set based on the selected model.
- * LJ Speech 1.1. is always the default option.
+ * LJ Speech 1.1 is always the default option.
+ *
+ * @param {string} selectedModel - The selected model to determine voice options and symbol set.
+ * @returns {void} - This function does not return a value.
  */
 function changeModelOptions(selectedModel) {
     var voiceDropdown = document.getElementById("voice-select-field");
@@ -491,8 +519,12 @@ function changeModelOptions(selectedModel) {
     };
 };
 
+
 /**
  * Allows the user to select and load a project file from their local system.
+ * Triggers the loadInput function with the selected file.
+ *
+ * @returns {void} - This function does not return a value.
  */
 function loadProject() {
     const input = document.createElement("input");
@@ -505,11 +537,14 @@ function loadProject() {
     };
 
     input.click();
-}
+};
 
 
 /**
- * Displays the audio playback and download in the output part of the website.
+ * Displays a synthesize button, audio player, and download button for the generated audio.
+ *
+ * @param {string} audioUrl - The URL of the generated audio file.
+ * @returns {void} - This function does not return a value.
  */
 function showSuccess(audioUrl) {
     var progressDiv = document.getElementById("progress");
@@ -533,11 +568,15 @@ function showSuccess(audioUrl) {
         event.preventDefault();
         window.open(audioUrl, "_blank");
     });
-}
+};
 
 
 /**
  * Updates the progress in the output part of the website.
+ *
+ * @param {string} loadingImageUrl - The URL of the loading image to display.
+ * @param {number} progress - The progress percentage to display.
+ * @returns {void} - This function does not return a value.
  */
 function showProgress(loadingImageUrl, progress) {
     var progressDiv = document.getElementById("progress");
@@ -554,6 +593,9 @@ function showProgress(loadingImageUrl, progress) {
 
 /**
  * Displays an error message in the output part of the website.
+ *
+ * @param {string} helpUrl - The URL to the guidelines for assistance.
+ * @returns {void} - This function does not return a value.
  */
 function showFailed(helpUrl) {
     var progressDiv = document.getElementById("progress");
@@ -577,6 +619,7 @@ function showFailed(helpUrl) {
  *
  * @param {string} sessionKey - The session key for the request.
  * @param {object} urls - An object containing various URLs generated dynamically in the main html template.
+ * @returns {void} - This function does not return a value.
  */
 function updateProgress(sessionKey, urls) {
     var xhr = new XMLHttpRequest();
@@ -607,6 +650,7 @@ function updateProgress(sessionKey, urls) {
  *
  * @param {string} sessionKey - The session key for tracking the progress.
  * @param {object} urls - An object containing various URLs generated dynamically in the main html template.
+ * @returns {void} - This function does not return a value.
  */
 function updateAndSchedule(sessionKey, urls) {
     updateProgress(sessionKey, urls);
@@ -616,12 +660,17 @@ function updateAndSchedule(sessionKey, urls) {
         setTimeout(function () {
             updateAndSchedule(sessionKey, urls);
         }, 1000);
-    }
+    };
 }
 
 
 /**
- * Listeners for triggers.
+ * Event listeners for triggers.
+ * - Listens for the "DOMContentLoaded" event to trigger updates on page load.
+ * - Listens for changes in the example selection field to update fields accordingly.
+ * - Listens for changes in the model selection field to update speaker and symbol options.
+ * 
+ * @returns {void} - This function does not return a value.
  */
 document.addEventListener("DOMContentLoaded", function () {
     // Triggers an update of fields when an example is selected
