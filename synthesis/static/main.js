@@ -4,10 +4,10 @@
  * @param {string} symbol - The symbol to be inserted.
  * @returns {void} - This function does not return a value.
  */
-function insertSymbol (symbol) {
+function insertSymbol(symbol) {
     let textFieldValue = document.getElementById("ipa-input-field");
     let cursorPosition = textFieldValue.selectionStart;
-    
+
     let currentValue = textFieldValue.value;
     let toInsert = "|" + symbol;
     if (currentValue === "") {
@@ -30,7 +30,7 @@ function insertSymbol (symbol) {
  * @param {string} originalFilename - The original project name used to generate the filename.
  * @returns {string} - The sanitized filename for the text file.
  */
-function _createFilename (originalFilename) {
+function _createFilename(originalFilename) {
     let fileName = "synthesis_" + originalFilename;
     const pattern = /[^a-z]/gi;
     fileName = fileName.replace(pattern, "_");
@@ -46,7 +46,7 @@ function _createFilename (originalFilename) {
  * @param {Object} projectInformation - An object containing project-related information.
  * @returns {string} - The formatted string of project information for the file content.
  */
-function _getFileContent (projectInformation) {
+function _getFileContent(projectInformation) {
     let fileContent = "";
     for (let key in projectInformation) {
         fileContent += key + ": " + projectInformation[key] + "\n";
@@ -63,7 +63,7 @@ function _getFileContent (projectInformation) {
  * @param {string} fileName - The name to be given to the downloaded file.
  * @returns {void} - This function does not return a value.
  */
-function _startDownload (fileContent, fileName) {
+function _startDownload(fileContent, fileName) {
     const link = document.createElement("a");
     const file = new Blob([fileContent], { type: "text/plain" });
     link.href = URL.createObjectURL(file);
@@ -260,7 +260,7 @@ function loadProject() {
  */
 function loadExample(chosenExample) {
     let projectInformation;
-    switch(chosenExample) {
+    switch (chosenExample) {
         case "quick":
             projectInformation = {
                 "projectName": "Quick test",
@@ -271,7 +271,7 @@ function loadExample(chosenExample) {
                 "sentenceInput": 1,
             };
             break;
-            
+
         case "printing":
             projectInformation = {
                 "projectName": "Example printing",
@@ -282,7 +282,7 @@ function loadExample(chosenExample) {
                 "sentenceInput": 1,
             };
             break;
-        
+
         case "mountain":
             projectInformation = {
                 "projectName": "Example mountain",
@@ -293,7 +293,7 @@ function loadExample(chosenExample) {
                 "sentenceInput": 1,
             };
             break;
-            
+
         case "wind":
             projectInformation = {
                 "projectName": "Example north wind",
@@ -324,7 +324,7 @@ function loadExample(chosenExample) {
  * This function is intended for use within the changeModelOptions function.
  * @param {*} element - The element to be emptied.
  */
-function _emptyElement (element) {
+function _emptyElement(element) {
     if (element) {
         while (element.firstChild) {
             element.removeChild(element.firstChild);
@@ -340,9 +340,9 @@ function _emptyElement (element) {
  * @param {string} selectedModel - The model for which data should be returned.
  * @returns {object} - An object containing data for the specified model, including voices, vowels, consonants, etc.
  */
-function _getModelsData (selectedModel) {
+function _getModelsData(selectedModel) {
     let modelData;
-    switch(selectedModel) {
+    switch (selectedModel) {
         case "6208-IPA-3500":
             modelData = {
                 "voices": [["6208 (sdp)", "6208 (sdp)"]],
@@ -372,7 +372,7 @@ function _getModelsData (selectedModel) {
                 "specialSymbols": [["!"], ["'"], [","], ["-"], ["."], [";"], ["?"], ["\""], ["("], [")"], [":"], ["["], ["]"]],
             };
             break;
-            
+
         default:
             modelData = {
                 "voices": [["Linda Johnson", "Linda Johnson"],],
@@ -382,7 +382,7 @@ function _getModelsData (selectedModel) {
                 "specialSymbols": [["!"], ["\""], ["'"], ["("], [")"], [","], ["-"], ["."], [":"], [";"], ["?"], ["["], ["]"], ["—"]],
             };
     };
-    
+
     modelData["stressSymbols"] = [[""], ["'"], ["ˌ"]];
     modelData["durationSymbols"] = [["˘"], [""], ["ˑ"], ["ː"]];
 
@@ -399,7 +399,7 @@ function _getModelsData (selectedModel) {
  *                        Each element should be a pair [displayText, optionValue].
  * @returns {void} - This function does not return a value directly, but it modifies the DOM.
  */
-function _addVoiceOptions (voiceDropdown, voices) {
+function _addVoiceOptions(voiceDropdown, voices) {
     if (voiceDropdown) {
         voices.forEach(function (voice) {
             let option = document.createElement("option");
@@ -439,13 +439,13 @@ function _createSubheadingIPATable(classValue, paddingTopValue, textContentValue
  * @param {string} duration - The duration component of the IPA symbol.
  * @returns {HTMLElement | null} - The created button element, or null if no symbol is provided.
  */
-function _getSymbolButton (stress, symbol, duration) {
+function _getSymbolButton(stress, symbol, duration) {
     let div;
-    if (symbol) {    
+    if (symbol) {
         div = document.createElement("div");
         div.className = "col";
         div.style.padding = "0rem";
-        
+
         let button = document.createElement("button");
         button.type = "button";
         button.className = "btn btn-light btn-ipa";
@@ -480,7 +480,7 @@ function _getSymbolButton (stress, symbol, duration) {
  * @param {object} modelData - An object containing data for the specified model, including voices, vowels, consonants, etc.
  * @returns {void} - This function does not return a value.
  */
-function _addSectionVowels (symbolSet, modelData) {
+function _addSectionVowels(symbolSet, modelData) {
     const headingVowels = _createSubheadingIPATable("p", "0rem", "Vowels:");
     symbolSet.appendChild(headingVowels);
 
@@ -505,7 +505,7 @@ function _addSectionVowels (symbolSet, modelData) {
  * @param {object} modelData - An object containing data for the specified model, including voices, vowels, consonants, etc.
  * @returns {void} - This function does not return a value.
  */
-function _addSectionConsonants (symbolSet, modelData) {
+function _addSectionConsonants(symbolSet, modelData) {
     const headingConsonants = _createSubheadingIPATable("p", "1rem", "Consonants:");
     symbolSet.appendChild(headingConsonants);
 
@@ -528,7 +528,7 @@ function _addSectionConsonants (symbolSet, modelData) {
  * @param {object} modelData - An object containing data for the specified model, including voices, vowels, consonants, etc.
  * @returns {void} - This function does not return a value.
  */
-function _addSectionSilenceSymbols (symbolSet, modelData) {
+function _addSectionSilenceSymbols(symbolSet, modelData) {
     const headingSilenceSymbols = _createSubheadingIPATable("p", "1rem", "Silence symbols:");
     symbolSet.appendChild(headingSilenceSymbols);
 
@@ -549,7 +549,7 @@ function _addSectionSilenceSymbols (symbolSet, modelData) {
  * @param {object} modelData - An object containing data for the specified model, including voices, vowels, consonants, etc.
  * @returns {void} - This function does not return a value.
  */
-function _addSectionSpecialSymbols (symbolSet, modelData) {
+function _addSectionSpecialSymbols(symbolSet, modelData) {
     const headingSpecialSymbols = _createSubheadingIPATable("p", "1rem", "Special symbols:");
     symbolSet.appendChild(headingSpecialSymbols);
 
@@ -587,8 +587,8 @@ function changeModelOptions(selectedModel) {
         _addSectionSilenceSymbols(symbolSet, modelData);
         _addSectionSpecialSymbols(symbolSet, modelData);
 
-    // Preselects options to avoid empty dropdown
-    voiceDropdown.value = modelData.voices[0][1];
+        // Preselects options to avoid empty dropdown
+        voiceDropdown.value = modelData.voices[0][1];
     };
 };
 
@@ -618,7 +618,7 @@ function _showSuccess(audioUrl) {
     progressDiv.innerHTML = htmlContent;
 
     let downloadBtn = document.getElementById("download-button");
-    downloadBtn.addEventListener("click", function () {
+    downloadBtn.addEventListener("click", function (event) {
         event.preventDefault();
         window.open(audioUrl, "_blank");
     });
@@ -734,14 +734,14 @@ document.addEventListener("DOMContentLoaded", function () {
     const exampleSelectField = document.getElementById("example");
     if (exampleSelectField) {
         exampleSelectField.addEventListener("change", function () {
-        let selectedValue = exampleSelectField.value;
-        loadExample(selectedValue);
+            let selectedValue = exampleSelectField.value;
+            loadExample(selectedValue);
         });
     };
 
     // Triggers an update of speaker and symbol options when a model is changed
     const modelSelectField = document.getElementById("model-select-field");
-    if (modelSelectField) {       
+    if (modelSelectField) {
         changeModelOptions(modelSelectField.value);
         modelSelectField.addEventListener("change", function () {
             changeModelOptions(modelSelectField.value);
