@@ -10,7 +10,7 @@ function insertSymbol(symbol) {
 
     let currentValue = textFieldValue.value;
     let toInsert = "|" + symbol;
-    if (currentValue === "") {
+    if (currentValue === "" || currentValue.charAt(currentValue.length - 1) === "|") {
         toInsert = symbol;
     };
 
