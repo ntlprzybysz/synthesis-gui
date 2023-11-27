@@ -5,16 +5,16 @@
  * @returns {void} - This function does not return a value.
  */
 function insertSymbol (symbol) {
-    var textFieldValue = document.getElementById("ipa-input-field");
-    var cursorPosition = textFieldValue.selectionStart;
+    let textFieldValue = document.getElementById("ipa-input-field");
+    let cursorPosition = textFieldValue.selectionStart;
     
-    var currentValue = textFieldValue.value;
-    var toInsert = "|" + symbol;
+    let currentValue = textFieldValue.value;
+    let toInsert = "|" + symbol;
     if (currentValue === "") {
         toInsert = symbol;
     }
 
-    var updatedValue = currentValue.substring(0, cursorPosition) + toInsert + currentValue.substring(cursorPosition);
+    let updatedValue = currentValue.substring(0, cursorPosition) + toInsert + currentValue.substring(cursorPosition);
     textFieldValue.value = updatedValue;
 
     textFieldValue.selectionStart = cursorPosition + toInsert.length;
@@ -31,8 +31,8 @@ function insertSymbol (symbol) {
  * @returns {string} - The sanitized filename for the text file.
  */
 function _createFilename (originalFilename) {
-    var fileName = "synthesis_" + originalFilename;
-    var pattern = /[^a-z]/gi;
+    let fileName = "synthesis_" + originalFilename;
+    const pattern = /[^a-z]/gi;
     fileName = fileName.replace(pattern, "_");
     fileName += ".txt";
     return fileName;
@@ -47,8 +47,8 @@ function _createFilename (originalFilename) {
  * @returns {string} - The formatted string of project information for the file content.
  */
 function _getFileContent (projectInformation) {
-    var fileContent = "";
-    for (var key in projectInformation) {
+    let fileContent = "";
+    for (let key in projectInformation) {
         fileContent += key + ": " + projectInformation[key] + "\n";
     };
     return fileContent;
@@ -80,8 +80,8 @@ function _startDownload (fileContent, fileName) {
  * @returns {void} - This function does not return a value.
  */
 function saveFile(projectInformation) {
-    var fileName = _createFilename(projectInformation["projectName"]);
-    var fileContent = _getFileContent(projectInformation);
+    const fileName = _createFilename(projectInformation["projectName"]);
+    const fileContent = _getFileContent(projectInformation);
     _startDownload(fileContent, fileName);
 };
 
@@ -92,10 +92,10 @@ function saveFile(projectInformation) {
  * @returns {void} - This function does not return a value.
  */
 function saveTextInput() {
-    var projectNameFieldValue = document.getElementById("project-name-field").value;
-    var textFieldValue = document.getElementById("text-input-field").value;
+    const projectNameFieldValue = document.getElementById("project-name-field").value;
+    const textFieldValue = document.getElementById("text-input-field").value;
 
-    var projectInformation = {
+    const projectInformation = {
         "projectName": projectNameFieldValue,
         "textInput": textFieldValue,
     };
@@ -110,10 +110,10 @@ function saveTextInput() {
  * @returns {void} - This function does not return a value.
  */
 function saveIpaInput() {
-    var projectNameFieldValue = document.getElementById("project-name-field").value;
-    var ipaFieldValue = document.getElementById("ipa-input-field").value;
+    const projectNameFieldValue = document.getElementById("project-name-field").value;
+    const ipaFieldValue = document.getElementById("ipa-input-field").value;
 
-    var projectInformation = {
+    const projectInformation = {
         "projectName": projectNameFieldValue,
         "ipaInput": ipaFieldValue,
     };
@@ -129,14 +129,14 @@ function saveIpaInput() {
  * @returns {void} - This function does not return a value.
  */
 function saveProject() {
-    var projectNameFieldValue = document.getElementById("project-name-field").value;
-    var textFieldValue = document.getElementById("text-input-field").value;
-    var ipaFieldValue = document.getElementById("ipa-input-field").value;
-    var modelFieldValue = document.getElementById("model-select-field").value;
-    var voiceFieldValue = document.getElementById("voice-select-field").value;
-    var sentenceFieldValue = document.getElementById("sentence-select-field").value;
+    const projectNameFieldValue = document.getElementById("project-name-field").value;
+    const textFieldValue = document.getElementById("text-input-field").value;
+    const ipaFieldValue = document.getElementById("ipa-input-field").value;
+    const modelFieldValue = document.getElementById("model-select-field").value;
+    const voiceFieldValue = document.getElementById("voice-select-field").value;
+    const sentenceFieldValue = document.getElementById("sentence-select-field").value;
 
-    var projectInformation = {
+    const projectInformation = {
         "projectName": projectNameFieldValue,
         "textInput": textFieldValue,
         "ipaInput": ipaFieldValue,
@@ -157,11 +157,11 @@ function saveProject() {
  * @returns {object} - The project information object.
  */
 function _parseFileContent(fileContent) {
-    const lines = fileContent.split("\n");
-    const projectInformation = {};
+    let lines = fileContent.split("\n");
+    let projectInformation = {};
 
     lines.forEach(function (line) {
-        const [key, value] = line.split(": ");
+        let [key, value] = line.split(": ");
         projectInformation[key] = value;
     });
 
@@ -177,7 +177,7 @@ function _parseFileContent(fileContent) {
 * @returns {void} - This function does not return a value.
 */
 function updateField(fieldId, fieldValue) {
-    const fieldElement = document.getElementById(fieldId);
+    let fieldElement = document.getElementById(fieldId);
     if (fieldElement) {
         if (fieldId === "model-select-field") {
             changeModelOptions(fieldValue);
@@ -203,8 +203,8 @@ function updateInputFields(projectInformation) {
         sentenceInput: "sentence-select-field"
     };
 
-    for (var key in projectInformation) {
-        const fieldId = fieldMapping[key];
+    for (let key in projectInformation) {
+        let fieldId = fieldMapping[key];
         if (fieldId) {
             const fieldValue = projectInformation[key];
             updateField(fieldId, fieldValue);
@@ -224,11 +224,31 @@ function loadInput(file) {
 
     reader.onload = function (event) {
         const fileContent = event.target.result;
-        const projectInformation = _parseFileContent(fileContent);
+        let projectInformation = _parseFileContent(fileContent);
         updateInputFields(projectInformation);
     };
 
     reader.readAsText(file);
+};
+
+
+/**
+ * Allows the user to select and load a project file from their local system.
+ * Triggers the loadInput function with the selected file.
+ *
+ * @returns {void} - This function does not return a value.
+ */
+function loadProject() {
+    let input = document.createElement("input");
+    input.type = "file";
+    input.accept = ".txt";
+
+    input.onchange = function (event) {
+        const file = event.target.files[0];
+        loadInput(file);
+    };
+
+    input.click();
 };
 
 
@@ -239,7 +259,7 @@ function loadInput(file) {
  * @returns {void} - This function does not return a value.
  */
 function loadExample(chosenExample) {
-    var projectInformation;
+    let projectInformation;
     switch(chosenExample) {
         case "quick":
             projectInformation = {
@@ -321,7 +341,7 @@ function _emptyElement (element) {
  * @returns {object} - An object containing data for the specified model, including voices, vowels, consonants, etc.
  */
 function _getModelsData (selectedModel) {
-    var modelData;
+    let modelData;
     switch(selectedModel) {
         case "6208-IPA-3500":
             modelData = {
@@ -382,7 +402,7 @@ function _getModelsData (selectedModel) {
 function _addVoiceOptions (voiceDropdown, voices) {
     if (voiceDropdown) {
         voices.forEach(function (voice) {
-            var option = document.createElement("option");
+            let option = document.createElement("option");
             option.value = voice[1];
             option.text = voice[0];
             voiceDropdown.appendChild(option);
@@ -401,7 +421,7 @@ function _addVoiceOptions (voiceDropdown, voices) {
  * @returns {HTMLElement} - The created subheading element.
  */
 function _createSubheadingIPATable(classValue, paddingTopValue, textContentValue) {
-    var subheading = document.createElement(classValue);
+    let subheading = document.createElement(classValue);
     subheading.className = classValue;
     subheading.style.paddingTop = paddingTopValue;
     subheading.textContent = textContentValue;
@@ -420,13 +440,13 @@ function _createSubheadingIPATable(classValue, paddingTopValue, textContentValue
  * @returns {HTMLElement | null} - The created button element, or null if no symbol is provided.
  */
 function _getSymbolButton (stress, symbol, duration) {
-    var div;
+    let div;
     if (symbol) {    
         div = document.createElement("div");
         div.className = "col";
         div.style.padding = "0rem";
         
-        var button = document.createElement("button");
+        let button = document.createElement("button");
         button.type = "button";
         button.className = "btn btn-light btn-ipa";
 
@@ -453,6 +473,97 @@ function _getSymbolButton (stress, symbol, duration) {
 
 
 /**
+ * Adds a heading for vowels available in the model and corresponding symbol buttons to the symbol set table.
+ * This function is intended for use within the changeModelOptions function.
+ *
+ * @param {HTMLElement} symbolSet - The symbol set element to add a heading and symbols to.
+ * @param {object} modelData - An object containing data for the specified model, including voices, vowels, consonants, etc.
+ * @returns {void} - This function does not return a value.
+ */
+function _addSectionVowels (symbolSet, modelData) {
+    const headingVowels = _createSubheadingIPATable("p", "0rem", "Vowels:");
+    symbolSet.appendChild(headingVowels);
+
+    modelData.vowels.forEach(function (vowel) {
+        modelData.stressSymbols.forEach(function (stress) {
+            modelData.durationSymbols.forEach(function (duration) {
+                const symbolButton = _getSymbolButton(stress, vowel, duration);
+                if (symbolButton) {
+                    symbolSet.appendChild(symbolButton);
+                };
+            });
+        });
+    });
+};
+
+
+/**
+ * Adds a heading for consonants available in the model and corresponding symbol buttons to the symbol set table.
+ * This function is intended for use within the changeModelOptions function.
+ *
+ * @param {HTMLElement} symbolSet - The symbol set element to add a heading and symbols to.
+ * @param {object} modelData - An object containing data for the specified model, including voices, vowels, consonants, etc.
+ * @returns {void} - This function does not return a value.
+ */
+function _addSectionConsonants (symbolSet, modelData) {
+    const headingConsonants = _createSubheadingIPATable("p", "1rem", "Consonants:");
+    symbolSet.appendChild(headingConsonants);
+
+    modelData.consonants.forEach(function (consonant) {
+        modelData.durationSymbols.forEach(function (duration) {
+            const symbolButton = _getSymbolButton("", consonant, duration);
+            if (symbolButton) {
+                symbolSet.appendChild(symbolButton);
+            };
+        });
+    });
+};
+
+
+/**
+ * Adds a heading for silence symbols available in the model and corresponding symbol buttons to the symbol set table.
+ * This function is intended for use within the changeModelOptions function.
+ *
+ * @param {HTMLElement} symbolSet - The symbol set element to add a heading and symbols to.
+ * @param {object} modelData - An object containing data for the specified model, including voices, vowels, consonants, etc.
+ * @returns {void} - This function does not return a value.
+ */
+function _addSectionSilenceSymbols (symbolSet, modelData) {
+    const headingSilenceSymbols = _createSubheadingIPATable("p", "1rem", "Silence symbols:");
+    symbolSet.appendChild(headingSilenceSymbols);
+
+    modelData.silenceSymbols.forEach(function (symbol) {
+        const symbolButton = _getSymbolButton("", symbol, "");
+        if (symbolButton) {
+            symbolSet.appendChild(symbolButton);
+        };
+    });
+};
+
+
+/**
+ * Adds a heading for special symbols available in the model and corresponding symbol buttons to the symbol set table.
+ * This function is intended for use within the changeModelOptions function.
+ *
+ * @param {HTMLElement} symbolSet - The symbol set element to add a heading and symbols to.
+ * @param {object} modelData - An object containing data for the specified model, including voices, vowels, consonants, etc.
+ * @returns {void} - This function does not return a value.
+ */
+function _addSectionSpecialSymbols (symbolSet, modelData) {
+    const headingSpecialSymbols = _createSubheadingIPATable("p", "1rem", "Special symbols:");
+    symbolSet.appendChild(headingSpecialSymbols);
+
+    modelData.specialSymbols.forEach(function (symbol) {
+        const symbolButton = _getSymbolButton("", symbol, "");
+        if (symbolButton) {
+            symbolSet.appendChild(symbolButton);
+        };
+    });
+
+};
+
+
+/**
  * Changes voice options and the symbol set based on the selected model.
  * LJ Speech 1.1 is always the default option.
  *
@@ -460,63 +571,22 @@ function _getSymbolButton (stress, symbol, duration) {
  * @returns {void} - This function does not return a value.
  */
 function changeModelOptions(selectedModel) {
-    var voiceDropdown = document.getElementById("voice-select-field");
-    var symbolSet = document.getElementById("ipa-symbol-set");
+    let voiceDropdown = document.getElementById("voice-select-field");
+    let symbolSet = document.getElementById("ipa-symbol-set");
 
     _emptyElement(voiceDropdown);
     _emptyElement(symbolSet);
 
-    var modelData = _getModelsData(selectedModel);
+    const modelData = _getModelsData(selectedModel);
 
     _addVoiceOptions(voiceDropdown, modelData.voices);
 
     if (symbolSet) {
-        var headingVowels = _createSubheadingIPATable("p", "0rem", "Vowels:");
-        symbolSet.appendChild(headingVowels);
+        _addSectionVowels(symbolSet, modelData);
+        _addSectionConsonants(symbolSet, modelData);
+        _addSectionSilenceSymbols(symbolSet, modelData);
+        _addSectionSpecialSymbols(symbolSet, modelData);
 
-        modelData.vowels.forEach(function (vowel) {
-            modelData.stressSymbols.forEach(function (stress) {
-                modelData.durationSymbols.forEach(function (duration) {
-                    var symbolButton = _getSymbolButton(stress, vowel, duration);
-                    if (symbolButton) {
-                        symbolSet.appendChild(symbolButton);
-                    };
-                });
-            });
-        });
-
-        var headingConsonants = _createSubheadingIPATable("p", "1rem", "Consonants:");
-        symbolSet.appendChild(headingConsonants);
-
-        modelData.consonants.forEach(function (consonant) {
-            modelData.durationSymbols.forEach(function (duration) {
-                var symbolButton = _getSymbolButton("", consonant, duration);
-                if (symbolButton) {
-                    symbolSet.appendChild(symbolButton);
-                };
-            });
-        });
-
-        var headingSilenceSymbols = _createSubheadingIPATable("p", "1rem", "Silence symbols:");
-        symbolSet.appendChild(headingSilenceSymbols);
-
-        modelData.silenceSymbols.forEach(function (symbol) {
-            var symbolButton = _getSymbolButton("", symbol, "");
-            if (symbolButton) {
-                symbolSet.appendChild(symbolButton);
-            };
-        });
-
-        var headingSpecialSymbols = _createSubheadingIPATable("p", "1rem", "Special symbols:");
-        symbolSet.appendChild(headingSpecialSymbols);
-
-        modelData.specialSymbols.forEach(function (symbol) {
-            var symbolButton = _getSymbolButton("", symbol, "");
-            if (symbolButton) {
-                symbolSet.appendChild(symbolButton);
-            };
-        });
-    
     // Preselects options to avoid empty dropdown
     voiceDropdown.value = modelData.voices[0][1];
     };
@@ -524,35 +594,16 @@ function changeModelOptions(selectedModel) {
 
 
 /**
- * Allows the user to select and load a project file from their local system.
- * Triggers the loadInput function with the selected file.
- *
- * @returns {void} - This function does not return a value.
- */
-function loadProject() {
-    const input = document.createElement("input");
-    input.type = "file";
-    input.accept = ".txt";
-
-    input.onchange = function (event) {
-        const file = event.target.files[0];
-        loadInput(file);
-    };
-
-    input.click();
-};
-
-
-/**
  * Displays a synthesize button, audio player, and download button for the generated audio.
+ * This function is intended for use within the updateProgress function.
  *
  * @param {string} audioUrl - The URL of the generated audio file.
  * @returns {void} - This function does not return a value.
  */
-function showSuccess(audioUrl) {
-    var progressDiv = document.getElementById("progress");
+function _showSuccess(audioUrl) {
+    let progressDiv = document.getElementById("progress");
 
-    var htmlContent = `
+    let htmlContent = `
                         <button id="synthesize-button" class="btn btn-light btn-outline-dark mb-1" type="submit"
                         style="margin-right: 3rem;">Synthesize</button>
 
@@ -566,7 +617,7 @@ function showSuccess(audioUrl) {
 
     progressDiv.innerHTML = htmlContent;
 
-    var downloadBtn = document.getElementById("download-button");
+    let downloadBtn = document.getElementById("download-button");
     downloadBtn.addEventListener("click", function () {
         event.preventDefault();
         window.open(audioUrl, "_blank");
@@ -576,14 +627,15 @@ function showSuccess(audioUrl) {
 
 /**
  * Updates the progress in the output part of the website.
+ * This function is intended for use within the updateProgress function.
  *
  * @param {string} loadingImageUrl - The URL of the loading image to display.
  * @param {number} progress - The progress percentage to display.
  * @returns {void} - This function does not return a value.
  */
-function showProgress(loadingImageUrl, progress) {
-    var progressDiv = document.getElementById("progress");
-    var htmlContent = `
+function _showProgress(loadingImageUrl, progress) {
+    let progressDiv = document.getElementById("progress");
+    let htmlContent = `
                         <p style="margin-top: 1rem;">
                         <img src="${loadingImageUrl}" width="25" height="25"
                         alt=""> ${progress}% Synthesizing, please wait. 
@@ -596,13 +648,14 @@ function showProgress(loadingImageUrl, progress) {
 
 /**
  * Displays an error message in the output part of the website.
+ * This function is intended for use within the updateProgress function.
  *
  * @param {string} helpUrl - The URL to the guidelines for assistance.
  * @returns {void} - This function does not return a value.
  */
-function showFailed(helpUrl) {
-    var progressDiv = document.getElementById("progress");
-    var htmlContent = `
+function _showFailed(helpUrl) {
+    let progressDiv = document.getElementById("progress");
+    let htmlContent = `
                         <button id="synthesize-button" class="btn btn-light btn-outline-dark mb-1" type="submit"
                         style="margin-right: 3rem;">Synthesize</button>
                         <p style="margin-top: 1rem;">
@@ -619,25 +672,26 @@ function showFailed(helpUrl) {
 
 /**
  * Updates the progress status on the web page based on server response on the task status.
+ * This function is intended for use within the updateAndSchedule function.
  *
  * @param {string} sessionKey - The session key for the request.
  * @param {object} urls - An object containing various URLs generated dynamically in the main html template.
  * @returns {void} - This function does not return a value.
  */
-function updateProgress(sessionKey, urls) {
-    var xhr = new XMLHttpRequest();
+function _updateProgress(sessionKey, urls) {
+    let xhr = new XMLHttpRequest();
     const csrftoken = document.querySelector("[name=csrfmiddlewaretoken]").value;
     xhr.onreadystatechange = function () {
         if (xhr.readyState === 4 && xhr.status === 200) {
-            var response = JSON.parse(xhr.responseText);
-            var progress = response.progress;
+            let response = JSON.parse(xhr.responseText);
+            let progress = response.progress;
 
             if (progress === 100) {
-                showSuccess(urls.audioUrl);
+                _showSuccess(urls.audioUrl);
             } else if (progress >= 0 && progress <= 100) {
-                showProgress(urls.loadingImageUrl, progress);
+                _showProgress(urls.loadingImageUrl, progress);
             } else {
-                showFailed(urls.helpUrl);
+                _showFailed(urls.helpUrl);
             }
         }
     };
@@ -656,9 +710,9 @@ function updateProgress(sessionKey, urls) {
  * @returns {void} - This function does not return a value.
  */
 function updateAndSchedule(sessionKey, urls) {
-    updateProgress(sessionKey, urls);
+    _updateProgress(sessionKey, urls);
 
-    var currentStatus = document.getElementById("progress").innerHTML;
+    let currentStatus = document.getElementById("progress").innerHTML;
     if (currentStatus.includes("Synthesizing, please wait.")) {
         setTimeout(function () {
             updateAndSchedule(sessionKey, urls);
@@ -680,7 +734,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const exampleSelectField = document.getElementById("example");
     if (exampleSelectField) {
         exampleSelectField.addEventListener("change", function () {
-        var selectedValue = exampleSelectField.value;
+        let selectedValue = exampleSelectField.value;
         loadExample(selectedValue);
         });
     };
