@@ -12,7 +12,7 @@ function insertSymbol (symbol) {
     let toInsert = "|" + symbol;
     if (currentValue === "") {
         toInsert = symbol;
-    }
+    };
 
     let updatedValue = currentValue.substring(0, cursorPosition) + toInsert + currentValue.substring(cursorPosition);
     textFieldValue.value = updatedValue;
@@ -20,7 +20,7 @@ function insertSymbol (symbol) {
     textFieldValue.selectionStart = cursorPosition + toInsert.length;
     textFieldValue.selectionEnd = cursorPosition + toInsert.length;
     textFieldValue.focus();
-}
+};
 
 
 /**
