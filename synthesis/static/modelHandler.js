@@ -30,7 +30,7 @@ function _emptyElement(element) {
 function _getModelsData(selectedModel) {
     let modelData;
     switch (selectedModel) {
-        case "101000":
+        case "101000-with-markers":
             modelData = {
                 "voices": [["Linda Johnson", "Linda Johnson"],],
                 "vowels": [["aɪ"], ["aʊ"], ["eɪ"], ["i"], ["oʊ"], ["u"], ["æ"], ["ɑ"], ["ɔ"], ["ɔr"], ["ɔɪ"], ["ə"], ["ər"], ["ɛ"], ["ɛr"], ["ɪ"], ["ɪr"], ["ʊ"], ["ʊr"], ["ʌ"], ["ʌr"]],
@@ -38,7 +38,17 @@ function _getModelsData(selectedModel) {
                 "silenceSymbols": [["SIL0"], ["SIL1"], ["SIL2"], ["SIL3"]],
                 "specialSymbols": [["!"], ["\""], ["'"], ["("], [")"], [","], ["-"], ["."], [":"], [";"], ["?"], ["["], ["]"], ["—"]],
             };
-            break
+            break;
+
+        case "101000-without-markers":
+            modelData = {
+                "voices": [],
+                "vowels": [],
+                "consonants": [],
+                "silenceSymbols": [],
+                "specialSymbols": [],
+            };
+            break;
 
         case "6208-IPA-3500":
             modelData = {
@@ -70,7 +80,37 @@ function _getModelsData(selectedModel) {
             };
             break;
 
-        default: // 101000
+        case "103500-with-markers":
+            modelData = {
+                "voices": [],
+                "vowels": [],
+                "consonants": [],
+                "silenceSymbols": [],
+                "specialSymbols": [],
+            };
+            break;
+
+        case "103500-without-markers":
+            modelData = {
+                "voices": [],
+                "vowels": [],
+                "consonants": [],
+                "silenceSymbols": [],
+                "specialSymbols": [],
+            };
+            break;
+
+        case "1051-IPA-3000":
+            modelData = {
+                "voices": [],
+                "vowels": [],
+                "consonants": [],
+                "silenceSymbols": [],
+                "specialSymbols": [],
+            };
+            break;
+
+        default: // 101000-with-markers
             modelData = {
                 "voices": [["Linda Johnson", "Linda Johnson"],],
                 "vowels": [["aɪ"], ["aʊ"], ["eɪ"], ["i"], ["oʊ"], ["u"], ["æ"], ["ɑ"], ["ɔ"], ["ɔr"], ["ɔɪ"], ["ə"], ["ər"], ["ɛ"], ["ɛr"], ["ɪ"], ["ɪr"], ["ʊ"], ["ʊr"], ["ʌ"], ["ʌr"]],
