@@ -11,12 +11,39 @@ function insertSymbol(symbol) {
     let currentValue = textFieldValue.value;
     let textBeforeCursor = currentValue.substring(0, cursorPosition);
 
-    let toInsert = "|" + symbol;
+    let toInsert;
+    // Empty text field
     if (textBeforeCursor === "") {
         toInsert = symbol;
-    };
-    if (textBeforeCursor.charAt(textBeforeCursor.length - 1) === "|") {
-        toInsert = symbol + "|";
+    // Non-empty text field
+    } else {
+        let charBeforeCursor = textBeforeCursor.charAt(textBeforeCursor.length - 1);
+        let charAfterCursor = currentValue.charAt(cursorPosition);
+        // Input as first character
+        if (charBeforeCursor === "") {
+            if (charAfterCursor === "|") {
+                toInsert = symbol;            
+            } else {
+                toInsert = symbol + "|"; 
+            };
+        // Input end-of-text
+        } else if (charAfterCursor === "") {
+            if (charBeforeCursor === "|") {
+                toInsert = symbol;
+            } else {
+                toInsert = "|" + symbol; 
+            };
+        } else {
+            if ((charBeforeCursor === "|") && (charAfterCursor === "|")) {
+                toInsert = symbol;
+            } else if (charBeforeCursor === "|") {
+                toInsert = symbol + "|"; 
+            } else if (charAfterCursor === "|") {
+                toInsert = "|" + symbol; 
+            } else {
+                toInsert = "|" + symbol + "|"; 
+            };
+        };
     };
 
     let updatedValue = currentValue.substring(0, cursorPosition) + toInsert + currentValue.substring(cursorPosition);
@@ -26,7 +53,6 @@ function insertSymbol(symbol) {
     textFieldValue.selectionEnd = cursorPosition + toInsert.length;
     textFieldValue.focus();
 };
-
 
 
 /**
