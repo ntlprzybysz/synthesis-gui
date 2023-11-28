@@ -27,7 +27,7 @@ class Project:
         Sets voice according to the given model. If the given model and the voice don't match,
         raises ValueError.
         """
-        if self.model == "ljspeech11" and voice == "Linda Johnson":
+        if self.model == "101000" and voice == "Linda Johnson":
             self.voice = "Linda Johnson"
         elif self.model == "6208-IPA-3500" and voice == "6208 (sdp)":
             self.voice = "6208 (sdp)"
@@ -53,7 +53,7 @@ class Project:
         Sets checkpoints according to the given model. If the given model doesn't match the known
         models, raises ValueError.
         """
-        if self.model == "ljspeech11":
+        if self.model == "101000":
             self.tacotron_checkpoint_file_path: Path = self.tools_dir_path / "tacotron" / "101000.pt"
         elif self.model == "6208-IPA-3500":
             self.tacotron_checkpoint_file_path: Path = self.tools_dir_path / "tacotron" / "6208-IPA-3500.pt"
