@@ -62,11 +62,11 @@ function _getModelsData(selectedModel) {
 
         case "101000-without-markers":
             modelData = {
-                "voices": [],
-                "vowels": [],
-                "consonants": [],
-                "silenceSymbols": [],
-                "specialSymbols": [],
+                "voices": [["Linda Johnson", "Linda Johnson"],],
+                "vowels": [["aɪ"], ["aʊ"], ["eɪ"], ["i"], ["oʊ"], ["u"], ["æ"], ["ɑ"], ["ɔ"], ["ɔr"], ["ɔɪ"], ["ə"], ["ər"], ["ɛ"], ["ɛr"], ["ɪ"], ["ɪr"], ["ʊ"], ["ʊr"], ["ʌ"], ["ʌr"]],
+                "consonants": [["b"], ["d"], ["dʒ"], ["f"], ["h"], ["j"], ["k"], ["l"], ["m"], ["n"], ["p"], ["r"], ["s"], ["t"], ["tʃ"], ["v"], ["w"], ["z"], ["ð"], ["ŋ"], ["ɡ"], ["ɪ"], ["ʃ"], ["ʒ"], ["θ"]],
+                "silenceSymbols": [["SIL0"], ["SIL1"], ["SIL2"], ["SIL3"]],
+                "specialSymbols": [["!"], ["\""], ["'"], ["("], [")"], [","], ["-"], ["."], [":"], [";"], ["?"], ["["], ["]"], ["—"]],
             };
             break;
 
