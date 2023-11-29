@@ -27,14 +27,20 @@ class Project:
         Sets voice according to the given model. If the given model and the voice don't match,
         raises ValueError.
         """
-        if self.model == "101000" and voice == "Linda Johnson":
-            self.voice = "Linda Johnson"
+        if self.model == "101000-with-markers" or self.model == "101000-without-markers":
+            if voice == "Linda Johnson":
+                self.voice = voice
+        elif self.model == "1051-IPA-3000" and voice == "1051":
+            self.voice = voice
         elif self.model == "6208-IPA-3500" and voice == "6208 (sdp)":
-            self.voice = "6208 (sdp)"
+            self.voice = voice
+        elif self.model == "103500-with-markers" or "103500-without-markers":
+            if voice in ["A11", "A12", "A13", "A14", "A19", "A2", "A22", "A23", "A32", "A33", "A34", "A35", "A36", "A4", "A5", "A6", "A7", "A8", "A9", "B11", "B12", "B15", "B2", "B21", "B22", "B31", "B32", "B33", "B34", "B4", "B6", "B7", "B8", "C12", "C13", "C14", "C17", "C18", "C19", "C2", "C20", "C21", "C22", "C23", "C31", "C32", "C4", "C6", "C7", "C8", "D11", "D12", "D13", "D21", "D31", "D32", "D4", "D6", "D7", "D8"]:
+                self.voice = voice
         elif self.model == "MagK-IPA-6400" and voice == "6446-MagK (sdp)":
-            self.voice = "6446-MagK (sdp)"
+            self.voice = voice
         elif self.model == "TZ-IPA-6000":
-            self.voice = "6450 (sdp)"
+            self.voice = voice
         else:
             logger = logging.getLogger("django")
             logger.error(f"Got unallowed combination of model {self.model} and voice {voice}.")
@@ -53,10 +59,18 @@ class Project:
         Sets checkpoints according to the given model. If the given model doesn't match the known
         models, raises ValueError.
         """
-        if self.model == "101000":
-            self.tacotron_checkpoint_file_path: Path = self.tools_dir_path / "tacotron" / "101000.pt"
+        if self.model == "1051-IPA-3000":
+            self.tacotron_checkpoint_file_path: Path = self.tools_dir_path / "tacotron" / "1051-IPA-3000.pt"
         elif self.model == "6208-IPA-3500":
             self.tacotron_checkpoint_file_path: Path = self.tools_dir_path / "tacotron" / "6208-IPA-3500.pt"
+        elif self.model == "101000-with-markers":
+            self.tacotron_checkpoint_file_path: Path = self.tools_dir_path / "tacotron" / "101000-with-markers.pt"
+        elif self.model == "101000-without-markers":
+            self.tacotron_checkpoint_file_path: Path = self.tools_dir_path / "tacotron" / "101000-without-markers.pt"
+        elif self.model == "103500-with-markers":
+            self.tacotron_checkpoint_file_path: Path = self.tools_dir_path / "tacotron" / "103500-with-markers.pt"
+        elif self.model == "103500-without-markers":
+            self.tacotron_checkpoint_file_path: Path = self.tools_dir_path / "tacotron" / "103500-without-markers.pt"
         elif self.model == "MagK-IPA-6400":
             self.tacotron_checkpoint_file_path: Path = self.tools_dir_path / "tacotron" / "MagK-IPA-6400.pt"
         elif self.model == "TZ-IPA-6000":

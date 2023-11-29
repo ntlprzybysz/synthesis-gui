@@ -147,6 +147,7 @@
                                                 <legend>Insert IPA symbol:</legend>
                                                 <div class="border border-secondary px-4 py-4" id="ipa-chart" name="ipa-chart" style="max-height: 550px; overflow-y: auto;">
                                                         <div class="row" id="ipa-symbol-set">
+                                                                <!-- Given as fallback -->
                                                                 <div class="col" style="padding: 0rem;"><button type="button" class="btn btn-light btn-ipa">!</button>
                                                                 </div>
                                                                 <div class="col" style="padding: 0rem;"><button type="button" class="btn btn-light btn-ipa">"</button>
@@ -308,7 +309,11 @@
                                                         <select class="form-select" name="model-select-field" id="model-select-field"
                                                                 style="border-radius: 0px; border-color: #212529;">
                                                                 <option value="101000-with-markers" selected>101000 with duration markers</option>
+                                                                <option value="101000-without-markers">101000 without duration markers</option>
+                                                                <option value="1051-IPA-3000">1051-IPA-3000</option>
                                                                 <option value="6208-IPA-3500">6208 IPA 3500</option>
+                                                                <option value="103500-with-markers">103500 with duration markers</option>
+                                                                <option value="103500-without-markers">103500 without duration markers</option>
                                                                 <option value="MagK-IPA-6400">MagK IPA 6400</option>
                                                                 <option value="TZ-IPA-6000">TZ IPA 6000</option>
                                                         </select>
