@@ -18,7 +18,6 @@ class Project:
         self.name: str = cleaned_form_input["project_name"]
         self.ipa_input: str = cleaned_form_input["ipa_input"]
         self._set_voice(cleaned_form_input["voice"])
-        self.sentence: int = int(cleaned_form_input["sentence"])
         self._set_paths()
         self._set_checkpoints()
     
