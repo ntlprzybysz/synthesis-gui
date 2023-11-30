@@ -7,20 +7,6 @@
 
 
 /**
- * Clears existing elements in the given element. 
- * This function is intended for use within the changeModelOptions function.
- * @param {*} element - The element to be emptied.
- */
-function _emptyElement(element) {
-    if (element) {
-        while (element.firstChild) {
-            element.removeChild(element.firstChild);
-        };
-    };
-};
-
-
-/**
  * Returns object with data of a model of choice. 
  * This function is intended for use within the changeModelOptions function.
  *
@@ -282,8 +268,8 @@ function changeModelOptions(selectedModel) {
     let voiceDropdown = document.getElementById("voice-select-field");
     let symbolSet = document.getElementById("ipa-symbol-set");
 
-    _emptyElement(voiceDropdown);
-    _emptyElement(symbolSet);
+    emptyElement(voiceDropdown);
+    emptyElement(symbolSet);
 
     const modelData = _getModelsData(selectedModel);
 

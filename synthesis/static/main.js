@@ -56,6 +56,19 @@ function insertSymbol(symbol) {
 
 
 /**
+ * Clears existing elements in the given element.
+ * @param {*} element - The element to be emptied.
+ */
+function emptyElement(element) {
+    if (element) {
+        while (element.firstChild) {
+            element.removeChild(element.firstChild);
+        };
+    };
+};
+
+
+/**
  * Updates a specific input field with a given value.
 *
 * @param {string} fieldId - The ID of the input field.
@@ -96,6 +109,59 @@ function updateInputFields(projectInformation) {
             updateField(fieldId, fieldValue);
         };
     };
+};
+
+
+/**
+ * Gets the IPA input from its input field and splits it into an array of strings 
+ * based on the line break symbol. The sentences in the array are shortened to 25 characters.
+ * @returns {Array} - An array of strings, where each string is a sentence from the IPA field.
+ */
+function getSentences() {
+    const ipaFieldValue = document.getElementById("ipa-input-field").value;
+    if (/\S/.test(ipaFieldValue)) { // Check if the string contains non-whitespace characters
+        return [];
+    } else if (ipaFieldValue.includes("\n")) {
+        let sentences = ipaFieldValue.split("\n");
+        for (let i = 0; i < sentences.length; i++) {
+            if (/\S/.test(sentences[i])) {
+                sentences.splice(i, 1);
+            };
+            if (sentences[i].length > 25) {
+                sentences[i] = sentences[i].slice(0, 25);
+                sentences[i][23] = ".";
+                sentences[i][24] = ".";
+                sentences[i][25] = ".";
+            };
+        }
+        return sentences;
+    } else {
+        return [ipaFieldValue];
+    };
+};
+
+
+/**
+ * Updates the sentence dropdown with the sentences from the IPA field.
+ * @returns {void} - This function does not return a value.
+ */
+function updateSentenceDropdown() {
+    const sentences = getSentences();
+    let sentenceDropdown = document.getElementById("sentence-select-field");
+    emptyElement(sentenceDropdown);
+
+    for (let i = 0; i < sentences.length; i++) {
+        let sentenceElement = document.createElement("option");
+        sentenceElement.text = sentences[i];
+        sentenceElement.value = sentences[i];
+        sentenceDropdown.appendChild(sentenceElement);
+    };
+};
+
+
+function selectSentence() {
+    updateSentenceDropdown();
+    // slice input to selection
 };
 
 
