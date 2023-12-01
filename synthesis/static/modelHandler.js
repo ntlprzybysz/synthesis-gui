@@ -22,28 +22,75 @@ function _getModelsData(selectedModel) {
                 "vowels": [["a"], ["aɪ"], ["aɪə"], ["aʊ"], ["e"], ["eə"], ["eɪ"], ["eʊ"], ["i"], ["o"], ["oʊ"], ["u"], ["æ"], ["ɐ"], ["ɑ"], ["ɑʊ"], ["ɒ"], ["ɔ"], ["ɔɪ"], ["ɘ"], ["ə"], ["əʊ"], ["ɚ"], ["ɛ"], ["ɛ̃"], ["ɜ"], ["ɝ"], ["ɪ"], ["ʊ"], ["ʌ"]],
                 "consonants": [["b"], ["d"], ["d͡ʑ"], ["d͡ʒ"], ["f"], ["h"], ["j"], ["k"], ["l"], ["m"], ["n"], ["p"], ["r"], ["s"], ["t"], ["t̬"], ["t͡ʃ"], ["v"], ["w"], ["z"], ["ð"], ["ŋ"], ["ɔ̃"], ["ɕ"], ["ɡ"], ["ɲ"], ["ɹ"], ["ɾ"], ["ʃ"], ["ʒ"], ["ʦ"], ["ʨ"], ["θ"]],
                 "silenceSymbols": [["SIL0"], ["SIL1"], ["SIL2"], ["SIL3"]],
-                "specialSymbols": [["!"], ["\""], ["'"], [","], ["-"], ["."], [":"], [";"], ["?"]]                
+                "specialSymbols": [["!"], ["\""], ["'"], [","], ["-"], ["."], [":"], [";"], ["?"]],              
+                "stressSymbols": [[""], ["'"], ["ˌ"]],
+                "durationSymbols": [["˘"], [""], ["ˑ"], ["ː"]],
+                "toneSymbols": [],
             };
             break;
             
         case "6208-IPA-3500":
-                modelData = {
-                    "voices": [["6208 (sdp)", "6208 (sdp)"]],
-                    "vowels": [["aɪ"], ["aʊ"], ["eɪ"], ["i"], ["oʊ"], ["u"], ["æ"], ["ɑ"], ["ɔ"], ["ɔɪ"], ["ɛ"], ["ɝ"], ["ɪ"], ["ʊ"], ["ʌ"]],
-                    "consonants": [["b"], ["d"], ["d͡ʒ"], ["f"], ["h"], ["j"], ["k"], ["l"], ["m"], ["n"], ["p"], ["s"], ["t"], ["t͡ʃ"], ["v"], ["w"], ["z"], ["ð"], ["ŋ"], ["ɡ"], ["ɹ"], ["ʃ"], ["ʒ"], ["θ"]],
-                    "silenceSymbols": [["SIL0"], ["SIL1"], ["SIL2"]],
-                    "specialSymbols": [["!"], ["\""], ["'"], ["("], [")"], [","], ["-"], ["."], [":"], [";"], ["?"], ["["], ["]"]],
-                };
-                break;
+            modelData = {
+                "voices": [["6208 (sdp)", "6208 (sdp)"]],
+                "vowels": [["aɪ"], ["aʊ"], ["eɪ"], ["i"], ["oʊ"], ["u"], ["æ"], ["ɑ"], ["ɔ"], ["ɔɪ"], ["ɛ"], ["ɝ"], ["ɪ"], ["ʊ"], ["ʌ"]],
+                "consonants": [["b"], ["d"], ["d͡ʒ"], ["f"], ["h"], ["j"], ["k"], ["l"], ["m"], ["n"], ["p"], ["s"], ["t"], ["t͡ʃ"], ["v"], ["w"], ["z"], ["ð"], ["ŋ"], ["ɡ"], ["ɹ"], ["ʃ"], ["ʒ"], ["θ"]],
+                "silenceSymbols": [["SIL0"], ["SIL1"], ["SIL2"]],
+                "specialSymbols": [["!"], ["\""], ["'"], ["("], [")"], [","], ["-"], ["."], [":"], [";"], ["?"], ["["], ["]"]],
+                "stressSymbols": [[""], ["'"], ["ˌ"]],
+                "durationSymbols": [],
+                "toneSymbols": [],
+            };
+            break;
+
+        case "101000-with-markers":
+            modelData = {
+                "voices": [["Linda Johnson", "Linda Johnson"],],
+                "vowels": [["aɪ"], ["aʊ"], ["eɪ"], ["i"], ["oʊ"], ["u"], ["æ"], ["ɑ"], ["ɔ"], ["ɔr"], ["ɔɪ"], ["ə"], ["ər"], ["ɛ"], ["ɛr"], ["ɪ"], ["ɪr"], ["ʊ"], ["ʊr"], ["ʌ"], ["ʌr"]],
+                "consonants": [["b"], ["d"], ["dʒ"], ["f"], ["h"], ["j"], ["k"], ["l"], ["m"], ["n"], ["p"], ["r"], ["s"], ["t"], ["tʃ"], ["v"], ["w"], ["z"], ["ð"], ["ŋ"], ["ɡ"], ["ʃ"], ["ʒ"], ["θ"]],
+                "silenceSymbols": [["SIL0"], ["SIL1"], ["SIL2"], ["SIL3"]],
+                "specialSymbols": [["!"], ["\""], ["'"], ["("], [")"], [","], ["-"], ["."], [":"], [";"], ["?"], ["["], ["]"], ["—"]],
+                "stressSymbols": [[""], ["'"], ["ˌ"]],
+                "durationSymbols": [["˘"], [""], ["ˑ"], ["ː"]],
+                "toneSymbols": [],
+            };
+            break;
+
+        case "101000-without-markers":
+            modelData = {
+                "voices": [["Linda Johnson", "Linda Johnson"],],
+                "vowels": [["aɪ"], ["aʊ"], ["eɪ"], ["i"], ["oʊ"], ["u"], ["æ"], ["ɑ"], ["ɔ"], ["ɔr"], ["ɔɪ"], ["ə"], ["ər"], ["ɛ"], ["ɛr"], ["ɪ"], ["ɪr"], ["ʊ"], ["ʊr"], ["ʌ"], ["ʌr"]],
+                "consonants": [["b"], ["d"], ["dʒ"], ["f"], ["h"], ["j"], ["k"], ["l"], ["m"], ["n"], ["p"], ["r"], ["s"], ["t"], ["tʃ"], ["v"], ["w"], ["z"], ["ð"], ["ŋ"], ["ɡ"], ["ʃ"], ["ʒ"], ["θ"]],
+                "silenceSymbols": [["SIL0"], ["SIL1"], ["SIL2"], ["SIL3"]],
+                "specialSymbols": [["!"], ["\""], ["'"], ["("], [")"], [","], ["-"], ["."], [":"], [";"], ["?"], ["["], ["]"], ["—"]],
+                "stressSymbols": [[""], ["'"], ["ˌ"]],
+                "durationSymbols": [],
+                "toneSymbols": [],
+            };
+            break;
 
         case "103500-with-markers":
-        case "103500-without-markers":  // fallthrough
             modelData = {
                 "voices": [["A11", "A11"], ["A12", "A12"], ["A13", "A13"], ["A14", "A14"], ["A19", "A19"], ["A2", "A2"], ["A22", "A22"], ["A23", "A23"], ["A32", "A32"], ["A33", "A33"], ["A34", "A34"], ["A35", "A35"], ["A36", "A36"], ["A4", "A4"], ["A5", "A5"], ["A6", "A6"], ["A7", "A7"], ["A8", "A8"], ["A9", "A9"], ["B11", "B11"], ["B12", "B12"], ["B15", "B15"], ["B2", "B2"], ["B21", "B21"], ["B22", "B22"], ["B31", "B31"], ["B32", "B32"], ["B33", "B33"], ["B34", "B34"], ["B4", "B4"], ["B6", "B6"], ["B7", "B7"], ["B8", "B8"], ["C12", "C12"], ["C13", "C13"], ["C14", "C14"], ["C17", "C17"], ["C18", "C18"], ["C19", "C19"], ["C2", "C2"], ["C20", "C20"], ["C21", "C21"], ["C22", "C22"], ["C23", "C23"], ["C31", "C31"], ["C32", "C32"], ["C4", "C4"], ["C6", "C6"], ["C7", "C7"], ["C8", "C8"], ["D11", "D11"], ["D12", "D12"], ["D13", "D13"], ["D21", "D21"], ["D31", "D31"], ["D32", "D32"], ["D4", "D4"], ["D6", "D6"], ["D7", "D7"], ["D8", "D8"]],
                 "vowels": [["a"], ["ai̯"], ["au̯"], ["e"], ["ei̯"], ["i"], ["o"], ["ou̯"], ["u"], ["y"], ["ə"], ["ɚ"], ["ɛ"], ["ʊ"]],
                 "consonants": [["f"], ["j"], ["k"], ["kʰ"], ["l"], ["m"], ["n"], ["p"], ["pʰ"], ["s"], ["t"], ["ts"], ["tsʰ"], ["tɕ"], ["tɕʰ"], ["tʰ"], ["w"], ["x"], ["ŋ"], ["ɕ"], ["ɤ"], ["ɥ"], ["ɹ̩"], ["ɻ"], ["ɻ̩"], ["ʂ"], ["ʈʂ"], ["ʈʂʰ"]],
                 "silenceSymbols": [["SIL0"], ["SIL1"], ["SIL2"], ["SIL3"]],
                 "specialSymbols": [["。"], ["？"]],
+                "stressSymbols": [],
+                "durationSymbols": [["˘"], [""], ["ˑ"], ["ː"]],
+                "toneSymbols": [[""], ["˥"], ["˥˩"], ["˧˥"], ["˧˩˧"]],
+            };
+            break;
+
+        case "103500-without-markers":
+            modelData = {
+                "voices": [["A11", "A11"], ["A12", "A12"], ["A13", "A13"], ["A14", "A14"], ["A19", "A19"], ["A2", "A2"], ["A22", "A22"], ["A23", "A23"], ["A32", "A32"], ["A33", "A33"], ["A34", "A34"], ["A35", "A35"], ["A36", "A36"], ["A4", "A4"], ["A5", "A5"], ["A6", "A6"], ["A7", "A7"], ["A8", "A8"], ["A9", "A9"], ["B11", "B11"], ["B12", "B12"], ["B15", "B15"], ["B2", "B2"], ["B21", "B21"], ["B22", "B22"], ["B31", "B31"], ["B32", "B32"], ["B33", "B33"], ["B34", "B34"], ["B4", "B4"], ["B6", "B6"], ["B7", "B7"], ["B8", "B8"], ["C12", "C12"], ["C13", "C13"], ["C14", "C14"], ["C17", "C17"], ["C18", "C18"], ["C19", "C19"], ["C2", "C2"], ["C20", "C20"], ["C21", "C21"], ["C22", "C22"], ["C23", "C23"], ["C31", "C31"], ["C32", "C32"], ["C4", "C4"], ["C6", "C6"], ["C7", "C7"], ["C8", "C8"], ["D11", "D11"], ["D12", "D12"], ["D13", "D13"], ["D21", "D21"], ["D31", "D31"], ["D32", "D32"], ["D4", "D4"], ["D6", "D6"], ["D7", "D7"], ["D8", "D8"]],
+                "vowels": [["a"], ["ai̯"], ["au̯"], ["e"], ["ei̯"], ["i"], ["o"], ["ou̯"], ["u"], ["y"], ["ə"], ["ɚ"], ["ɛ"], ["ʊ"]],
+                "consonants": [["f"], ["j"], ["k"], ["kʰ"], ["l"], ["m"], ["n"], ["p"], ["pʰ"], ["s"], ["t"], ["ts"], ["tsʰ"], ["tɕ"], ["tɕʰ"], ["tʰ"], ["w"], ["x"], ["ŋ"], ["ɕ"], ["ɤ"], ["ɥ"], ["ɹ̩"], ["ɻ"], ["ɻ̩"], ["ʂ"], ["ʈʂ"], ["ʈʂʰ"]],
+                "silenceSymbols": [["SIL0"], ["SIL1"], ["SIL2"], ["SIL3"]],
+                "specialSymbols": [["。"], ["？"]],
+                "stressSymbols": [],
+                "durationSymbols": [],
+                "toneSymbols": [[""], ["˥"], ["˥˩"], ["˧˥"], ["˧˩˧"]],
             };
             break;
 
@@ -54,6 +101,9 @@ function _getModelsData(selectedModel) {
                 "consonants": [["b"], ["d"], ["d͡ʒ"], ["f"], ["h"], ["j"], ["k"], ["l"], ["m"], ["n"], ["p"], ["r"], ["s"], ["t"], ["t͡ʃ"], ["v"], ["w"], ["z"], ["ð"], ["ŋ"], ["ɡ"], ["ɹ"], ["ʃ"], ["ʒ"], ["ʤ"], ["ʧ"], ["θ"]],
                 "silenceSymbols": [["SIL0"], ["SIL1"], ["SIL2"], ["SIL3"]],
                 "specialSymbols": [["!"], ["\""], ["'"], ["("], [")"], [","], ["-"], ["."], [":"], [";"], ["?"], ["["], ["]"]],
+                "stressSymbols": [[""], ["'"], ["ˌ"]],
+                "durationSymbols": [],
+                "toneSymbols": [],
             };
             break;
 
@@ -64,21 +114,24 @@ function _getModelsData(selectedModel) {
                 "consonants": [["b"], ["d"], ["d͡ʒ"], ["f"], ["h"], ["j"], ["k"], ["l"], ["m"], ["n"], ["p"], ["s"], ["t"], ["t͡ʃ"], ["v"], ["w"], ["z"], ["ð"], ["ŋ"], ["ɡ"], ["ɹ"], ["ʃ"], ["ʒ"], ["ʤ"], ["ʧ"], ["θ"]],
                 "silenceSymbols": [["SIL0"], ["SIL1"], ["SIL2"], ["SIL3"]],
                 "specialSymbols": [["!"], ["\""], ["'"], ["("], [")"], [","], ["-"], ["."], [":"], [";"], ["?"], ["["], ["]"]],
+                "stressSymbols": [[""], ["'"], ["ˌ"]],
+                "durationSymbols": [],
+                "toneSymbols": [],         
             };
             break;
 
-        default: // 101000-with-markers, 101000-without-markers
+        default: // 101000-with-markers
             modelData = {
                 "voices": [["Linda Johnson", "Linda Johnson"],],
                 "vowels": [["aɪ"], ["aʊ"], ["eɪ"], ["i"], ["oʊ"], ["u"], ["æ"], ["ɑ"], ["ɔ"], ["ɔr"], ["ɔɪ"], ["ə"], ["ər"], ["ɛ"], ["ɛr"], ["ɪ"], ["ɪr"], ["ʊ"], ["ʊr"], ["ʌ"], ["ʌr"]],
                 "consonants": [["b"], ["d"], ["dʒ"], ["f"], ["h"], ["j"], ["k"], ["l"], ["m"], ["n"], ["p"], ["r"], ["s"], ["t"], ["tʃ"], ["v"], ["w"], ["z"], ["ð"], ["ŋ"], ["ɡ"], ["ʃ"], ["ʒ"], ["θ"]],
                 "silenceSymbols": [["SIL0"], ["SIL1"], ["SIL2"], ["SIL3"]],
                 "specialSymbols": [["!"], ["\""], ["'"], ["("], [")"], [","], ["-"], ["."], [":"], [";"], ["?"], ["["], ["]"], ["—"]],
+                "stressSymbols": [[""], ["'"], ["ˌ"]],
+                "durationSymbols": [["˘"], [""], ["ˑ"], ["ː"]],
+                "toneSymbols": [],
             };
     };
-
-    modelData["stressSymbols"] = [[""], ["'"], ["ˌ"]];
-    modelData["durationSymbols"] = [["˘"], [""], ["ˑ"], ["ː"]];
 
     return modelData;
 };
@@ -130,10 +183,11 @@ function _createSubheadingIPATable(classValue, paddingTopValue, textContentValue
  *
  * @param {string} stress - The stress component of the IPA symbol.
  * @param {string} symbol - The main IPA symbol to be displayed on the button.
+ * @param {string} tone - The tone component of the IPA symbol.
  * @param {string} duration - The duration component of the IPA symbol.
  * @returns {HTMLElement | null} - The created button element, or null if no symbol is provided.
  */
-function _getSymbolButton(stress, symbol, duration) {
+function _getSymbolButton(stress, symbol, tone, duration) {
     let div;
     if (symbol) {
         div = document.createElement("div");
@@ -144,22 +198,11 @@ function _getSymbolButton(stress, symbol, duration) {
         button.type = "button";
         button.className = "btn btn-light btn-ipa";
 
-        if (duration && stress) {
-            button.textContent = stress + symbol + duration;
-            button.addEventListener("click", function () {
-                insertSymbol(stress + symbol + duration);
-            });
-        } else if (duration) {
-            button.textContent = symbol + duration;
-            button.addEventListener("click", function () {
-                insertSymbol(symbol + duration);
-            });
-        } else {
-            button.textContent = symbol;
-            button.addEventListener("click", function () {
-                insertSymbol(symbol);
-            });
-        };
+        button.textContent = stress + symbol + tone + duration;
+        button.addEventListener("click", function () {
+            insertSymbol(stress + symbol + tone + duration);
+        });
+
         div.appendChild(button);
     };
     return div;
@@ -179,14 +222,48 @@ function _addSectionVowels(symbolSet, modelData) {
     symbolSet.appendChild(headingVowels);
 
     modelData.vowels.forEach(function (vowel) {
-        modelData.stressSymbols.forEach(function (stress) {
-            modelData.durationSymbols.forEach(function (duration) {
-                const symbolButton = _getSymbolButton(stress, vowel, duration);
-                if (symbolButton) {
-                    symbolSet.appendChild(symbolButton);
+        if (modelData.stressSymbols){
+            // stress + symbol (+ duration)
+            modelData.stressSymbols.forEach(function (stress) {
+                if (modelData.durationSymbols) {
+                    // stress + symbol + duration
+                    modelData.durationSymbols.forEach(function (duration) {
+                        const symbolButton = _getSymbolButton(stress, vowel, "", duration);
+                        if (symbolButton) {
+                            symbolSet.appendChild(symbolButton);
+                        };
+                    });
+                } else { 
+                    // stress + symbol
+                    const symbolButton = _getSymbolButton(stress, vowel, "", "");
+                    if (symbolButton) {
+                        symbolSet.appendChild(symbolButton);
+                    };
                 };
             });
-        });
+        }
+        else {
+            // symbol + tone (+ duration)
+            if (modelData.durationSymbols) {
+                // symbol + tone + duration
+                modelData.durationSymbols.forEach(function (duration) {
+                    modelData.toneSymbols.forEach(function (tone) {
+                        const symbolButton = _getSymbolButton("", vowel, tone, duration);
+                        if (symbolButton) {
+                            symbolSet.appendChild(symbolButton);
+                        };
+                    });
+                });
+            } else { 
+                // symbol + tone
+                modelData.toneSymbols.forEach(function (tone) {
+                    const symbolButton = _getSymbolButton("", vowel, tone, "");
+                    if (symbolButton) {
+                        symbolSet.appendChild(symbolButton);
+                    };
+                });
+            };
+        };
     });
 };
 
@@ -205,7 +282,7 @@ function _addSectionConsonants(symbolSet, modelData) {
 
     modelData.consonants.forEach(function (consonant) {
         modelData.durationSymbols.forEach(function (duration) {
-            const symbolButton = _getSymbolButton("", consonant, duration);
+            const symbolButton = _getSymbolButton("", consonant, "", duration);
             if (symbolButton) {
                 symbolSet.appendChild(symbolButton);
             };
@@ -227,7 +304,7 @@ function _addSectionSilenceSymbols(symbolSet, modelData) {
     symbolSet.appendChild(headingSilenceSymbols);
 
     modelData.silenceSymbols.forEach(function (symbol) {
-        const symbolButton = _getSymbolButton("", symbol, "");
+        const symbolButton = _getSymbolButton("", symbol, "", "");
         if (symbolButton) {
             symbolSet.appendChild(symbolButton);
         };
@@ -248,7 +325,7 @@ function _addSectionSpecialSymbols(symbolSet, modelData) {
     symbolSet.appendChild(headingSpecialSymbols);
 
     modelData.specialSymbols.forEach(function (symbol) {
-        const symbolButton = _getSymbolButton("", symbol, "");
+        const symbolButton = _getSymbolButton("", symbol, "", "");
         if (symbolButton) {
             symbolSet.appendChild(symbolButton);
         };
