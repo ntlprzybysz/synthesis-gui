@@ -178,7 +178,6 @@ function updateSentenceDropdown() {
  * @returns {void} - This function does not return a value.
  */
 function selectSentence() {
-    updateSentenceDropdown();
     const sentenceDropdown = document.getElementById("sentence-select-field");
     if (sentenceDropdown) {
         sentenceDropdown.addEventListener("change", function () {
@@ -218,4 +217,21 @@ document.addEventListener("DOMContentLoaded", function () {
             changeModelOptions(modelSelectField.value);
         });
     };
+
+/*
+    const sentenceSelectField = document.getElementById("sentence-select-field");
+    if (sentenceSelectField) {
+        // Triggers an update of sentence options when the dropdown is clicked on
+        sentenceSelectField.addEventListener("click", function () {
+            updateSentenceDropdown();
+            console.log("updated sentences")
+        });
+        
+        // Triggers an update of IPA input based on selected sentence
+        sentenceSelectField.addEventListener("change", function () {
+            selectSentence();
+            console.log("updated ipa input based on selected sentence")
+        });
+    };
+*/
 });
