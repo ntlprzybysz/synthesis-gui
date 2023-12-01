@@ -222,10 +222,10 @@ function _addSectionVowels(symbolSet, modelData) {
     symbolSet.appendChild(headingVowels);
 
     modelData.vowels.forEach(function (vowel) {
-        if (modelData.stressSymbols){
+        if (modelData.stressSymbols.length > 0){
             // stress + symbol (+ duration)
             modelData.stressSymbols.forEach(function (stress) {
-                if (modelData.durationSymbols) {
+                if (modelData.durationSymbols.length > 0) {
                     // stress + symbol + duration
                     modelData.durationSymbols.forEach(function (duration) {
                         const symbolButton = _getSymbolButton(stress, vowel, "", duration);
@@ -244,7 +244,7 @@ function _addSectionVowels(symbolSet, modelData) {
         }
         else {
             // symbol + tone (+ duration)
-            if (modelData.durationSymbols) {
+            if (modelData.durationSymbols.length > 0) {
                 // symbol + tone + duration
                 modelData.durationSymbols.forEach(function (duration) {
                     modelData.toneSymbols.forEach(function (tone) {
@@ -281,12 +281,19 @@ function _addSectionConsonants(symbolSet, modelData) {
     symbolSet.appendChild(headingConsonants);
 
     modelData.consonants.forEach(function (consonant) {
-        modelData.durationSymbols.forEach(function (duration) {
-            const symbolButton = _getSymbolButton("", consonant, "", duration);
+        if (modelData.durationSymbols.length > 0) {
+            modelData.durationSymbols.forEach(function (duration) {
+                const symbolButton = _getSymbolButton("", consonant, "", duration);
+                if (symbolButton) {
+                    symbolSet.appendChild(symbolButton);
+                };
+            });
+        } else {
+            const symbolButton = _getSymbolButton("", consonant, "", "");
             if (symbolButton) {
                 symbolSet.appendChild(symbolButton);
             };
-        });
+        };
     });
 };
 
