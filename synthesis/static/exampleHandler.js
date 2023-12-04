@@ -138,7 +138,7 @@ function loadExample(chosenExample) {
 
         case "wind-TZ-IPA-6000":
                 projectInformation = {
-                    "projectName": "Example wind with TZ-IPA-6000",
+                    "projectName": "Example wind with TZ IPA 6000",
                     "textInput": "The North Wind and the Sun were disputing which was the stronger, when a traveler came along wrapped in a warm cloak.",
                     "ipaInput": "ð|ʌ|SIL0|n|ˈɔ|ɹ|θ|SIL0|w|ˈɪ|n|d|SIL0|ˈæ|n|d|SIL0|ð|ʌ|SIL0|s|ˈʌ|n|SIL0|w|ɝ|SIL0|d|ɪ|s|p|j|ˈu|t|ɪ|ŋ|SIL0|h|w|ˈɪ|t͡ʃ|SIL0|w|ˈɑ|z|SIL0|ð|ʌ|SIL0|s|t|ɹ|ˈɔ|ŋ|ɝ|,|SIL1|h|w|ˈɛ|n|SIL0|ʌ|SIL0|t|ɹ|ˈæ|v|ʌ|l|ɝ|SIL0|k|ˈeɪ|m|SIL0|ʌ|l|ˈɔ|ŋ|SIL0|ɹ|ˈæ|p|t|SIL0|ɪ|n|SIL0|ʌ|SIL0|w|ˈɔ|ɹ|m|SIL0|k|l|ˈoʊ|k|.|SIL2",
                     "modelInput": "TZ-IPA-6000",
