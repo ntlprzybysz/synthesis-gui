@@ -40,7 +40,7 @@ function loadExample(chosenExample) {
         case "tsunami-6208-IPA-3500":
             projectInformation = {
                 "projectName": "Example tsunami with 6208 IPA 3500",
-                "textInput": "A tsunami is a series of ocean waves that sends surges of water, sometimes reaching heights of over 100 feet (30.5 meters), onto land.",
+                "textInput": "A tsunami is a series of ocean waves that sends surges of water, sometimes reaching heights of over 30 meters, onto land.",
                 "ipaInput": "ʌ|SIL0|t|s|u|n|ˈɑ|m|i|SIL0|ɪ|z|SIL0|ʌ|SIL0|s|ˈɪ|ɹ|i|z|SIL0|ʌ|v|SIL0|ˈoʊ|ʃ|ʌ|n|SIL0|w|ˈeɪ|v|z|SIL1|ð|ˈæ|t|SIL0|s|ˈɛ|n|d|z|SIL0|s|ˈɝ|d͡ʒ|ʌ|z|SIL0|ʌ|v|SIL0|w|ˈɔ|t|ɝ|,|SIL1|s|ʌ|m|t|ˈaɪ|m|z|SIL0|ɹ|ˈi|t͡ʃ|ɪ|ŋ|SIL0|h|ˈaɪ|t|s|SIL0|ʌ|v|SIL0|ˈoʊ|v|ɝ|SIL0|θ|ˈɝ|d|i|SIL0|m|ˈi|t|ɝ|z|,|SIL1|ˈɑ|n|t|u|SIL0|l|ˈæ|n|d|.|SIL2",
                 "modelInput": "6208-IPA-3500",
                 "voiceInput": "6208 (sdp)",

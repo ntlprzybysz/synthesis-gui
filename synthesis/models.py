@@ -38,7 +38,7 @@ class Project:
                 self.voice = voice
         elif self.model == "MagK-IPA-6400" and voice == "6446-MagK (sdp)":
             self.voice = voice
-        elif self.model == "TZ-IPA-6000":
+        elif self.model == "TZ-IPA-6000" and voice == "6450 (sdp)":
             self.voice = voice
         else:
             logger = logging.getLogger("django")
