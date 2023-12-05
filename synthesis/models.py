@@ -33,7 +33,7 @@ class Project:
             self.voice = voice
         elif self.model == "6208-IPA-3500" and voice == "6208 (sdp)":
             self.voice = voice
-        elif self.model == "103500-with-markers" or "103500-without-markers":
+        elif self.model == "103500-with-markers" or self.model == "103500-without-markers":
             if voice in ["A11", "A12", "A13", "A14", "A19", "A2", "A22", "A23", "A32", "A33", "A34", "A35", "A36", "A4", "A5", "A6", "A7", "A8", "A9", "B11", "B12", "B15", "B2", "B21", "B22", "B31", "B32", "B33", "B34", "B4", "B6", "B7", "B8", "C12", "C13", "C14", "C17", "C18", "C19", "C2", "C20", "C21", "C22", "C23", "C31", "C32", "C4", "C6", "C7", "C8", "D11", "D12", "D13", "D21", "D31", "D32", "D4", "D6", "D7", "D8"]:
                 self.voice = voice
         elif self.model == "MagK-IPA-6400" and voice == "6446-MagK (sdp)":
