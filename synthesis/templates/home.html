@@ -120,119 +120,95 @@
                                 </div>
                         </div>
 
-                        <div class="p-3 border border-dark">
-                                <div class="row pt-5 px-3">
-                                        <div class="col">
-                                                <h2>Input</h2>
-                                        </div>
+                        <div class="row align-items-start justify-content-evenly mt-3 pb-3 px-5 input-fields">
+
+                                <div class="col-lg-4 col-md-6 col-12 mb-3">
+                                        {{ form.ipa_input.errors }}
+                                        <label for="ipa-input-field" class="form-label">IPA:</label>
+                                        {{ form.ipa_input }}
+                                        </button>
                                 </div>
 
-                                <div class="row align-items-start justify-content-evenly mt-3 pb-3 px-5 input-fields">
-
-                                        <div class="col-lg-4 col-md-6 col-12 mb-3">
-                                                {{ form.ipa_input.errors }}
-                                                <label for="ipa-input-field" class="form-label">IPA:</label>
-                                                {{ form.ipa_input }}
-                                                </button>
-                                        </div>
-
-                                        <div class="col-lg-4 col-md-6 col-12 mb-3">
-                                                <legend>Insert IPA symbol:</legend>
-                                                <div class="border border-secondary px-4 py-4" id="ipa-chart" name="ipa-chart" style="max-height: 550px; overflow-y: auto;">
-                                                        <div class="row" id="ipa-symbol-set"></div>
-                                                </div>
+                                <div class="col-lg-4 col-md-6 col-12 mb-3">
+                                        <legend>Insert IPA symbol:</legend>
+                                        <div class="border border-secondary px-4 py-4" id="ipa-chart" name="ipa-chart" style="max-height: 550px; overflow-y: auto;">
+                                                <div class="row" id="ipa-symbol-set"></div>
                                         </div>
                                 </div>
                         </div>
 
-                        <div class="mt-2 p-3 border border-dark">
-                                <div class="row pt-5 px-3">
-                                        <div class="col">
-                                                <h2>Settings</h2>
-                                        </div>
-                                </div>
+                        <div class="row justify-content-start align-items-end mt-3 pb-3 px-5">
+                                <div class="col-12 mt-3">
+                                        <label for="model-select-field" class="form-label">Model:
+                                                <select class="form-select" name="model-select-field" id="model-select-field"
+                                                        style="border-radius: 0px; border-color: #212529;">
+                                                        <option value="101000-with-markers" selected>North American English - LJS (w/ duration markers)</option>
+                                                        <option value="101000-without-markers">North American English - LJS (w/o duration markers)</option>
+                                                        <option value="1051-IPA-3000">Chinese English</option>
+                                                        <option value="6208-IPA-3500">Italian English</option>
+                                                        <option value="103500-with-markers">Chinese (w/ duration markers)</option>
+                                                        <option value="103500-without-markers">Chinese (w/o duration markers)</option>
+                                                        <option value="MagK-IPA-6400">Czech English</option>
+                                                        <option value="TZ-IPA-6000">Czech English</option>
+                                                </select>
+                                        </label>
 
-                                <div class="row justify-content-start align-items-end mt-3 pb-3 px-5">
-                                        <div class="col-12 mt-3">
-                                                <label for="model-select-field" class="form-label">Model:
-                                                        <select class="form-select" name="model-select-field" id="model-select-field"
-                                                                style="border-radius: 0px; border-color: #212529;">
-                                                                <option value="101000-with-markers" selected>North American English - LJS (w/ duration markers)</option>
-                                                                <option value="101000-without-markers">North American English - LJS (w/o duration markers)</option>
-                                                                <option value="1051-IPA-3000">Chinese English</option>
-                                                                <option value="6208-IPA-3500">Italian English</option>
-                                                                <option value="103500-with-markers">Chinese (w/ duration markers)</option>
-                                                                <option value="103500-without-markers">Chinese (w/o duration markers)</option>
-                                                                <option value="MagK-IPA-6400">Czech English</option>
-                                                                <option value="TZ-IPA-6000">Czech English</option>
-                                                        </select>
-                                                </label>
-
-                                                {{ form.voice.errors }}
-                                                <label for="voice-select-field" class="form-label">Voice:
-                                                {{ form.voice }}
-                                                </label>
-                                        </div>
+                                        {{ form.voice.errors }}
+                                        <label for="voice-select-field" class="form-label">Voice:
+                                        {{ form.voice }}
+                                        </label>
                                 </div>
                         </div>
 
-                        <div class="mt-2 p-3 border border-dark mb-3">
-                                <div class="row pt-5 px-3">
-                                        <div class="col">
-                                                <h2>Output</h2>
-                                        </div>
+                        <div class="row justify-content-start align-items-end mt-3 mb-1 pb-3 px-5">
+                                <div class="col-12 mt-3">
+                                        <label for="sentence-select-field" class="form-label">Sentence:
+                                                <select name="sentence" id="sentence-select-field" class="form-select" style="margin-right: 3rem; margin-bottom: 1rem; border-color: #212529; border-radius: 0px;">
+                                                        <option selected>---</option>
+                                                </select>
+                                        </label>
                                 </div>
+                        </div>
 
-                                <div class="row justify-content-start align-items-end mt-3 mb-1 pb-3 px-5">
-                                        <div class="col-12 mt-3">
-                                                <label for="sentence-select-field" class="form-label">Sentence:
-                                                        <select name="sentence" id="sentence-select-field" class="form-select" style="margin-right: 3rem; margin-bottom: 1rem; border-color: #212529; border-radius: 0px;">
-                                                                <option selected>---</option>
-                                                        </select>
-                                                </label>
-                                        </div>
-                                </div>
-
-                                <div class="row justify-content-start align-items-end pb-3 px-5">
-                                        <div class="col-12">
-                                                {% if task_queued == True %}
-                                                <div id="progress">
-                                                        <p style="margin-top: 1rem;">
-                                                                <img src="{% static 'graphics/loading.webp' %}" alt="" 
-                                                                width="25" height="25"> Synthesizing, please wait. 
-                                                                This can take a few minutes.
-                                                        </p>
-                                                </div>
-                                                <script>
-                                                        document.addEventListener('DOMContentLoaded', function () {
-                                                                var urls = {
-                                                                        audioUrl: "{{ audio_url }}",
-                                                                        taskStatusUrl: "{% url 'task_status' %}",
-                                                                        helpUrl: "{% url 'help' %}",
-                                                                        loadingImageUrl: "{% static 'graphics/loading.webp' %}",
-                                                                };
-                                                                var sessionKey = "{{ session_key }}";
-
-                                                                updateAndSchedule(sessionKey, urls);
-                                                        });
-                                                </script>
-
-                                                {% elif session_key == "_failed" %}
-                                                <button id="synthesize-button" class="btn btn-light btn-outline-dark mb-1" type="submit"
-                                                style="margin-right: 3rem;">Synthesize</button>
-
+                        <div class="row justify-content-start align-items-end pb-3 px-5">
+                                <div class="col-12">
+                                        {% if task_queued == True %}
+                                        <div id="progress">
                                                 <p style="margin-top: 1rem;">
-                                                        Synthesis failed. Please make sure you followed the
-                                                        <a href="{% url 'help' %}">guidelines</a> and try again.
-                                                        If the problem persists, please contact the
-                                                        <a href="https://github.com/ntlprzybysz/synthesis-gui">maintainer</a>.
+                                                        <img src="{% static 'graphics/loading.webp' %}" alt="" 
+                                                        width="25" height="25"> Synthesizing, please wait. 
+                                                        This can take a few minutes.
                                                 </p>
-
-                                                {% else %}
-                                                <button id="synthesize-button" class="btn btn-light btn-outline-dark mb-1"
-                                                        type="submit">Synthesize</button>
-                                                {% endif %}
                                         </div>
+                                        <script>
+                                                document.addEventListener('DOMContentLoaded', function () {
+                                                        var urls = {
+                                                                audioUrl: "{{ audio_url }}",
+                                                                taskStatusUrl: "{% url 'task_status' %}",
+                                                                helpUrl: "{% url 'help' %}",
+                                                                loadingImageUrl: "{% static 'graphics/loading.webp' %}",
+                                                        };
+                                                        var sessionKey = "{{ session_key }}";
+
+                                                        updateAndSchedule(sessionKey, urls);
+                                                });
+                                        </script>
+
+                                        {% elif session_key == "_failed" %}
+                                        <button id="synthesize-button" class="btn btn-light btn-outline-dark mb-1" type="submit"
+                                        style="margin-right: 3rem;">Synthesize</button>
+
+                                        <p style="margin-top: 1rem;">
+                                                Synthesis failed. Please make sure you followed the
+                                                <a href="{% url 'help' %}">guidelines</a> and try again.
+                                                If the problem persists, please contact the
+                                                <a href="https://github.com/ntlprzybysz/synthesis-gui">maintainer</a>.
+                                        </p>
+
+                                        {% else %}
+                                        <button id="synthesize-button" class="btn btn-light btn-outline-dark mb-1"
+                                                type="submit">Synthesize</button>
+                                        {% endif %}
                                 </div>
                         </div>
                 </form>
