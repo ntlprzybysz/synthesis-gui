@@ -95,7 +95,6 @@ function updateField(fieldId, fieldValue) {
 function updateInputFields(projectInformation) {
     const fieldMapping = {
         projectName: "project-name-field",
-        textInput: "text-input-field",
         ipaInput: "ipa-input-field",
         modelInput: "model-select-field",
         voiceInput: "voice-select-field",

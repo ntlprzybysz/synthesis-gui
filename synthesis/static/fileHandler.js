@@ -70,50 +70,13 @@ function saveFile(projectInformation) {
 
 
 /**
- * Saves user input from the project name and text input fields to a text file.
- *
- * @returns {void} - This function does not return a value.
- */
-function saveTextInput() {
-    const projectNameFieldValue = document.getElementById("project-name-field").value;
-    const textFieldValue = document.getElementById("text-input-field").value;
-
-    const projectInformation = {
-        "projectName": projectNameFieldValue,
-        "textInput": textFieldValue,
-    };
-
-    saveFile(projectInformation);
-};
-
-
-/**
- * Saves user input from the project name and IPA input fields to a text file.
- *
- * @returns {void} - This function does not return a value.
- */
-function saveIpaInput() {
-    const projectNameFieldValue = document.getElementById("project-name-field").value;
-    const ipaFieldValue = document.getElementById("ipa-input-field").value;
-
-    const projectInformation = {
-        "projectName": projectNameFieldValue,
-        "ipaInput": ipaFieldValue,
-    };
-
-    saveFile(projectInformation);
-};
-
-
-/**
- * Saves project information, including project name, text input, IPA input,
+ * Saves project information, including project name, IPA input,
  * selected model, voice, and sentence to a text file.
  *
  * @returns {void} - This function does not return a value.
  */
 function saveProject() {
     const projectNameFieldValue = document.getElementById("project-name-field").value;
-    const textFieldValue = document.getElementById("text-input-field").value;
     const ipaFieldValue = document.getElementById("ipa-input-field").value;
     const modelFieldValue = document.getElementById("model-select-field").value;
     const voiceFieldValue = document.getElementById("voice-select-field").value;
@@ -121,7 +84,6 @@ function saveProject() {
 
     const projectInformation = {
         "projectName": projectNameFieldValue,
-        "textInput": textFieldValue,
         "ipaInput": ipaFieldValue,
         "modelInput": modelFieldValue,
         "voiceInput": voiceFieldValue,

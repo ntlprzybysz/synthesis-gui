@@ -21,19 +21,6 @@ class InputForm(forms.Form):
         initial="Example synthesis",
     )
 
-    text_input = forms.CharField(
-        max_length=500,
-        required=False,
-        widget=forms.Textarea(
-            attrs={
-                "id": "text-input-field",
-                "class": "form-control mb-1",
-                "style": "height: 550px; font-family: Andale Mono, monospace; border-color: #212529; border-radius: 0px;",
-            }
-        ),
-        label="Text:",
-    )
-
     ipa_input = forms.CharField(
         max_length=500,
         min_length=1,
@@ -65,9 +52,3 @@ class InputForm(forms.Form):
         project_name = self.cleaned_data["project_name"]
         cleaned_project_name = "".join(c if c.isalpha() else "_" for c in project_name)
         return cleaned_project_name
-
-    def clean_text_input(self):
-        """
-        Discards all text input by subtituting it with an empty string.
-        """
-        return ""

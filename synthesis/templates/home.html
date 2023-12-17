@@ -128,26 +128,11 @@
                                 </div>
 
                                 <div class="row align-items-start justify-content-evenly mt-3 pb-3 px-5 input-fields">
-                                
-                                        <div class="col-lg-4 col-md-12 col-12 mb-3">
-                                                {{ form.text_input.errors }}
-                                                <label for="text-input-field" class="form-label">Text:</label>
-                                                {{ form.text_input }}
-                                                <button type="button" id="save-text-input-button" class="btn btn-light btn-outline-dark btn-sm"
-                                                onclick="saveTextInput()">
-                                                <img src="{% static 'graphics/download_btn.svg' %}" width="20" height="auto"
-                                                        aria-label="Save text input">
-                                                </button>
-                                        </div>
 
                                         <div class="col-lg-4 col-md-6 col-12 mb-3">
                                                 {{ form.ipa_input.errors }}
                                                 <label for="ipa-input-field" class="form-label">IPA:</label>
                                                 {{ form.ipa_input }}
-                                                <button type="button" id="save-ipa-input-button" class="btn btn-light btn-outline-dark btn-sm"
-                                                onclick="saveIpaInput()">
-                                                <img src="{% static 'graphics/download_btn.svg' %}" width="20" height="auto"
-                                                        aria-label="Save IPA input">
                                                 </button>
                                         </div>
 
