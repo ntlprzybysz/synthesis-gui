@@ -98,7 +98,6 @@ function updateInputFields(projectInformation) {
         ipaInput: "ipa-input-field",
         modelInput: "model-select-field",
         voiceInput: "voice-select-field",
-        sentenceInput: "sentence-select-field"
     };
 
     for (let key in projectInformation) {
@@ -107,85 +106,6 @@ function updateInputFields(projectInformation) {
             const fieldValue = projectInformation[key];
             updateField(fieldId, fieldValue);
         };
-    };
-};
-
-
-/**
- * Shortens sentences in an array to 25 characters and adds ellipsis if necessary.
- * @param {string[]} sentences - An array of sentences to be formatted.
- * @returns {string[]} - The formatted array of sentences.
- */
-function formatSentences(sentences) {
-    for (let i = 0; i < sentences.length; i++) {
-        if (sentences[i].length > 25) {
-            sentences[i] = sentences[i].slice(0, 25);
-            sentences[i][23] = ".";
-            sentences[i][24] = ".";
-            sentences[i][25] = ".";
-        };
-    };
-    return sentences;
-};
-
-
-/**
- * Gets the IPA input from its input field and splits it into an array of strings 
- * based on the line break symbol.
- * @returns {Array} - An array of strings, where each string is a sentence from the IPA field.
- */
-function getSentences() {
-    const ipaFieldValue = document.getElementById("ipa-input-field").value;
-    if (/^\s*$/.test(ipaFieldValue)) { // Contains only whitespace characters?
-        return [];
-    } else if (ipaFieldValue.includes("\n")) {
-        let sentences = ipaFieldValue.split("\n");
-        for (let i = 0; i < sentences.length; i++) {
-            if (/\S/.test(sentences[i])) { // Contains any non-whitespace characters?
-                sentences.splice(i, 1);
-            };
-        }
-        return sentences;
-    } else {
-        return [ipaFieldValue];
-    };
-};
-
-
-/**
- * Updates the sentence dropdown with the sentences from the IPA field.
- * @returns {void} - This function does not return a value.
- */
-function updateSentenceDropdown() {
-    let sentences = getSentences();
-    sentences = formatSentences(sentences);
-
-    let sentenceDropdown = document.getElementById("sentence-select-field");
-    emptyElement(sentenceDropdown);
-
-    for (let i = 0; i < sentences.length; i++) {
-        let sentenceElement = document.createElement("option");
-        sentenceElement.text = sentences[i];
-        sentenceElement.value = i;
-        sentenceDropdown.appendChild(sentenceElement);
-    };
-};
-
-
-/**
- * Updates the IPA input field with the selected sentence from the dropdown.
- * @returns {void} - This function does not return a value.
- */
-function selectSentence() {
-    const sentenceDropdown = document.getElementById("sentence-select-field");
-    if (sentenceDropdown) {
-        sentenceDropdown.addEventListener("change", function () {
-            const selectedSentence = document.getElementById("sentence-select-field").value;
-            const sentences = getSentences();
-            if (selectSentence && sentences) {
-                updateField("ipa-input-field", sentences[i]);
-            };
-        });
     };
 };
 
@@ -217,20 +137,4 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     };
 
-/*
-    const sentenceSelectField = document.getElementById("sentence-select-field");
-    if (sentenceSelectField) {
-        // Triggers an update of sentence options when the dropdown is clicked on
-        sentenceSelectField.addEventListener("click", function () {
-            updateSentenceDropdown();
-            console.log("updated sentences")
-        });
-        
-        // Triggers an update of IPA input based on selected sentence
-        sentenceSelectField.addEventListener("change", function () {
-            selectSentence();
-            console.log("updated ipa input based on selected sentence")
-        });
-    };
-*/
 });

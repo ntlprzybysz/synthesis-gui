@@ -71,7 +71,7 @@ function saveFile(projectInformation) {
 
 /**
  * Saves project information, including project name, IPA input,
- * selected model, voice, and sentence to a text file.
+ * selected model and voice to a text file.
  *
  * @returns {void} - This function does not return a value.
  */
@@ -80,14 +80,12 @@ function saveProject() {
     const ipaFieldValue = document.getElementById("ipa-input-field").value;
     const modelFieldValue = document.getElementById("model-select-field").value;
     const voiceFieldValue = document.getElementById("voice-select-field").value;
-    const sentenceFieldValue = document.getElementById("sentence-select-field").value;
 
     const projectInformation = {
         "projectName": projectNameFieldValue,
         "ipaInput": ipaFieldValue,
         "modelInput": modelFieldValue,
         "voiceInput": voiceFieldValue,
-        "sentenceInput": sentenceFieldValue,
     };
 
     saveFile(projectInformation);
