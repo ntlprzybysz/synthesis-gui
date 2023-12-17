@@ -111,6 +111,22 @@ function updateInputFields(projectInformation) {
 
 
 /**
+ * Resets input fields.
+ *
+ * @returns {void} - This function does not return a value.
+ */
+function startNewProject() {
+    const projectInformation = {
+        "projectName": "New project",
+        "ipaInput": "",
+        "modelInput": "101000-with-markers",
+        "voiceInput": "Linda Johnson",
+    };
+    updateInputFields(projectInformation);
+};
+
+
+/**
  * Event listeners for triggers.
  * - Listens for the "DOMContentLoaded" event to trigger updates on page load.
  * - Listens for changes in the example selection field to update fields accordingly.

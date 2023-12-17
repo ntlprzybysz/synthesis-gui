@@ -12,13 +12,13 @@ class InputForm(forms.Form):
         widget=forms.TextInput(
             attrs={
                 "id": "project-name-field",
-                "placeholder": "Example synthesis",
+                "placeholder": "New project",
                 "class": "form-control form-control-lg",
                 "style": "width: 250px; border-color: #212529; border: none; outline: 0;",
                 "aria-label": "Project name",
             }
         ),
-        initial="Example synthesis",
+        initial="New project",
     )
 
     ipa_input = forms.CharField(
