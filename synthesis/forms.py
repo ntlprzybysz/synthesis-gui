@@ -7,8 +7,7 @@ class InputForm(forms.Form):
     ]
 
     project_name = forms.CharField(
-        max_length=254,
-        min_length=3,
+        max_length=250,
         required=True,
         initial="New project",
         widget=forms.TextInput(
@@ -23,8 +22,6 @@ class InputForm(forms.Form):
     )
 
     ipa_input = forms.CharField(
-        max_length=500,
-        min_length=1,
         required=True,
         widget=forms.Textarea(
             attrs={
@@ -49,26 +46,28 @@ class InputForm(forms.Form):
     )
 
     sentence_breaks = forms.FloatField(
+        min_value=0,
         required=True,
         initial=0.0,
         widget=forms.NumberInput(
             attrs={
                 "id": "sentence-breaks-field",
                 "class": "form-select",
-                "step": 0.1,
+                "step": "0.1",
                 "style": "margin-right: 3rem; margin-bottom: 1rem; border-color: #212529; border-radius: 0px;",
             }
         ),
     )
 
     paragraph_breaks = forms.FloatField(
+        min_value=0,
         required=True,
-        initial=0,
+        initial=0.0,
         widget=forms.NumberInput(
             attrs={
                 "id": "paragraph-breaks-field",
                 "class": "form-select",
-                "step": 1.0,
+                "step": "1.0",
                 "style": "margin-right: 3rem; margin-bottom: 1rem; border-color: #212529; border-radius: 0px;",
             }
         ),
