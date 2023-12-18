@@ -17,6 +17,8 @@ class Project:
         self.session_key = session_key
         self.name: str = cleaned_form_input["project_name"]
         self.ipa_input: str = cleaned_form_input["ipa_input"]
+        self.sentence_breaks: float = cleaned_form_input["sentence_breaks"]
+        self.paragraph_breaks: float = cleaned_form_input["paragraph_breaks"]
         self._set_voice(cleaned_form_input["voice"])
         self._set_paths()
         self._set_checkpoints()

@@ -9,6 +9,8 @@ class InputForm(forms.Form):
     project_name = forms.CharField(
         max_length=254,
         min_length=3,
+        required=True,
+        initial="New project",
         widget=forms.TextInput(
             attrs={
                 "id": "project-name-field",
@@ -18,12 +20,12 @@ class InputForm(forms.Form):
                 "aria-label": "Project name",
             }
         ),
-        initial="New project",
     )
 
     ipa_input = forms.CharField(
         max_length=500,
         min_length=1,
+        required=True,
         widget=forms.Textarea(
             attrs={
                 "id": "ipa-input-field",
@@ -36,10 +38,37 @@ class InputForm(forms.Form):
     voice = forms.ChoiceField(
         choices=VOICE_OPTIONS,
         initial=VOICE_OPTIONS[0],
+        required=True,
         widget=forms.Select(
             attrs={
                 "id": "voice-select-field",
                 "class": "form-select",
+                "style": "margin-right: 3rem; margin-bottom: 1rem; border-color: #212529; border-radius: 0px;",
+            }
+        ),
+    )
+
+    sentence_breaks = forms.FloatField(
+        required=True,
+        initial=0.0,
+        widget=forms.NumberInput(
+            attrs={
+                "id": "sentence-breaks-field",
+                "class": "form-select",
+                "step": 0.1,
+                "style": "margin-right: 3rem; margin-bottom: 1rem; border-color: #212529; border-radius: 0px;",
+            }
+        ),
+    )
+
+    paragraph_breaks = forms.FloatField(
+        required=True,
+        initial=0,
+        widget=forms.NumberInput(
+            attrs={
+                "id": "paragraph-breaks-field",
+                "class": "form-select",
+                "step": 1.0,
                 "style": "margin-right: 3rem; margin-bottom: 1rem; border-color: #212529; border-radius: 0px;",
             }
         ),

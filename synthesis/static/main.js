@@ -81,6 +81,10 @@ function updateField(fieldId, fieldValue) {
         if (fieldId === "model-select-field") {
             changeModelOptions(fieldValue);
         };
+        if (fieldId === "ipa-input-field") {
+            updateSentenceBreaks(fieldValue);
+            updateLineBreaks(fieldValue);
+        };
         fieldElement.value = fieldValue;
     };
 };
@@ -98,6 +102,8 @@ function updateInputFields(projectInformation) {
         ipaInput: "ipa-input-field",
         modelInput: "model-select-field",
         voiceInput: "voice-select-field",
+        sentenceBreaks: "sentence-breaks-field",
+        paragraphBreaks: "paragraph-breaks-field",
     };
 
     for (let key in projectInformation) {
@@ -121,8 +127,49 @@ function startNewProject() {
         "ipaInput": "",
         "modelInput": "101000-with-markers",
         "voiceInput": "Linda Johnson",
+        "sentenceBreaks": 0.0,
+        "paragraphBreaks": 0,
     };
     updateInputFields(projectInformation);
+};
+
+
+/**
+ * Counts the number of times a given symbol appears in a text.
+ * 
+ * @param {string} symbol - The symbol to count.
+ * @param {string} text - The text to search.
+ * @returns {number} The number of times the symbol appears in the text.
+ */
+function countSymbols(symbol, text) {
+	const lines = text.split(symbol);
+	let counter = 0;
+	for (let i = 0; i < lines.length; i++) {
+		counter += 1;
+	};
+	return counter;
+};
+
+
+/**
+ * Updates the number of sentence breaks in the HTML field.
+ * 
+ * @returns {void} - This function does not return a value.
+ */
+function updateSentenceBreaks(ipaFieldValue) {
+	counter = countSymbols("\n", ipaFieldValue);
+	updateField("sentence-breaks-field", "0." + counter);
+};
+
+
+/**
+ * Updates the number of paragraphs in the HTML field.
+ * 
+ * @returns {void} - This function does not return a value.
+ */
+function updateLineBreaks(ipaFieldValue) {
+	counter = countSymbols("\n\n", ipaFieldValue) - 1;
+	updateField("paragraph-breaks-field", counter + ".0");
 };
 
 
@@ -143,4 +190,14 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     };
 
+    // Triggers an update of sentence and paragraph breaks when IPA input field is changed
+    const ipaInputField = document.getElementById("ipa-input-field");
+    if (ipaInputField) {
+        updateSentenceBreaks(ipaInputField.value);
+        updateLineBreaks(ipaInputField.value);
+        ipaInputField.addEventListener("change", function () {
+            updateSentenceBreaks(ipaInputField.value);
+            updateLineBreaks(ipaInputField.value);
+        });
+    };
 });

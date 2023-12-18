@@ -190,10 +190,22 @@
                         </div>
 
                         <div class="row mb-1 px-5">
-                                <div class="col-12">
+                                <div class="col">
                                         {{ form.voice.errors }}
                                         <label for="voice-select-field" class="form-label">Voice:
                                                 {{ form.voice }}
+                                        </label>
+                                </div>
+                                <div class="col">
+                                        {{ form.sentence_breaks.errors }}
+                                        <label for="sentence-breaks-field" class="form-label">Sentence break (s)
+                                                {{ form.sentence_breaks }}
+                                        </label>
+                                </div>
+                                <div class="col">
+                                        {{ form.paragraph_breaks.errors }}
+                                        <label for="paragraph-breaks-field" class="form-label">Paragraph break (s)
+                                                {{ form.paragraph_breaks }}
                                         </label>
                                 </div>
                         </div>

@@ -80,12 +80,16 @@ function saveProject() {
     const ipaFieldValue = document.getElementById("ipa-input-field").value;
     const modelFieldValue = document.getElementById("model-select-field").value;
     const voiceFieldValue = document.getElementById("voice-select-field").value;
+    const sentenceBreaksValue = document.getElementById("sentence-breaks-field").value;
+    const paragraphBreaksValue = document.getElementById("paragraph-breaks-field").value;
 
     const projectInformation = {
         "projectName": projectNameFieldValue,
         "ipaInput": ipaFieldValue,
         "modelInput": modelFieldValue,
         "voiceInput": voiceFieldValue,
+        "sentenceBreaks": sentenceBreaksValue,
+        "paragraphBreaks": paragraphBreaksValue,
     };
 
     saveFile(projectInformation);
