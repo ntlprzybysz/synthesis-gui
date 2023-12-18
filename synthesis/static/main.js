@@ -129,21 +129,11 @@ function startNewProject() {
 /**
  * Event listeners for triggers.
  * - Listens for the "DOMContentLoaded" event to trigger updates on page load.
- * - Listens for changes in the example selection field to update fields accordingly.
  * - Listens for changes in the model selection field to update speaker and symbol options.
  * 
  * @returns {void} - This function does not return a value.
  */
 document.addEventListener("DOMContentLoaded", function () {
-    // Triggers an update of fields when an example is selected
-    const exampleSelectField = document.getElementById("example");
-    if (exampleSelectField) {
-        exampleSelectField.addEventListener("change", function () {
-            let selectedValue = exampleSelectField.value;
-            loadExample(selectedValue);
-        });
-    };
-
     // Triggers an update of speaker and symbol options when a model is changed
     const modelSelectField = document.getElementById("model-select-field");
     if (modelSelectField) {
