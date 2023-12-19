@@ -172,6 +172,7 @@ function updateBreaks(ipaFieldValue) {
  * Event listeners for triggers.
  * - Listens for the "DOMContentLoaded" event to trigger updates on page load.
  * - Listens for changes in the model selection field to update speaker and symbol options.
+ * - Listens for changes in the IPA input field to update the sentence and paragraph breaks.
  * 
  * @returns {void} - This function does not return a value.
  */
