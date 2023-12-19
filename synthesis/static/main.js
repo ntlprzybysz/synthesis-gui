@@ -82,8 +82,7 @@ function updateField(fieldId, fieldValue) {
             changeModelOptions(fieldValue);
         };
         if (fieldId === "ipa-input-field") {
-            updateSentenceBreaks(fieldValue);
-            updateLineBreaks(fieldValue);
+            updateBreaks(fieldValue);
         };
         fieldElement.value = fieldValue;
     };
@@ -152,24 +151,20 @@ function countSymbols(symbol, text) {
 
 
 /**
- * Updates the number of sentence breaks in the HTML field.
+ * Updates the number of paragraph and sentence breaks in the HTML field.
  * 
  * @returns {void} - This function does not return a value.
  */
-function updateSentenceBreaks(ipaFieldValue) {
-	counter = countSymbols("\n", ipaFieldValue);
-	updateField("sentence-breaks-field", "0." + counter);
-};
+function updateBreaks(ipaFieldValue) {
+    counterParagraphBreaks = countSymbols("\n\n", ipaFieldValue) - 1;
+    updateField("paragraph-breaks-field", counterParagraphBreaks + ".0");
 
-
-/**
- * Updates the number of paragraphs in the HTML field.
- * 
- * @returns {void} - This function does not return a value.
- */
-function updateLineBreaks(ipaFieldValue) {
-	counter = countSymbols("\n\n", ipaFieldValue) - 1;
-	updateField("paragraph-breaks-field", counter + ".0");
+	if (counterParagraphBreaks > 0) {
+        counterSentenceBreaks = countSymbols("\n", ipaFieldValue) - counterParagraphBreaks;
+    } else {
+        counterSentenceBreaks = countSymbols("\n", ipaFieldValue);
+    };
+	updateField("sentence-breaks-field", "0." + counterSentenceBreaks);
 };
 
 
@@ -193,11 +188,9 @@ document.addEventListener("DOMContentLoaded", function () {
     // Triggers an update of sentence and paragraph breaks when IPA input field is changed
     const ipaInputField = document.getElementById("ipa-input-field");
     if (ipaInputField) {
-        updateSentenceBreaks(ipaInputField.value);
-        updateLineBreaks(ipaInputField.value);
+        updateBreaks(ipaInputField.value);
         ipaInputField.addEventListener("change", function () {
-            updateSentenceBreaks(ipaInputField.value);
-            updateLineBreaks(ipaInputField.value);
+            updateBreaks(ipaInputField.value);
         });
     };
 });
