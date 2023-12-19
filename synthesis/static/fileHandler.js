@@ -104,13 +104,29 @@ function saveProject() {
  * @returns {object} - The project information object.
  */
 function _parseFileContent(fileContent) {
-    let lines = fileContent.split("\n");
+    const lines = fileContent.split("\n");
     let projectInformation = {};
 
-    lines.forEach(function (line) {
-        let [key, value] = line.split(": ");
-        projectInformation[key] = value;
-    });
+    const keys = ["projectName", "ipaInput", "modelInput", "voiceInput", "sentenceBreaks", "paragraphBreaks"];
+    let previousKey = "";
+
+    for (let i = 0; i < lines.length; i++) {
+        const line = lines[i];
+
+        let key = keys.find(k => line.startsWith(k + ": "));
+        if (key) {
+            let [, value] = line.split(": ");
+            projectInformation[key] = value;
+            previousKey = key;
+        } else {
+            if (previousKey.length > 0) {
+                projectInformation[previousKey] += line;
+                if (i < lines.length - 1) {
+                    projectInformation[previousKey] += '\n';
+                };
+            };
+        };
+    };
 
     return projectInformation;
 };
