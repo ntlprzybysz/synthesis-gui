@@ -194,4 +194,17 @@ document.addEventListener("DOMContentLoaded", function () {
             updateBreaks(ipaInputField.value);
         });
     };
+
+    const exampleModal = document.getElementById('loadExampleModal');
+    exampleModal.addEventListener('show.bs.modal', event => {
+      // Button that triggered the modal
+      const button = event.relatedTarget;
+      // Extract info from data-bs-* attributes
+      const example = button.getAttribute('data-bs-example');
+      console.log("Example: ", example);
+      // Update the modal's content.
+      
+        // TODO
+    });
 });
+

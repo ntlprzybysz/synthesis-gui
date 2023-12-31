@@ -62,65 +62,57 @@
 
                         <div class="row mt-3 mb-5 px-5">
                                 <div class="col">
+
+
+
                                         <div class="dropdown">
                                                 <a class="dropdown-toggle" href="#" role="button"
                                                         data-bs-toggle="dropdown" aria-expanded="false"
                                                         style="font-size: large; color: #000; text-decoration: none;">Project</a>
                                                 <ul class="dropdown-menu">
-                                                        <li><a class="dropdown-item" href="#"
-                                                                        onclick="startNewProject()">New</a></li>
-                                                        <li><a class="dropdown-item" href="#"
-                                                                        onclick="saveProject()">Save</a></li>
-                                                        <li><a class="dropdown-item" href="#"
-                                                                        onclick="loadProject()">Load</a></li>
+                                                        <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#newProjectModal">New</a></li>
+                                                        <li><a class="dropdown-item" href="#" onclick="saveProject()">Save</a></li>
+                                                        <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#loadProjectModal">Load</a></li>
                                                         <li><h6 class="dropdown-header">Load example:</h6></li>
                                                         <li><a class="dropdown-item" href="#" style="margin-left: 10px;"
-                                                                        onclick="loadExample('image-1051-IPA-3000')">Chinese
-                                                                        English - Image</a>
+                                                                data-bs-toggle="modal" data-bs-target="#loadExampleModal"
+                                                                data-bs-example="image-1051-IPA-3000">Modal chinese eng image</a>
                                                         </li>
                                                         <li><a class="dropdown-item" href="#" style="margin-left: 10px;"
-                                                                        onclick="loadExample('wind-6208-IPA-3500')">Italian
-                                                                        English - North wind</a>
+                                                                        onclick="loadExample('image-1051-IPA-3000')">Chinese English - Image</a>
                                                         </li>
                                                         <li><a class="dropdown-item" href="#" style="margin-left: 10px;"
-                                                                        onclick="loadExample('tsunami-6208-IPA-3500')">Italian
-                                                                        English - Tsunami</a>
+                                                                        onclick="loadExample('wind-6208-IPA-3500')">Italian English - North wind</a>
                                                         </li>
                                                         <li><a class="dropdown-item" href="#" style="margin-left: 10px;"
-                                                                        onclick="loadExample('plates-6208-IPA-3500')">Italian
-                                                                        English - Tectonic plates</a>
+                                                                        onclick="loadExample('tsunami-6208-IPA-3500')">Italian English - Tsunami</a>
                                                         </li>
                                                         <li><a class="dropdown-item" href="#" style="margin-left: 10px;"
-                                                                        onclick="loadExample('wind-101000-with-markers')">NA
-                                                                        English (w/ duration markers) - North wind</a>
+                                                                        onclick="loadExample('plates-6208-IPA-3500')">Italian English - Tectonic plates</a>
                                                         </li>
                                                         <li><a class="dropdown-item" href="#" style="margin-left: 10px;"
-                                                                        onclick="loadExample('printing-101000-with-markers')">NA
-                                                                        English (w/ duration markers) - Printing</a>
+                                                                        onclick="loadExample('wind-101000-with-markers')">NA English (w/ duration markers) - North wind</a>
                                                         </li>
                                                         <li><a class="dropdown-item" href="#" style="margin-left: 10px;"
-                                                                        onclick="loadExample('mountain-101000-with-markers')">NA
-                                                                        English (w/ duration markers) - Mountain</a>
+                                                                        onclick="loadExample('printing-101000-with-markers')">NA English (w/ duration markers) - Printing</a>
                                                         </li>
                                                         <li><a class="dropdown-item" href="#" style="margin-left: 10px;"
-                                                                        onclick="loadExample('wind-101000-without-markers')">NA
-                                                                        English (w/o duration markers) - North wind</a>
+                                                                        onclick="loadExample('mountain-101000-with-markers')">NA English (w/ duration markers) - Mountain</a>
                                                         </li>
                                                         <li><a class="dropdown-item" href="#" style="margin-left: 10px;"
-                                                                        onclick="loadExample('wind-103500-with-markers')">Chinese
-                                                                        (w/ duration markers) - North wind</a>
+                                                                        onclick="loadExample('wind-101000-without-markers')">NA English (w/o duration markers) - North wind</a>
                                                         </li>
                                                         <li><a class="dropdown-item" href="#" style="margin-left: 10px;"
-                                                                        onclick="loadExample('wind-103500-without-markers')">Chinese
-                                                                        (w/o duration markers) - North wind</a>
+                                                                        onclick="loadExample('wind-103500-with-markers')">Chinese (w/ duration markers) - North wind</a>
                                                         </li>
                                                         <li><a class="dropdown-item" href="#" style="margin-left: 10px;"
-                                                                        onclick="loadExample('wind-MagK-IPA-6400')">Czech
-                                                                        English - North wind</a>
+                                                                        onclick="loadExample('wind-103500-without-markers')">Chinese (w/o duration markers) - North wind</a>
                                                         </li>
                                                         <li><a class="dropdown-item" href="#" style="margin-left: 10px;"
-                                                                        onclick="loadExample('wind-TZ-IPA-6000')">Czech
-                                                                        English - North wind</a>
+                                                                        onclick="loadExample('wind-MagK-IPA-6400')">Czech English - North wind</a>
+                                                        </li>
+                                                        <li><a class="dropdown-item" href="#" style="margin-left: 10px;"
+                                                                        onclick="loadExample('wind-TZ-IPA-6000')">Czech English - North wind</a>
                                                         </li>
                                                 </ul>
                                         </div>
@@ -257,6 +249,63 @@
                         <a href="https://www.linkedin.com/in/ntl-przybysz/">Natalia Przybysz</a>.
                 </span>
         </div>
+
+        <!-- Modals -->
+        <div class="modal fade" id="newProjectModal" tabindex="-1" aria-labelledby="newProjectModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                        <div class="modal-content">
+                                <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="newProjectModalTitle">Start New Project</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                        Starting a new project will delete the current input!
+                                </div>
+                                <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="startNewProject()">New project</button>
+                                </div>
+                        </div>
+                </div>
+        </div>      
+
+        <div class="modal fade" id="loadProjectModal" tabindex="-1" aria-labelledby="loadProjectModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                        <div class="modal-content">
+                                <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="loadProjectModalTitle">Load Project</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                        Loading a project will delete the current input!
+                                </div>
+                                <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="loadProject()">Load project</button>
+                                </div>
+                        </div>
+                </div>
+        </div>      
+        
+        <div class="modal fade" id="loadExampleModal" tabindex="-1" aria-labelledby="loadExampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                        <div class="modal-content">
+                                <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="loadExampleModalTitle">Load Example</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                        Loading an example will delete the current input!
+                                </div>
+                                <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="loadExample()">Load example</button>
+                                </div>
+                        </div>
+                </div>
+        </div> 
+
 </body>
+
 
 </html>
