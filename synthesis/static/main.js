@@ -169,10 +169,10 @@ function updateBreaks(ipaFieldValue) {
 
 
 /**
- * Event listeners for triggers.
- * - Listens for the "DOMContentLoaded" event to trigger updates on page load.
+ * Listens for the "DOMContentLoaded" event to trigger updates on page load, then:
  * - Listens for changes in the model selection field to update speaker and symbol options.
  * - Listens for changes in the IPA input field to update the sentence and paragraph breaks.
+ * - Listens for loading an example to adjust the modal's content.
  * 
  * @returns {void} - This function does not return a value.
  */
@@ -195,16 +195,19 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     };
 
-    const exampleModal = document.getElementById('loadExampleModal');
-    exampleModal.addEventListener('show.bs.modal', event => {
-      // Button that triggered the modal
-      const button = event.relatedTarget;
-      // Extract info from data-bs-* attributes
-      const example = button.getAttribute('data-bs-example');
-      console.log("Example: ", example);
-      // Update the modal's content.
-      
-        // TODO
+    // Triggers an update of a modal content that appears when an example is chosen.
+    // A generic modal contant is replaced with data relevant to the selected example.
+    const exampleModal = document.getElementById("loadExampleModal");
+    exampleModal.addEventListener("show.bs.modal", event => {
+        const button = event.relatedTarget;
+        const example = button.getAttribute("data-bs-example");
+        
+        console.log("Example: ", example);
+
+        let proceedButton = document.getElementById("loadExampleModalButton");
+        proceedButton.onclick = function() {
+            loadExample(example);
+        };
     });
 });
 
