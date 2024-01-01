@@ -1,5 +1,5 @@
 {% load static %}
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -31,7 +31,7 @@
                                 <a class="navbar-brand" style="text-decoration: none; font-size: xx-large;"
                                         href="{% url 'home' %}">
                                         <img src="{% static 'graphics/logo_transparent_500x500.png' %}"
-                                                alt="Logo of the website" width="90" height="auto"
+                                                alt="Logo of the website" width="90"
                                                 class="d-inline-block align-middle" style="margin-right: 1rem;">
                                         <h1 style="font-size: xx-large; display: inline;">Speech synthesis</h1>
                                 </a>
@@ -40,13 +40,13 @@
                                         <li class="nav-item">
                                                 <a class="nav-link" href="{% url 'about' %}">
                                                         <img src="{% static 'graphics/info_btn.svg' %}" width="35"
-                                                                height="auto" aria-label="Information">
+                                                                alt="Information">
                                                 </a>
                                         </li>
                                         <li class="nav-item">
                                                 <a class="nav-link" href="{% url 'help' %}">
                                                         <img src="{% static 'graphics/help_btn.svg' %}" width="35"
-                                                                height="auto" aria-label="Help">
+                                                                alt="Help">
                                                 </a>
                                         </li>
                                 </ul>
@@ -60,6 +60,7 @@
                 <form method="post" novalidate>
                         {% csrf_token %}
 
+                        <!-- Project menu -->
                         <div class="row mt-3 mb-1 px-5">
                                 <div class="col">
                                         <div class="dropdown">
@@ -125,6 +126,7 @@
                                 </div>
                         </div>
 
+                        <!-- Form errors -->
                         {% if form.non_field_errors %}
                         <div class="row mb-1 px-5">
                                 <div class="col-12">
@@ -133,25 +135,25 @@
                         </div>
                         {% endif %}
 
+                        <!-- Project name field-->
                         <div class="row mb-1 px-5">
                                 <div class="col">
                                         {{ form.project_name.errors }}
                                         <div class="input-group">
                                                 <div class="input-group-text"
                                                         style="background: none; border: none; padding: 0;">
-                                                        <img src="{% static 'graphics/edit_btn.svg' %}" width="30"
-                                                                height="auto" alt="">
+                                                        <img src="{% static 'graphics/edit_btn.svg' %}" width="30" alt="">
                                                 </div>
                                                 {{ form.project_name }}
                                         </div>
                                 </div>
                         </div>
 
+                        <!-- Model selection dropdown -->
                         <div class="row mb-1 px-5">
                                 <div class="col-12">
                                         <label for="model-select-field" class="form-label">Model:
-                                                <select class="form-select" name="model-select-field"
-                                                        id="model-select-field"
+                                                <select class="form-select" name="model-select-field" id="model-select-field"
                                                         style="border-radius: 0px; border-color: #212529;">
                                                         <option value="101000-with-markers" selected>North American English (w/ duration markers)</option>
                                                         <option value="101000-without-markers">North American English (w/o duration markers)</option>
@@ -166,37 +168,46 @@
                                 </div>
                         </div>
 
+                        <!-- Input field and IPA table -->
                         <div class="row justify-content-evenly mb-1 px-5 input-fields">
 
+                                <!-- Input field -->
                                 <div class="col-lg-7 col-md-7 col-12">
                                         {{ form.ipa_input.errors }}
                                         <label for="ipa-input-field" class="form-label">Input</label>
                                         {{ form.ipa_input }}
-                                        </button>
                                 </div>
 
+                                <!-- IPA table -->
                                 <div class="col-lg-5 col-md-5 col-12">
                                         <legend>Insert symbol on cursor position</legend>
-                                        <div class="border border-secondary px-4 py-4" id="ipa-chart" name="ipa-chart"
+                                        <div class="border border-secondary px-4 py-4" id="ipa-chart"
                                                 style="max-height: 550px; overflow-y: auto;">
                                                 <div class="row" id="ipa-symbol-set"></div>
                                         </div>
                                 </div>
                         </div>
 
+                        <!-- Voice dropdown, sentence & paragraph breaks -->
                         <div class="row mb-1 px-5">
+
+                                <!-- Voice dropdown -->
                                 <div class="col">
                                         {{ form.voice.errors }}
                                         <label for="voice-select-field" class="form-label">Voice:
                                                 {{ form.voice }}
                                         </label>
                                 </div>
+
+                                <!-- Sentence break -->
                                 <div class="col">
                                         {{ form.sentence_breaks.errors }}
                                         <label for="sentence-breaks-field" class="form-label">Sentence break (s)
                                                 {{ form.sentence_breaks }}
                                         </label>
                                 </div>
+
+                                <!-- Paragraph break -->
                                 <div class="col">
                                         {{ form.paragraph_breaks.errors }}
                                         <label for="paragraph-breaks-field" class="form-label">Paragraph break (s)
@@ -204,7 +215,8 @@
                                         </label>
                                 </div>
                         </div>
-
+                        
+                        <!-- Synthesis button, updates, playback and download -->
                         <div class="row mb-5 px-5">
                                 <div class="col-12">
                                         {% if task_queued == True %}
@@ -250,6 +262,7 @@
         </div>
         {% endblock %}
 
+        <!-- Footer -->
         <div class="footer col-12 justify-content-start">
                 <span class="mb-3 mb-md-0 text-body-secondary">© Copyright 2023,
                         <a href="https://stefantaubert.com/">Stefan Taubert</a> and
@@ -258,7 +271,7 @@
         </div>
 
         <!-- Modals -->
-        <div class="modal fade" id="newProjectModal" tabindex="-1" aria-labelledby="newProjectModalLabel" aria-hidden="true">
+        <div class="modal fade" id="newProjectModal" tabindex="-1" aria-hidden="true">
                 <div class="modal-dialog">
                         <div class="modal-content">
                                 <div class="modal-header">
@@ -276,7 +289,7 @@
                 </div>
         </div>      
 
-        <div class="modal fade" id="loadProjectModal" tabindex="-1" aria-labelledby="loadProjectModalLabel" aria-hidden="true">
+        <div class="modal fade" id="loadProjectModal" tabindex="-1" aria-hidden="true">
                 <div class="modal-dialog">
                         <div class="modal-content">
                                 <div class="modal-header">
@@ -294,7 +307,7 @@
                 </div>
         </div>      
         
-        <div class="modal fade" id="loadExampleModal" tabindex="-1" aria-labelledby="loadExampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="loadExampleModal" tabindex="-1" aria-hidden="true">
                 <div class="modal-dialog">
                         <div class="modal-content">
                                 <div class="modal-header">
@@ -312,6 +325,4 @@
                 </div>
         </div> 
 </body>
-
-
 </html>
